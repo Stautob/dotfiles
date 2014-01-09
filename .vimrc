@@ -34,7 +34,7 @@ set number
 set laststatus=2
 
 " Set the theme for dark backgrounds
-colorscheme wombat256mod
+colorscheme candyVirus
 set background=dark
 
 " Press F5 for paste mode
@@ -54,7 +54,7 @@ let g:clang_complete_auto=1
 let g:clang_complete_copen=1
 let g:clang_snippets=1
 if has('mac')
-let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+  let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
 endif
 let g:clang_close_preview=1
 let g:clang_periodic_quickfix=1
