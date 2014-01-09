@@ -1,0 +1,68 @@
+" Include the pathogen plugins
+call pathogen#infect()
+
+" Automatically reload vimrc on changes
+autocmd! bufwritepost .vimrc source %
+
+" Automatically strip trailing whitespace from certain files
+autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+" Automatically disable paste mode when leavin insert mode
+autocmd InsertLeave * set nopaste
+
+" Set the leader key to , for easier access
+let mapleader=","
+
+" Syntax highlighting on
+syntax on
+
+" Highlight the search term
+set hlsearch
+
+" Basic indentation rules
+set tabstop=2
+set expandtab
+set shiftwidth=2
+set autoindent
+
+" Show the cursor position
+set ruler
+set cursorline
+
+" Show line numbers
+set number
+set laststatus=2
+
+" Set the theme for dark backgrounds
+colorscheme wombat256mod
+set background=dark
+
+" Press F5 for paste mode
+set pastetoggle=<F3>
+
+" Press F2 for toggling the NERDtree
+map <F2> :NERDTreeToggle<CR>
+
+
+" Enable filetype related plugins
+filetype plugin indent on
+match Error /\s\+$/
+
+" Settings related to clang_complete
+let g:clang_user_options="-Iinclude -I../include -std=c++11"
+let g:clang_complete_auto=1
+let g:clang_complete_copen=1
+let g:clang_snippets=1
+let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+let g:clang_close_preview=1
+let g:clang_periodic_quickfix=1
+
+" C-support related options
+let g:C_UseTool_cmake = 'yes'
+
+" C++ indentation
+set cino=f1s,{1s,}0,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
+
+set concealcursor=inv
+set conceallevel=2
+
