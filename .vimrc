@@ -53,7 +53,9 @@ let g:clang_user_options="-Iinclude -I../include -std=c++11"
 let g:clang_complete_auto=1
 let g:clang_complete_copen=1
 let g:clang_snippets=1
+if has('mac')
 let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+endif
 let g:clang_close_preview=1
 let g:clang_periodic_quickfix=1
 
