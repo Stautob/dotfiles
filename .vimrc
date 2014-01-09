@@ -10,6 +10,9 @@ autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 " Automatically disable paste mode when leavin insert mode
 autocmd InsertLeave * set nopaste
 
+" :W saves using sudo
+command W w !sudo tee % > /dev/null
+
 " Set the leader key to , for easier access
 let mapleader=","
 
@@ -29,6 +32,10 @@ set autoindent
 set ruler
 set cursorline
 
+" Keep the cursor horizontally centered when possible
+set scrolloff=999
+nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
+
 " Show line numbers
 set number
 set laststatus=2
@@ -42,7 +49,6 @@ set pastetoggle=<F3>
 
 " Press F2 for toggling the NERDtree
 map <F2> :NERDTreeToggle<CR>
-
 
 " Enable filetype related plugins
 filetype plugin indent on
