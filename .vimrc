@@ -11,7 +11,7 @@ autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd InsertLeave * set nopaste
 
 " :W saves using sudo
-command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
 
 " Set the leader key to , for easier access
 let mapleader=","
