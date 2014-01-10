@@ -66,7 +66,7 @@ set laststatus=2
 colorscheme jellybeans
 " set background=dark
 
-" Press F5 for paste mode
+" Press F3 for paste mode
 set pastetoggle=<F3>
 
 " Press F2 for toggling the NERDtree
