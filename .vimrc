@@ -1,6 +1,18 @@
 " Include the pathogen plugins
 call pathogen#infect()
 
+" Force use of "right" move keys hjkl
+nnoremap <up> ddgkP
+nnoremap <down> ddp
+nnoremap <left> <<
+nnoremap <right> >>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap j gj
+nnoremap k gk
+
 " Automatically reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 
