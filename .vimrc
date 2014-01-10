@@ -2,8 +2,8 @@
 call pathogen#infect()
 
 " Force use of "right" move keys hjkl
-nnoremap <up> ddgkP
-nnoremap <down> ddp
+nnoremap <up> :m .-2<CR>==
+nnoremap <down> :m .+1<CR>==
 nnoremap <left> <<
 nnoremap <right> >>
 inoremap <up> <nop>
@@ -59,8 +59,8 @@ set number
 set laststatus=2
 
 " Set the theme for dark backgrounds
-colorscheme candyVirus
-set background=dark
+colorscheme jellybeans
+" set background=dark
 
 " Press F5 for paste mode
 set pastetoggle=<F3>
