@@ -36,9 +36,6 @@ autocmd InsertLeave * set nopaste
 " :W saves using sudo
 command! W w !sudo tee % > /dev/null
 
-" Set the leader key to , for easier access
-let mapleader=","
-
 " Syntax highlighting on
 syntax on
 
@@ -99,3 +96,5 @@ set conceallevel=2
 nnoremap <Leader><Space> :noh<CR>
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>gl :GitGutterLineHighlightsToggle<CR>
+
+let g:airline_powerline_fonts = 1
