@@ -9,6 +9,8 @@ nnoremap <up> :m .-2<CR>==
 nnoremap <down> :m .+1<CR>==
 nnoremap <left> <<
 nnoremap <right> >>
+vnoremap <up> :m '<-2<CR>gv=gv
+vnoremap <down> :m '>+1<CR>gv=gv
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
