@@ -13,6 +13,10 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
+" Better indentation in visual mode
+vnoremap < <gv
+vnoremap > >gv
+
 " Automatically reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 
