@@ -1,6 +1,9 @@
 " Include the pathogen plugins
 call pathogen#infect()
 
+" Set the leader key to , for easier access
+let mapleader=","
+
 " Force use of "right" move keys hjkl
 nnoremap <up> :m .-2<CR>==
 nnoremap <down> :m .+1<CR>==
