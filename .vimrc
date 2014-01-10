@@ -21,6 +21,8 @@ syntax on
 
 " Highlight the search term
 set hlsearch
+set incsearch
+set showmatch
 
 " Basic indentation rules
 set tabstop=2
@@ -65,12 +67,12 @@ endif
 let g:clang_close_preview=1
 let g:clang_periodic_quickfix=1
 
-" C-support related options
-let g:C_UseTool_cmake = 'yes'
-
 " C++ indentation
 set cino=f1s,{1s,}0,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
 
 set concealcursor=inv
 set conceallevel=2
 
+nnoremap <Leader><Space> :noh<CR>
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>gl <Plug>GitGutterLineHighlightsToggle
