@@ -13,6 +13,10 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
+" Quickly insert lines above or under "without" entering insert mode
+nnoremap <Leader>o o<ESC>
+nnoremap <Leader>O O<ESC>
+
 " Better indentation in visual mode
 vnoremap < <gv
 vnoremap > >gv
@@ -91,4 +95,4 @@ set conceallevel=2
 
 nnoremap <Leader><Space> :noh<CR>
 nmap <Leader>hs <Plug>GitGutterStageHunk
-nmap <Leader>gl <Plug>GitGutterLineHighlightsToggle
+nmap <Leader>gl :GitGutterLineHighlightsToggle<CR>
