@@ -63,7 +63,7 @@ nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 " Show line numbers
 set number
 set laststatus=2
-
+set numberwidth=3
 " Set the theme for dark backgrounds
 colorscheme jellybeans
 " set background=dark
