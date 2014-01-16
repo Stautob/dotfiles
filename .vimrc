@@ -79,7 +79,8 @@ filetype plugin indent on
 match Error /\s\+$/
 
 " Settings related to clang_complete
-let g:clang_user_options="-Iinclude -I../include -std=c++11"
+autocmd FileType c let g:clang_user_options="-Iinclude -I../include -std=c99 -Weverything"
+autocmd FileType cpp let g:clang_user_options="-Iinclude -I../include -std=c++11 -Weverything"
 let g:clang_complete_auto=1
 let g:clang_complete_copen=1
 let g:clang_snippets=1
