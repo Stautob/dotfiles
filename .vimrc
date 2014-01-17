@@ -1,31 +1,6 @@
 " Include the pathogen plugins
 call pathogen#infect()
 
-" Set the leader key to , for easier access
-let mapleader=","
-
-" Force use of "right" move keys hjkl
-nnoremap <up> :m .-2<CR>==
-nnoremap <down> :m .+1<CR>==
-nnoremap <left> <<
-nnoremap <right> >>
-vnoremap <up> :m '<-2<CR>gv=gv
-vnoremap <down> :m '>+1<CR>gv=gv
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-nnoremap j gj
-nnoremap k gk
-
-" Quickly insert lines above or under "without" entering insert mode
-nnoremap <Leader>o o<ESC>
-nnoremap <Leader>O O<ESC>
-
-" Better indentation in visual mode
-vnoremap < <gv
-vnoremap > >gv
-
 " Automatically reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 
@@ -35,22 +10,22 @@ autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 " Automatically disable paste mode when leavin insert mode
 autocmd InsertLeave * set nopaste
 
+" Include custom mappings
+source .vimmappings
+
 " :W saves using sudo
 command! W w !sudo tee % > /dev/null
+
+" Enable filetype related plugins
+filetype plugin indent on
 
 " Syntax highlighting on
 syntax on
 
-" Highlight the search term
+" Highlight the search term while typing
 set hlsearch
 set incsearch
 set showmatch
-
-" Basic indentation rules
-set tabstop=2
-set expandtab
-set shiftwidth=2
-set autoindent
 
 " Show the cursor position
 set ruler
@@ -58,46 +33,42 @@ set cursorline
 
 " Keep the cursor horizontally centered when possible
 set scrolloff=999
-nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
 " Show line numbers
 set number
 set laststatus=2
 set numberwidth=3
+
 " Set the theme for dark backgrounds
 colorscheme jellybeans
-" set background=dark
 
-" Press F3 for paste mode
-set pastetoggle=<F3>
-
-" Press F2 for toggling the NERDtree
-map <F2> :NERDTreeToggle<CR>
-
-" Enable filetype related plugins
-filetype plugin indent on
+" Hightlight trailing whitespace as errors
 match Error /\s\+$/
 
+" Basic indentation rules
+set tabstop=2
+set expandtab
+set shiftwidth=2
+set autoindent
+
+" C++ indentation
+set cino=f1s,{1s,}0,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
+
 " Settings related to clang_complete
-autocmd FileType c let g:clang_user_options="-Iinclude -I../include -std=c99 -Weverything"
-autocmd FileType cpp let g:clang_user_options="-Iinclude -I../include -std=c++11 -Weverything"
-let g:clang_complete_auto=1
-let g:clang_complete_copen=1
+let g:clang_user_options="-I. -Iinclude -I../include -I../inc"
+autocmd FileType c let g:clang_user_options .= "-std=c99"     " when editing C files, force The c99 standard
+autocmd FileType cpp let g:clang_user_options .= "-std=c++11" " when editing C++ files, force the C++11 standard
+let g:clang_complete_auto = 1
+let g:clang_complete_copen = 1
 let g:clang_snippets=1
 if has('mac')
   let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
 endif
 let g:clang_close_preview=1
 let g:clang_periodic_quickfix=1
-
-" C++ indentation
-set cino=f1s,{1s,}0,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
-
 set concealcursor=inv
 set conceallevel=2
 
-nnoremap <Leader><Space> :noh<CR>
-nmap <Leader>hs <Plug>GitGutterStageHunk
-nmap <Leader>gl :GitGutterLineHighlightsToggle<CR>
-
+" Use nice symbols in airline
 let g:airline_powerline_fonts = 1
+
