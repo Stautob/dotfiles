@@ -38,6 +38,9 @@ nnoremap <Leader><Space> :noh<CR>
 vnoremap < <gv
 vnoremap > >gv
 
+" Easyly reindent the whole file
+map <F6> mzgg=G`z
+
 " Toggle "cursor-centering"
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
