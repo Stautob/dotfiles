@@ -11,7 +11,7 @@ autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd InsertLeave * set nopaste
 
 " Include custom mappings
-source ~/.dotfiles/.vimmappings
+source ~/.vim/.vimmappings
 
 " :W saves using sudo
 command! W w !sudo tee % > /dev/null
