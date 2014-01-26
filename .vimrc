@@ -64,9 +64,9 @@ autocmd FileType cpp let g:clang_user_options .= "-std=c++11" " when editing C++
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_snippets=1
-if has('mac')
+"if has('mac')
   let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
-endif
+"endif
 let g:clang_close_preview=1
 let g:clang_periodic_quickfix=1
 set concealcursor=inv
