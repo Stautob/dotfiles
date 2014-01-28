@@ -59,14 +59,14 @@ autocmd FileType java set cino=f1s,{1s,}0,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
 
 " Settings related to clang_complete
 let g:clang_user_options="-I. -Iinclude -I../include -I../inc"
-autocmd FileType c let g:clang_user_options .= "-std=c99"     " when editing C files, force The c99 standard
-autocmd FileType cpp let g:clang_user_options .= "-std=c++11" " when editing C++ files, force the C++11 standard
+autocmd FileType c let g:clang_user_options .= " -std=c99"     " when editing C files, force The c99 standard
+autocmd FileType cpp let g:clang_user_options .= " -std=c++11" " when editing C++ files, force the C++11 standard
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_snippets=1
-"if has('mac')
+if system("uname")=="Darwin\n"
   let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
-"endif
+endif
 let g:clang_close_preview=1
 let g:clang_periodic_quickfix=1
 set concealcursor=inv
