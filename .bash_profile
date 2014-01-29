@@ -1,5 +1,7 @@
-export PYTHONPATH=${PYTHONPATH}:/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export PATH=${PATH}:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/usr/texbin
+if [ "$(uname)" = "Darwin" ]; then
+  export PYTHONPATH=${PYTHONPATH}:/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+  export PATH=${PATH}:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/MacGPG2/bin:/usr/texbin
+fi
 
 export EDITOR=vi
 
