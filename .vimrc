@@ -22,6 +22,9 @@ filetype plugin indent on
 " Syntax highlighting on
 syntax on
 
+" Disable vi compatibility mode
+set nocompatible
+
 " Highlight the search term while typing
 set hlsearch
 set incsearch
