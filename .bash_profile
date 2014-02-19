@@ -41,6 +41,15 @@ else
     TERM=xterm-256color
   fi
 
+  if [ -f "/etc/profile.d/bash-completion.sh" ]; then
+    . "/etc/profile.d/bash-completion.sh"
+
+    if [[ -f "/usr/share/bash-completion/git-prompt" || -f "/usr/share/bash-completion/git-prompt.sh" ]]; then
+      . /usr/share/bash-completion/git-prompt*
+      GIT_PROMPT_LOADED=1
+    fi
+  fi
+
 fi
 
 # Some environment setup
