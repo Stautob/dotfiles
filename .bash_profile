@@ -34,6 +34,13 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then # We are on NetBSD
   export PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
   export ENV=$HOME/.shrc
 
+else
+
+  if [[ "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
+  then
+    TERM=xterm-256color
+  fi
+
 fi
 
 # Some environment setup
