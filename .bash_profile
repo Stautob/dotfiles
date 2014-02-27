@@ -29,10 +29,16 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then # We are on OS X
     GIT_PROMPT_LOADED=1
   fi
 
+  alias ls='ls -G'
+
 elif [ $UNAME_PLATFORM = "NetBSD" ]; then # We are on NetBSD
 
   export PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
   export ENV=$HOME/.shrc
+
+  if which gls &>/dev/null; then
+    alias ls='gls --color=auto'
+  fi
 
 else
 
@@ -50,6 +56,8 @@ else
     fi
   fi
 
+  alias ls='ls --color=auto'
+
 fi
 
 # Some environment setup
@@ -65,11 +73,6 @@ set -o notify
 # Standard aliases
 alias grep='grep --color=always'
 
-if $(ls --color > /dev/null 2>&1); then
-  alias ls='ls --color=auto'
-elif $(ls -G > /dev/null 2>&1); then
-  alias ls='ls -G'
-fi
 
 alias ll='ls -l'
 
