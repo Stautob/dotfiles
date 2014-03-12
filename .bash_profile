@@ -2,7 +2,7 @@ UNAME_PLATFORM=$(uname)
 
 if [ $UNAME_PLATFORM = "Darwin" ]; then
 
-##### MAC OS X CONFIGURATION BELOW #####
+  ##### MAC OS X CONFIGURATION BELOW #####
 
   # Preprend the homebrew installation directories to the PATH
   export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
@@ -36,13 +36,9 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
 
   alias ls='ls -G'
 
-  if which tmux 2>1&>/dev/null; then
-    test -z "$TMUX" && (tmux attach || tmux new-session)
-  fi
-
 elif [ $UNAME_PLATFORM = "NetBSD" ]; then
 
-##### NETBSD CONFIGURATION BELOW #####
+  ##### NETBSD CONFIGURATION BELOW #####
 
   export PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
   export ENV=$HOME/.shrc
@@ -53,7 +49,7 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then
 
 
 elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
-##### LINUX CONFIGURATION BELOW #####
+  ##### LINUX CONFIGURATION BELOW #####
 
   if [[ "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
   then
@@ -71,6 +67,10 @@ elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
 
   alias ls='ls --color=auto'
 
+fi
+
+if which tmux 2>1&>/dev/null; then
+  test -z "$TMUX" && (tmux new-session -t base || tmux new-session -s base)
 fi
 
 # Some environment setup
