@@ -1,9 +1,14 @@
 UNAME_PLATFORM=$(uname)
 
-if [ $UNAME_PLATFORM = "Darwin" ]; then # We are on OS X
+if [ $UNAME_PLATFORM = "Darwin" ]; then
+
+##### MAC OS X CONFIGURATION BELOW #####
 
   # Preprend the homebrew installation directories to the PATH
   export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
+
+  # Append the users .bin directory to the path
+  export PATH=${PATH}:~/.bin
 
   BREW_PREFIX=$(brew --prefix 2> /dev/null)
 
@@ -82,13 +87,12 @@ set -o notify
 alias grep='grep --color=always'
 
 alias ll='ls -l'
+
 # git aliases
 alias gpush='git push'
 alias gpull='git pull'
 alias gbranch='git branch'
 alias gcommit='git commit'
-
-
 alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
