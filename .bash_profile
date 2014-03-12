@@ -31,7 +31,13 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then # We are on OS X
 
   alias ls='ls -G'
 
-elif [ $UNAME_PLATFORM = "NetBSD" ]; then # We are on NetBSD
+  if which tmux 2>1&>/dev/null; then
+    test -z "$TMUX" && (tmux attach || tmux new-session)
+  fi
+
+elif [ $UNAME_PLATFORM = "NetBSD" ]; then
+
+##### NETBSD CONFIGURATION BELOW #####
 
   export PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
   export ENV=$HOME/.shrc
@@ -40,7 +46,9 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then # We are on NetBSD
     alias ls='gls --color=auto'
   fi
 
-else
+
+elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
+##### LINUX CONFIGURATION BELOW #####
 
   if [[ "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
   then
@@ -73,14 +81,14 @@ set -o notify
 # Standard aliases
 alias grep='grep --color=always'
 
-
 alias ll='ls -l'
-
 # git aliases
 alias gpush='git push'
 alias gpull='git pull'
 alias gbranch='git branch'
 alias gcommit='git commit'
+
+
 alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
