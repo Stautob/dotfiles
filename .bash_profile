@@ -40,6 +40,10 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then
 
   ##### NETBSD CONFIGURATION BELOW #####
 
+  if [[ -f "/usr/pkg/share/bash-completion/bash_completion" ]]; then
+    . "/usr/pkg/share/bash-completion/bash_completion"
+  fi
+
   export PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
   export ENV=$HOME/.shrc
 
@@ -47,8 +51,8 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then
     alias ls='gls --color=auto'
   fi
 
-
 elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
+
   ##### LINUX CONFIGURATION BELOW #####
 
   if [[ "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
