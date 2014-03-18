@@ -38,18 +38,26 @@ nnoremap <Leader><Space> :noh<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" Easyly reindent the whole file
-map <F6> mzgg=G`z
-
 " Toggle "cursor-centering"
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
-" Press F3 for paste mode
-set pastetoggle=<F3>
+" ------------------------------
+" Function key mappings
+" ------------------------------
 
 " Press F2 for toggling the NERDtree
 nnoremap <F2> :NERDTreeToggle<CR>
 inoremap <F2> <ESC>:NERDTreeToggle<CR>
+
+" Press F3 for paste mode
+set pastetoggle=<F3>
+
+" Press F4 for toggling the Eclim ProjectTree
+nnoremap <F4> :ProjectTreeToggle<CR>
+inoremap <F4> <ESC>:ProjectTreeToggle<CR>
+
+" Press F6 to reindent the hole file
+map <F6> mzgg=G`zmz
 
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>gl :GitGutterLineHighlightsToggle<CR>
