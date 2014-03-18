@@ -31,6 +31,10 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
     GIT_PROMPT_LOADED=1
   fi
 
+  # Set the locale to English-USA UTF8
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+
   alias ls='ls -G'
 
 elif [ $UNAME_PLATFORM = "NetBSD" ]; then
