@@ -7,9 +7,6 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
   # Preprend the homebrew installation directories to the PATH
   export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
 
-  # Append the users .bin directory to the path
-  export PATH=${PATH}:~/.bin
-
   BREW_PREFIX=$(brew --prefix 2> /dev/null)
 
   if [ "$BREW_PREFIX" != "" ]; then
@@ -73,9 +70,12 @@ elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
 
 fi
 
-if which tmux 2>1&>/dev/null; then
-  test -z "$TMUX" && (tmux new-session -t base || tmux new-session -s base)
-fi
+# Append the users .bin directory to the path
+export PATH=${PATH}:~/.bin
+
+#if which tmux 2>1&>/dev/null; then
+#  test -z "$TMUX" && (tmux new-session -t base || tmux new-session -s base)
+#fi
 
 # Some environment setup
 export EDITOR=vi
@@ -101,7 +101,7 @@ alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
 
-PS1="\[\e[00;32m\]\u\[\e[00;34m\]@\H \[\e[01;31m\][\[\e[00;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[00;34m\]{%s}'; fi)\[\e[01;31m\]] \[\e[01;34m\]\306\222 = \[\e[0m\]"
+PS1="\[\e[00;32m\]\u\[\e[00;34m\]@\H \[\e[01;31m\][\[\e[00;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[00;34m\]{%s}'; fi)\[\e[01;31m\]] \[\e[01;34m\]\306\222 =\e[0m "
 
 # bash history related stuff
 HISTCONTROL=ignorespace:erasedups
