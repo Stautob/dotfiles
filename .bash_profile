@@ -101,7 +101,7 @@ alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
 
-PS1="\[\e[00;32m\]\u\[\e[00;34m\]@\H \[\e[01;31m\][\[\e[00;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[00;34m\]{%s}'; fi)\[\e[01;31m\]] \[\e[01;34m\]\306\222 =\e[0m "
+PS1="\[\e[32m\]\u\[\e[34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[34m\]{%s}'; fi)\[\e[1;31m\]] \[\e[1;34m\]\306\222 =\e[0m "
 
 # bash history related stuff
 HISTCONTROL=ignorespace:erasedups
