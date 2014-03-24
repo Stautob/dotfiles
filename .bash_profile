@@ -31,10 +31,6 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
     GIT_PROMPT_LOADED=1
   fi
 
-  # Set the locale to English-USA UTF8
-  export LANG=en_US.UTF-8
-  export LC_ALL=en_US.UTF-8
-
   alias ls='ls -G'
 
 elif [ $UNAME_PLATFORM = "NetBSD" ]; then
@@ -77,7 +73,7 @@ fi
 # Append the users .bin directory to the path
 export PATH=${PATH}:~/.bin
 
-#if which tmux 2>1&>/dev/null; then
+#if which tmux >/dev/null 2>&1; then
 #  test -z "$TMUX" && (tmux new-session -t base || tmux new-session -s base)
 #fi
 
@@ -105,7 +101,7 @@ alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
 
-PS1="\[\e[32m\]\u\[\e[34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[34m\]{%s}'; fi)\[\e[1;31m\]] \[\e[1;34m\]\306\222 =\e[0m "
+PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[0;34m\]{%s}'; fi)\[\e[1;31m\]] \[\e[1;34m\]\$\e[0m\] "
 
 # bash history related stuff
 HISTCONTROL=ignorespace:erasedups
