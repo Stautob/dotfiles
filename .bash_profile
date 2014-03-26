@@ -10,10 +10,6 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
   BREW_PREFIX=$(brew --prefix 2> /dev/null)
 
   if [ "$BREW_PREFIX" != "" ]; then
-    # Add the homebrew PYTHONPATH as well (for 2.7 and 3)
-    export PYTHONPATH=${PYTHONPATH}:$BREW_PREFIX/lib/python2.7/site-packages
-    export PYTHONPATH=${PYTHONPATH}:$BREW_PREFIX/lib/python3.3/site-packages
-
     # Load bash completion if available
     if [ -f "$BREW_PREFIX/etc/bash_completion" ]; then
       . "$BREW_PREFIX/etc/bash_completion"
