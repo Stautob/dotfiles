@@ -88,9 +88,9 @@ alias gclone='git clone'
 alias gstatus='git status'
 
 if [[ $GIT_PROMPT_LOADED -eq '1' ]]; then
-  PS1='\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[0;34m\]$(__git_ps1 "{%s}")\[\e[1;31m\]] \[\e[1;34m\]\$\e[m\] '
+  PS1='\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[0;34m\]$(__git_ps1 "{%s}")\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[m\] '
 else
-  PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[1;31m\]] \[\e[1;34m\]\$\e[0;0m\] "
+  PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0;0m\] "
 fi
 
 # bash history related stuff
