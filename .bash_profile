@@ -7,7 +7,7 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
   # Preprend the homebrew installation directories to the PATH
   export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
 
-  BREW_PREFIX=$(brew --prefix 2> /dev/null)
+  BREW_PREFIX=$(brew --prefix 2>/dev/null)
 
   if [ "$BREW_PREFIX" != "" ]; then
     # Load bash completion if available
@@ -19,12 +19,6 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
         GIT_PROMPT_LOADED=1
       fi
     fi
-  fi
-
-  # Load the git-prompt function when available
-  if [[ ! $GIT_PROMPT_LOADED -eq "1" && -d /Library/Developer/CommandLineTools ]]; then
-    . /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
-    GIT_PROMPT_LOADED=1
   fi
 
   alias ls='ls -G'
@@ -69,10 +63,6 @@ fi
 # Append the users .bin directory to the path
 export PATH=${PATH}:~/.bin
 
-#if which tmux >/dev/null 2>&1; then
-#  test -z "$TMUX" && (tmux new-session -t base || tmux new-session -s base)
-#fi
-
 # Some environment setup
 export EDITOR=vi
 export PAGER=less
@@ -97,11 +87,13 @@ alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
 
-PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[0;34m\]{%s}'; fi)\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0m\] "
+if [[ $GIT_PROMPT_LOADED -eq '1' ]]; then
+  PS1='\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[0;34m\]$(__git_ps1 "{%s}")\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[m\] '
+else
+  PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0;0m\] "
+fi
 
-# bash history related stuff
+# bash history related stuff
 HISTCONTROL=ignorespace:erasedups
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#[[ -f ~/.bashrc ]] && . ~/.bashrc
