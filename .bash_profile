@@ -97,9 +97,11 @@ alias gcheckout='git checkout'
 alias gclone='git clone'
 alias gstatus='git status'
 
-PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[0;34m\]{%s}'; fi)\[\e[1;31m\]] \[\e[1;34m\]\$\e[0m\] "
+PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT_PROMPT_LOADED -eq '1' ]]; then __git_ps1 '\[\e[0;34m\]{%s}'; fi)\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0m\] "
 
 # bash history related stuff
 HISTCONTROL=ignorespace:erasedups
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
