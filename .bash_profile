@@ -95,5 +95,3 @@ fi
 
 # bash history related stuff
 HISTCONTROL=ignorespace:erasedups
-
-#[[ -f ~/.bashrc ]] && . ~/.bashrc
