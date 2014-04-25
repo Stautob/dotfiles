@@ -1,2 +1,4 @@
 .VimballRecord
 .netrwhist
+.vim/eclim
+.vim/plugin
