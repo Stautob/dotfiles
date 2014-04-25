@@ -1,6 +1,6 @@
 " Settings related to clang_complete
 
-let g:clang_user_options="-I. -Iinclude -I../include -I../inc -I/opt/X11/include"
+let g:clang_user_options="-I. -Iinclude -I../include -I../inc -I/opt/X11/include -I/usr/local/include -I/usr/pkg/include"
 let g:clang_complete_auto=1
 let g:clang_complete_copen=1
 let g:clang_snippets=1
