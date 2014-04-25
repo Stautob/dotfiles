@@ -16,6 +16,9 @@ autocmd InsertLeave * set nopaste
 " Include custom mappings
 runtime .vimmappings.vim
 
+" Include project custom settings
+runtime .vimprojects.vim
+
 " :W saves using sudo
 command! W w !sudo tee % > /dev/null
 
@@ -29,7 +32,8 @@ syntax on
 set nocompatible
 
 " Set /tmp as the directory for swap files
-set backupdir=/tmp
+set backupdir=/var/tmp
+set directory=/var/tmp
 
 " Highlight the search term while typing
 set hlsearch
