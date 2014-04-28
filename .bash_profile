@@ -1,16 +1,17 @@
 UNAME_PLATFORM=$(uname)
 
+USRH_PATH=~/.bin
+USRL_PATH=/usr/local/bin:/usr/local/sbin
+GAME_PATH=/usr/games:/usr/local/games
+USRP_PATH=/usr/pkg/bin:/usr/pkg/sbin
+
 if [ $UNAME_PLATFORM = "Darwin" ]; then
 
-  ##### MAC OS X CONFIGURATION BELOW #####
-
-  # Preprend the homebrew installation directories to the PATH
-  export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
+  export PATH=${USRH_PATH}:${USRL_PATH}:${PATH}
 
   BREW_PREFIX=$(brew --prefix 2>/dev/null)
 
   if [ "$BREW_PREFIX" != "" ]; then
-    # Load bash completion if available
     if [ -f "$BREW_PREFIX/etc/bash_completion" ]; then
       . "$BREW_PREFIX/etc/bash_completion"
 
@@ -25,13 +26,11 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
 
 elif [ $UNAME_PLATFORM = "NetBSD" ]; then
 
-  ##### NETBSD CONFIGURATION BELOW #####
-
   if [[ -f "/usr/pkg/share/bash-completion/bash_completion" ]]; then
     . "/usr/pkg/share/bash-completion/bash_completion"
   fi
 
-  export PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:/usr/pkg/bin:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
+  PATH=${USRH_PATH}:${USRL_PATH}:${USRP_PATH}:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:${GAME_PATH}
   export ENV=$HOME/.shrc
 
   if which gls &>/dev/null; then
@@ -40,7 +39,7 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then
 
 elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
 
-  ##### LINUX CONFIGURATION BELOW #####
+  export PATH=${USRH_PATH}:${URSL_PATH}:/bin:/sbin:/usr/bin:/usr/sbin:${GAME_PATH}
 
   if [[ "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
   then
@@ -60,25 +59,17 @@ elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
 
 fi
 
-# Append the users .bin directory to the path
-export PATH=${PATH}:~/.bin
-
-# Some environment setup
 export EDITOR=vi
 export PAGER=less
 
-# Spelling correction for directory names
 shopt -s cdspell
 
-# Notify about exited processes immediately
 set -o notify
 
-# Standard aliases
 alias grep='grep --color=always'
 
 alias ll='ls -l'
 
-# git aliases
 alias gpush='git push'
 alias gpull='git pull'
 alias gbranch='git branch'
@@ -93,7 +84,6 @@ else
   PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0;0m\] "
 fi
 
-# bash history related stuff
 HISTCONTROL=ignorespace:erasedups
 
 [[ -f $HOME/.bashrc ]] && . ~/.bashrc
