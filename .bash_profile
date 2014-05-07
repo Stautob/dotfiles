@@ -4,10 +4,16 @@ USRH_PATH=~/.bin
 USRL_PATH=/usr/local/bin:/usr/local/sbin
 GAME_PATH=/usr/games:/usr/local/games
 USRP_PATH=/usr/pkg/bin:/usr/pkg/sbin
+SYST_PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+[[ -f $HOME/.bashrc ]] && . ~/.bashrc
 
 if [ $UNAME_PLATFORM = "Darwin" ]; then
 
-  export PATH=${USRH_PATH}:${USRL_PATH}:${PATH}
+  if [ -z $PATD_PATH ]; then
+    for i in /etc/paths.d/*; do PATD_PATH=$(cat $i):${PATD_PATH}; done
+  fi
+  export PATH=${USRH_PATH}:${USRL_PATH}:${SYST_PATH}:${GAME_PATH}:${PATD_PATH/%:/}:${CUST_PATH}
 
   BREW_PREFIX=$(brew --prefix 2>/dev/null)
 
@@ -30,7 +36,7 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then
     . "/usr/pkg/share/bash-completion/bash_completion"
   fi
 
-  PATH=${USRH_PATH}:${USRL_PATH}:${USRP_PATH}:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R7/bin:/usr/X11R6/bin:${GAME_PATH}
+  PATH=${USRH_PATH}:${USRL_PATH}:${USRP_PATH}:${SYST_PATH}:/usr/X11R7/bin:/usr/X11R6/bin:${GAME_PATH}:${CUST_PATH}
   export ENV=$HOME/.shrc
 
   if which gls &>/dev/null; then
@@ -39,7 +45,7 @@ elif [ $UNAME_PLATFORM = "NetBSD" ]; then
 
 elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
 
-  export PATH=${USRH_PATH}:${URSL_PATH}:/bin:/sbin:/usr/bin:/usr/sbin:${GAME_PATH}
+  export PATH=${USRH_PATH}:${URSL_PATH}:${SYST_PATH}:${GAME_PATH}:${CUST_PATH}
 
   if [[ "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
   then
@@ -85,5 +91,3 @@ else
 fi
 
 HISTCONTROL=ignorespace:erasedups
-
-[[ -f $HOME/.bashrc ]] && . ~/.bashrc

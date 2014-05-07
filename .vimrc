@@ -7,8 +7,8 @@ autocmd! bufwritepost .vimrc source %
 " Automatically strip trailing whitespace from certain files
 autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 
-" Java indentation
-autocmd FileType java set cino=f1s,{1s,}0,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
+" indentation
+set cino=f1s,{0,}1s,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
 
 " Automatically disable paste mode when leavin insert mode
 autocmd InsertLeave * set nopaste
@@ -60,9 +60,9 @@ match Error /\s\+$/
 
 " Basic indentation rules
 set tabstop=2
+set softtabstop=2
 set expandtab
 set shiftwidth=2
-set autoindent
 
 " Use nice symbols in airline
 let g:airline_powerline_fonts = 1
