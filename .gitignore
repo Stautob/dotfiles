@@ -2,3 +2,4 @@
 .netrwhist
 .vim/eclim
 .vim/plugin
+*.pyc

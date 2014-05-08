@@ -1,5 +1,6 @@
 UNAME_PLATFORM=$(uname)
 
+
 USRH_PATH=~/.bin
 USRL_PATH=/usr/local/bin:/usr/local/sbin
 GAME_PATH=/usr/games:/usr/local/games

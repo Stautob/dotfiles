@@ -7,9 +7,6 @@ autocmd! bufwritepost .vimrc source %
 " Automatically strip trailing whitespace from certain files
 autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 
-" indentation
-set cino=f1s,{0,}1s,l1,b,b0,h1s,i1s,t0,>1s,:1s,(1s
-
 " Automatically disable paste mode when leavin insert mode
 autocmd InsertLeave * set nopaste
 
