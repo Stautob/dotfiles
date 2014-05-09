@@ -30,6 +30,7 @@
 
 import os
 import ycm_core
+import sys
 
 # These are the compilation flags that will be used in case there's no
 # compilation database set (by default, one is not set).
@@ -152,8 +153,7 @@ def FlagsForFile( filename, **kwargs ):
     except ValueError:
       pass
   else:
-    relative_to = os.getcwd()
-    # relative_to = DirectoryOfThisScript()
+    relative_to = os.path.dirname(filename)
     final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
 
   return {

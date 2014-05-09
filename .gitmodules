@@ -28,6 +28,3 @@
 [submodule ".vim/bundle/vim-cpp-enhanced-highlight"]
 	path = .vim/bundle/vim-cpp-enhanced-highlight
 	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
-[submodule ".vim/bundle/blockify"]
-	path = .vim/bundle/blockify
-	url = https://github.com/mhinz/vim-blockify.git

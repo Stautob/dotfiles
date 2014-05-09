@@ -24,6 +24,7 @@ command! W w !sudo tee % > /dev/null
 
 " Enable filetype related plugins
 filetype plugin indent on
+set foldmethod=syntax
 
 " Syntax highlighting on
 syntax on
