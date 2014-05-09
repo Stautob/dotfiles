@@ -1,6 +1,15 @@
 " Include the pathogen plugins
 call pathogen#infect()
 
+" Include custom mappings
+runtime .vimmappings.vim
+
+" Include project custom settings
+runtime .vimprojects.vim
+
+" Include plugin settings
+runtime .vimplugins.vim
+
 " Automatically reload vimrc on changes
 autocmd! bufwritepost .vimrc source %
 
@@ -9,12 +18,6 @@ autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Automatically disable paste mode when leavin insert mode
 autocmd InsertLeave * set nopaste
-
-" Include custom mappings
-runtime .vimmappings.vim
-
-" Include project custom settings
-runtime .vimprojects.vim
 
 " :W saves using sudo
 command! W w !sudo tee % > /dev/null
@@ -58,9 +61,5 @@ match Error /\s\+$/
 " Basic indentation rules
 set tabstop=2
 set softtabstop=2
-set expandtab
 set shiftwidth=2
-
-" Use nice symbols in airline
-let g:airline_powerline_fonts = 1
-
+set expandtab
