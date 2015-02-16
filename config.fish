@@ -39,7 +39,11 @@ set -gx TERM xterm-256color
 # aliases
 
 function ll
-  ls -alGh --color=auto
+  ls -alGh --color=auto $argv
+end
+
+function lock
+  i3lock -c 000000
 end
 
 function g++
