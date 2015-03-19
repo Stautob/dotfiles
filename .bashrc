@@ -10,6 +10,9 @@ PS1="\[\e[0;32m\][\u]\[\e[0;34m\]@[\H] \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT
 
 # set variables
 TERM='xterm-256color'
+TERMINAL='terminator'
+LANG='en_US.UTF-8'
+export LANG
 
 
 alias ll='ls -la --color=auto'

@@ -2,6 +2,7 @@ UNAME_PLATFORM=$(uname)
 
 
 USRH_PATH=~/.bin
+OPT_PATH=/opt/rabbitMQ:
 USRL_PATH=/usr/local/bin:/usr/local/sbin
 GAME_PATH=/usr/games:/usr/local/games
 USRP_PATH=/usr/pkg/bin:/usr/pkg/sbin
@@ -14,7 +15,7 @@ if [ $UNAME_PLATFORM = "Darwin" ]; then
   if [ -z $PATD_PATH ]; then
     for i in /etc/paths.d/*; do PATD_PATH=$(cat $i):${PATD_PATH}; done
   fi
-  export PATH=${USRH_PATH}:${USRL_PATH}:${SYST_PATH}:${GAME_PATH}:${PATD_PATH/%:/}:${CUST_PATH}
+  export PATH=${USRH_PATH}:${USRL_PATH}:${OPT_PATH}:${SYST_PATH}:${GAME_PATH}:${PATD_PATH/%:/}:${CUST_PATH}
 
   BREW_PREFIX=$(brew --prefix 2>/dev/null)
 
