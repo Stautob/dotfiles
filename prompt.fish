@@ -6,6 +6,8 @@ set branch_glyph            ' '
  
 # Additional glyphs
 set detached_glyph          '➦ '
+set pull_pending_glyph      '⬇ '
+set push_pending_glyph      '⇧ '
 set nonzero_exit_glyph      '⚡ '
 set prompt_finisher_glyph   '❱ '
 set superuser_glyph         '✠ '
