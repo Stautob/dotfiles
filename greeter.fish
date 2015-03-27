@@ -102,7 +102,7 @@ function fish_greeting
   printf "Temperature.:"
 
   #colorpicker
-  set greeter_temp (printf "%.0f" (sensors|head -n7|tail -n1|awk '{print substr($4, 2, length($4)-3)}'))
+  set greeter_temp (sensors | awk '/Physical id 0/ {print substr($4, 2, length($4)-5)}')
   if [ $greeter_temp -gt 80 ]
       set_color $med_red
   else if [ $greeter_temp -gt 60 ]
@@ -112,7 +112,7 @@ function fish_greeting
   else
       set_color $med_green
   end
-  printf "%"(math $COLUMNS-17)"s" (sensors|head -n7|tail -n1|awk '{print substr($4, 1, length($4)-2)}')
+  printf "%"(math $COLUMNS-17)"s" (sensors | awk '/Physical id 0/ {print $4}')
 
   #border
   set_color $med_green
