@@ -1,5 +1,6 @@
 .VimballRecord
 .netrwhist
-.vim/eclim
-.vim/plugin
+.vim
+.vim/*
+.vim/*/*
 *.pyc
