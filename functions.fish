@@ -7,11 +7,15 @@ function sudop
 end
 
 function ll
-  ls -alGh --color=auto $argv
+  ls -1a --color=auto $argv
+end
+
+function pacman
+  pacman --color always $argv
 end
 
 function ud -d "Opens Unidoc folder"
-  if [ (count $argv) = 1 ]
+  if [ (count $argv) -eq 1 ]
     cd $docfolder$argv[1]
   else
     cd $docfolder
@@ -21,14 +25,9 @@ end
 complete -f -c ud -a "(ls $docfolder)" -d "Completition for ud"
 
 function mcdir
-  if [ (count $argv) > 0 ]
-    switch $argv[(count $argv)]
-      case '-*'
-      case '*'
-        mkdir $argv[(count $argv)] -p
-        cd $argv[(count $argv)]
-        return
-    end
+  if [ (count $argv) -gt 0 ]
+      mkdir $argv[(count $argv)] -p
+      cd $argv[(count $argv)]
   else
     echo "Usage: mcdir <path/to/new/folder>"
   end
@@ -53,11 +52,4 @@ end
 
 function -
   cd -
-end
-
-#-----------------------#
-# HELPERS FOR GREETER   #
-#-----------------------#
-
-function greeter_temperature
 end

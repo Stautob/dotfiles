@@ -328,6 +328,7 @@ end
  
 function fish_prompt
   set -g RETVAL $status
+  set -gx EXPORTEDPWD $PWD
   __g2prompt_prompt_status
   __g2prompt_prompt_user
  

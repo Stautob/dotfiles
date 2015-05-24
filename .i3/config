@@ -18,6 +18,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start terminal with last PWD
+bindsym $mod+Shift+Return exec i3-sensible-terminal $EXPORTEDPWD
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -59,7 +62,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-5%'
 bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+5%'
-bindcode 160 exec i3lock -c 000000
+bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/wallpaper/abstract.png
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $mod+Shift+s exec gnome-screenshot
 
@@ -67,8 +70,10 @@ bindsym $mod+Shift+s exec gnome-screenshot
 assign [class="Opera"] 2 www
 
 # enable Keyboard toggle:
-setxkbmap -layout "ch(de),gb,jp"
-setxkbmap -option 'grp:ctrl_alt_toggle'
+#setxkbmap -layout "ch(de),gb,jp"
+#setxkbmap -layout "us -variant altgr-intl -option nodeadkeys"
+setxkbmap us -variant intl
+#setxkbmap -option 'grp:ctrl_alt_toggle'
 
 # open nautilus
 bindsym $mod+n exec nautilus --no-desktop
@@ -171,8 +176,8 @@ exec --no-startup-id terminator
 # Start opera
 exec opera
 
-# Start Dropbox-Applet
-exec --no-startup-id dropbox start
-
 # Set wallpaper
-exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/Schooner-Ship-Sail-Ship-Ocean-Smoke-Fire-Battle.jpg
+exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/wallpaper/abstractwp.png
+
+# Set kbdlayout
+exec --no-startup-id setxkbmap us -variant intl

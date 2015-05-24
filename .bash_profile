@@ -92,4 +92,9 @@ else
   PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0;0m\] "
 fi
 
+
+xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.35
+#Disable Touchpad
+xinput set-prop 15 "Device Enabled" 0
+
 HISTCONTROL=ignorespace:erasedups

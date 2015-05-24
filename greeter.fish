@@ -83,7 +83,7 @@ function fish_greeting
   printf "Avg-load....:"
  
   #colorpicker
-  set greeter_uptime (printf "%.0f" (math (uptime | awk '{print $12}')\*100))
+  set greeter_uptime (printf "%.0f" (math (uptime | awk '{print $NF}')\*100))
   if [ $greeter_uptime -gt 50 ]
       set_color $med_red
   else if [ $greeter_uptime -gt 30 ]
