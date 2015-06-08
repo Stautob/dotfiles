@@ -10,10 +10,6 @@ function ll
   ls -1a --color=auto $argv
 end
 
-function pacman
-  pacman --color always $argv
-end
-
 function ud -d "Opens Unidoc folder"
   if [ (count $argv) -eq 1 ]
     cd $docfolder$argv[1]
