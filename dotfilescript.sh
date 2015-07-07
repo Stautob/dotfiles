@@ -18,38 +18,28 @@ function install {
     linking greeter.fish ~/.config/fish/
     linking functions.fish ~/.config/fish/
     linking prompt.fish ~/.config/fish/
-  else
-    echo "No fish installation found"
   fi
 
   # tmux
   if checkexists tmux; then
     linking .tmux.conf ~/
-  else
-    echo "No tmux installation found"
   fi
 
   # vim
   if checkexists vim; then
     linking .vimrc ~/
     linking .vim/ ~/
-  else
-    echo "No vim installation found"
   fi
 
   # eclim
   if checkexists eclipse; then
     linking .eclimrc ~/
-  else
-    echo "No eclipse installation found"
   fi
 
   # i3
   if checkexists i3; then
     mkdir -p ~/.i3/
     linking .i3/config ~/.i3/
-  else
-    echo "No i3 installation found"
   fi
 }
 

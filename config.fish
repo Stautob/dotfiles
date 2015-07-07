@@ -11,6 +11,9 @@ set -g theme_display_user "yes"
 set -gx docfolder "/home/tstauber/syncthing/FS15/"
 set -gx TERM xterm-256color
 
+# set Xinput
+xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
+
 # load prompt.fish
 . ~/.config/fish/prompt.fish
 

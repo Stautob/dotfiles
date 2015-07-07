@@ -62,18 +62,12 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-5%'
 bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+5%'
-bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpaper/abstract.png
+bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $mod+Shift+s exec gnome-screenshot
 
 # open opera on 2 www
 assign [class="Opera"] 2 www
-
-# enable Keyboard toggle:
-#setxkbmap -layout "ch(de),gb,jp"
-#setxkbmap -layout "us -variant altgr-intl -option nodeadkeys"
-setxkbmap us -variant intl
-#setxkbmap -option 'grp:ctrl_alt_toggle'
 
 # open nautilus
 bindsym $mod+n exec nautilus --no-desktop
@@ -177,7 +171,7 @@ exec --no-startup-id terminator
 exec opera
 
 # Set wallpaper
-exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/wallpaper/abstractwp.png
+exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractwp.png
 
 # Set kbdlayout
 exec --no-startup-id setxkbmap us -variant intl
