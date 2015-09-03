@@ -2,7 +2,7 @@ UNAME_PLATFORM=$(uname)
 
 
 USRH_PATH=~/.bin
-OPT_PATH=/opt/rabbitMQ:
+OPT_PATH=/opt/rabbitMQ:/opt/android-studio/bin:
 USRL_PATH=/usr/local/bin:/usr/local/sbin
 GAME_PATH=/usr/games:/usr/local/games
 USRP_PATH=/usr/pkg/bin:/usr/pkg/sbin
