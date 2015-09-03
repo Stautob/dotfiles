@@ -22,5 +22,5 @@ alias g++03='g++ -std=c++03'
 
 
 # only if on ThinkPad
-xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
-xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
+#xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
+#xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
