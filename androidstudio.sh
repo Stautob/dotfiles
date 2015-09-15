@@ -1,0 +1,21 @@
+#!/bin/bash
+
+sudo sed -i 's/^\#\[multilib\]/\[multilib]/g' /etc/pacman.conf
+sudo sed -i '/\[multilib\]/{n;s/#//}' /etc/pacman.conf
+
+sudo pacman -Syu --noconfirm
+
+sudo pacman -S --noconfirm lib32-mesa lib32-libxrender lib32-fontconfig
+
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+tar -xvzf package-query.tar.gz
+cd package-query
+sudo makepkg -si
+
+cd ..
+curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz
+tar -xvzf yaourt.tar.gz
+cd yaourt
+sudo makepkg -si
+
+sudo yaourt -S --noconfirm android-studio
