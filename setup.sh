@@ -1,7 +1,10 @@
 #!/bin/bash
 # Script to install necessary applications
+SCRIPT=`realpath $0`
+SCRIPTPATH=`dirname $SCRIPT`/
 
-DEFAULTAPPSCONFIG="/home/tstauber/git/dotfiles/.defaultapps.conf"
+DEFAULTAPPSCONFIG=${SCRIPTPATH}".defaultapps.conf"
+
 function checkexists () {
   if (command -v $1 > /dev/null 2>&1); then
     echo "Found $1 installation allready installed"
