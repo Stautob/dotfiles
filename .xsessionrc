@@ -1,3 +1,4 @@
+#!/bin/bash
 xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
 
 xinput set-prop "TPPS/2 IBM TrackPoint" "Device Enabled" 1
@@ -5,4 +6,7 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
-xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
+xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.35
+
+export PATH=$PATH:~/opt/bin
+echo $PATH > /tmp/path3

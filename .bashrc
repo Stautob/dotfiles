@@ -1,5 +1,3 @@
-# .bashrc
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -11,16 +9,7 @@ PS1="\[\e[0;32m\][\u]\[\e[0;34m\]@[\H] \[\e[1;31m\][\[\e[0;33m\]\W\$(if [[ \$GIT
 # set variables
 TERM='xterm-256color'
 TERMINAL='terminator'
-EDITOR='/usr/bin/vim'
 LANG='en_US.UTF-8'
 export LANG
 
-
-alias ll='ls -la --color=auto'
-alias g++='clang++ -std=c++11'
-alias g++03='g++ -std=c++03'
-
-
-# only if on ThinkPad
-#xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
-#xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 0
+echo $PATH > /tmp/path0

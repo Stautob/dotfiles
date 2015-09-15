@@ -10,7 +10,11 @@ set -g default_user "tstauber"
 set -g theme_display_user "yes"
 set -gx docfolder "/home/tstauber/syncthing/FS15/"
 set -gx TERM "xterm-256color"
-set PATH "/opt/android-studio/bin/" $PATH
+
+# paths
+set OPT_PATH "/opt/android-studio/bin" "/opt/astah"
+
+set PATH $OPT_PATH $PATH
 
 # load prompt.fish
 . ~/.config/fish/prompt.fish
