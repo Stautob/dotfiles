@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script to install necessary applications
 
+DEFAULTAPPSCONFIG="/home/tstauber/git/dotfiles/.defaultapps.conf"
 function checkexists () {
   if (command -v $1 > /dev/null 2>&1); then
     echo "Found $1 installation allready installed"
@@ -12,11 +13,11 @@ function checkexists () {
 }
 
 function install () {
-  case $1
-    "arch" )
-      cat $DEFAULTAPPSCONFIG | xargs -L1 sudo pacman -S ;;
-    "fedora" )
-      cat $DEFAULTAPPSCONFIG | xargs -L1 sudo yum install ;;
+  case $1 in
+    arch )
+      cat $DEFAULTAPPSCONFIG | xargs -L1 sudo pacman --noconfirm -S ;;
+    fedora )
+      cat $DEFAULTAPPSCONFIG | xargs -L1 sudo yum -y install ;;
     # extend in case of other cases
   esac
 }
@@ -24,4 +25,7 @@ function install () {
 function makeKey () {
   ssh-keygen -b 4096 -t rsa -N $1 -f ~/.ssh/id_rsa.mk
 }
+
+install arch
+
 

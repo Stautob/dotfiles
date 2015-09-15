@@ -45,7 +45,7 @@ function install {
 
 function linking () {
   # Syntax: linking LINKTARGET, LINKPATH
-  ln -s -b -t ${SCRIPTPATH}$1 $2
+  ln -s -b -t $2 ${SCRIPTPATH}$1
   echo "Linked $1"
 }
 
