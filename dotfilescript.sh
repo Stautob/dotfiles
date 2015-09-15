@@ -41,6 +41,12 @@ function install {
     mkdir -p ~/.i3/
     linking .i3/config ~/.i3/
   fi
+
+  # terminator
+  if checkexists terminator; then
+    linking config ~/.config/terminator/
+  fi
+
 }
 
 function linking () {
