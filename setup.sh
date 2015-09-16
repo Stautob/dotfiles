@@ -30,5 +30,4 @@ function makeKey () {
 }
 
 install arch
-
-
+#add support ycm / operaconfig / usw
