@@ -1,4 +1,5 @@
 #!/bin/bash
+# Enables multilib repo, installs lib's, yaourt and android-studio
 
 sudo sed -i 's/^\#\[multilib\]/\[multilib]/g' /etc/pacman.conf
 sudo sed -i '/\[multilib\]/{n;s/#//}' /etc/pacman.conf
@@ -19,4 +20,4 @@ cd yaourt
 makepkg -si
 cd ..
 
-sudo yaourt -S --noconfirm android-studio android-tools
+yaourt -S --noconfirm android-studio android-tools
