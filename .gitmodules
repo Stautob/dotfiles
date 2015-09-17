@@ -1,30 +1,6 @@
 [submodule ".vim/bundle/vim-cmake"]
 	path = .vim/bundle/vim-cmake
 	url = https://github.com/vhdirk/vim-cmake.git
-[submodule ".vim/bundle/vim-airline"]
-	path = .vim/bundle/airline
-	url = https://github.com/bling/vim-airline.git
-[submodule ".vim/bundle/vim-gnupg"]
-	path = .vim/bundle/gnupg
-	url = https://github.com/jamessan/vim-gnupg.git
-[submodule ".vim/bundle/jellybeans"]
-	path = .vim/bundle/jellybeans
-	url = https://github.com/nanotech/jellybeans.vim
-[submodule ".vim/bundle/vim-python-pep8-indent"]
-	path = .vim/bundle/python-pep8-indent
-	url = https://github.com/hynek/vim-python-pep8-indent.git
-[submodule ".vim/bundle/YouCompleteMe"]
-	path = .vim/bundle/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe.git
-[submodule ".vim/bundle/vim-indent-guides"]
-	path = .vim/bundle/indent-guides
-	url = https://github.com/nathanaelkane/vim-indent-guides.git
-[submodule ".vim/bundle/command-t"]
-	path = .vim/bundle/command-t
-	url = git://git.wincent.com/command-t.git
 [submodule ".vim/bundle/syntax"]
 	path = .vim/bundle/syntax
-	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
-[submodule ".vim/bundle/vim-cpp-enhanced-highlight"]
-	path = .vim/bundle/vim-cpp-enhanced-highlight
 	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
