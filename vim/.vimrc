@@ -25,6 +25,7 @@ command! W w !sudo tee % > /dev/null
 " Enable filetype related plugins
 filetype plugin indent on
 set foldmethod=syntax
+set foldlevel=99
 
 " Syntax highlighting on
 syntax on
@@ -64,8 +65,3 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
-
-let g:ycm_path_to_python_interpreter = '/bin/python2'
-
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_log_level = 'debug'
