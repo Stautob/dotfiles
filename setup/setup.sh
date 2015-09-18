@@ -1,7 +1,6 @@
 #!/bin/bash
 # Script to install necessary applications
 
-#silence parallel parallel --bibtex
 
 DEFAULTAPPSCONFIG="/home/tstauber/git/dotfiles/.defaultapps.conf"
 function checkexists () {
@@ -30,4 +29,6 @@ function makeKey () {
 
 install arch
 
+# TODO: set username hostname automatically
+#       fstab entry for hsr-dfs
 
