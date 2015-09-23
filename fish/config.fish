@@ -2,19 +2,11 @@
 # CONFIG                #
 #-----------------------#
 
-set -g fish_greeting ""
+# set vars and path
+. ~/.config/fish/vars.fish
 
-# set vars
-set -g default_host "stautobt430"
-set -g default_user "tstauber"
-set -g theme_display_user "yes"
-set -gx docfolder "/home/tstauber/syncthing/FS15/"
-set -gx TERM "xterm-256color"
-
-# paths
-set OPT_PATH "/opt/android-studio/bin" "/opt/astah"
-
-set PATH $OPT_PATH $PATH
+# set default vars
+. ~/.config/fish/default_vars.fish
 
 # load prompt.fish
 . ~/.config/fish/prompt.fish
@@ -24,4 +16,3 @@ set PATH $OPT_PATH $PATH
 
 # load greeter.fish
 . ~/.config/fish/greeter.fish
-
