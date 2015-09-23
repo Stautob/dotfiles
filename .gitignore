@@ -3,3 +3,4 @@
 .vim/eclim
 .vim/plugin
 *.pyc
+fish/default_vars.fish
