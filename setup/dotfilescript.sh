@@ -1,7 +1,8 @@
 #!/bin/bash
 # Script to create the links to the dotfiles
 
-
+APPEXCLUDE="various"
+export APPEXCLUDE
 SCRIPT=`realpath $0`
 SCRIPTPATH=`dirname $SCRIPT`
 APPSPATH=${SCRIPTPATH%/*}/
@@ -13,19 +14,17 @@ export APPFILE
 linking () {
   # Syntax: linking LINKTARGETPATH, LINKPATH
   shopt -s dotglob
-  ln -s -b -v -t $2 ${APPSPATH}${1}/*
+  ln -s -b -t $2 ${APPSPATH}${1}/*
 }
 
 export -f linking
 
 checkexists () {
   # Syntax: checkexists PROGRAMMNAME
-  if (command -v $1 > /dev/null 2>&1); then
-    echo -e "Found $1 installation, proceeding"
-    return 0
+  if ( (command -v $1 > /dev/null 2>&1) || [[ $APPEXCLUDE =~ $1 ]] ); then
+    echo -e "Proceeding creating links for $1"; return 0
   else
-    echo -e "No $1 installation found"
-    return 1
+    echo -e "No $1 installation found"; return 1
   fi
 }
 
