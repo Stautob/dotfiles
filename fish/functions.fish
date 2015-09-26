@@ -30,13 +30,13 @@ end
 
 function ud -d "Opens Unidoc folder"
   if [ (count $argv) -eq 1 ]
-    cd $docfolder$argv[1]
+    cd {$docfolder}/*/{$argv[1]}
   else
     cd $docfolder
   end
 end
 
-complete -f -c ud -a "(ls $docfolder/*)" -d "Completion for ud"
+complete -f -c ud -a "(ls $docfolder/*)"
 
 function mcdir
   if [ (count $argv) -gt 0 ]
