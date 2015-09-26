@@ -48,7 +48,7 @@ function mcdir
 end
 
 function hsr-sync -d "Syncs hsr-folders"
-  bash ~/git/hsrhkkers/Shell Sync/shell-scripts/hsr-sync.sh $argv
+  bash ~/git/hsrhkkers/Shell\ Sync/shell-scripts/hsr-sync.sh $argv
 end
 
 function mntNAS -d "Mounts Tobias-NAS"
