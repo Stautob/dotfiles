@@ -52,9 +52,9 @@ function hsr-sync -d "Syncs hsr-folders"
 end
 
 function mntNAS -d "Mounts Tobias-NAS"
-  bash ${SCRIPTPATH}/mount_NAS.sh $argv
+  bash {$SCRIPTPATH}/mount_NAS.sh $argv
 end
 
 function mntHSR -d "Mounts HSR dfs"
-  bash ${SCRIPTPATH}/mount_HSR.sh $argv
+  bash {$SCRIPTPATH}/mount_HSR.sh $argv
 end
