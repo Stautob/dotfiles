@@ -1,18 +1,19 @@
 #-----------------------#
 # CONFIG                #
 #-----------------------#
+set -g ConfigDir ~/.config/fish/
 
 # set vars and path
-. ~/.config/fish/vars.fish
+source {$ConfigDir}vars.fish
 
 # set default vars
-. ~/.config/fish/default_vars.fish
+source {$ConfigDir}default_vars.fish
 
-# load prompt.fish
-. ~/.config/fish/prompt.fish
+# load promptsourcefish
+source {$ConfigDir}prompt.fish
 
-# load functions.fish
-. ~/.config/fish/functions.fish
+# load functionssourcefish
+source {$ConfigDir}functions.fish
 
-# load greeter.fish
-. ~/.config/fish/greeter.fish
+# load greetersourcefish
+source {$ConfigDir}greeter.fish

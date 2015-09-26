@@ -1,14 +1,32 @@
 #---------------------#
-# FUNCTIONS           #
+# FUNCTIONS AND ALIAS #
 #---------------------#
 
+#---------------------#
+# Alias
+
 function sudop
-  sudo -i fish
+  sudo -i fish $argv
 end
 
 function ll
   ls -1a --color=auto $argv
 end
+
+function gst
+  git status $argv
+end
+
+function -
+  cd -
+end
+
+function g++
+  clang++ $argv
+end
+
+#---------------------#
+# Functions
 
 function ud -d "Opens Unidoc folder"
   if [ (count $argv) -eq 1 ]
@@ -18,7 +36,7 @@ function ud -d "Opens Unidoc folder"
   end
 end
 
-complete -f -c ud -a "(ls $docfolder)" -d "Completition for ud"
+complete -f -c ud -a "(ls $docfolder/*)" -d "Completion for ud"
 
 function mcdir
   if [ (count $argv) -gt 0 ]
@@ -29,23 +47,14 @@ function mcdir
   end
 end
 
-function g++
-  clang++ $argv
+function hsr-sync -d "Syncs hsr-folders"
+  bash ~/git/hsrhkkers/Shell Sync/shell-scripts/hsr-sync.sh $argv
 end
 
-function mntNAS -d "Mount Tobias-NAS"
-  echo "Mounting NAS-Tobias"
-  if [ !(mount | grep Volume_1 > /dev/null) ]
-    sudo mount -t cifs -o credentials=/home/tstauber/.NAS-Tobias_cred //192.168.1.45/Volume_1/ /media/BU
-  else
-    echo "Volume_1 allready mounted"
-  end
+function mntNAS -d "Mounts Tobias-NAS"
+  bash ${SCRIPTPATH}/mount_NAS.sh $argv
 end
 
-function haei -d "Mounts HSR dfs"
-  sudo mount -t cifs -o credentials=/home/tstauber/.HSRDFScred //hsr.ch/root/ /media/hsrdfs
-end
-
-function -
-  cd -
+function mntHSR -d "Mounts HSR dfs"
+  bash ${SCRIPTPATH}/mount_HSR.sh $argv
 end
