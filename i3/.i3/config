@@ -175,3 +175,6 @@ exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractw
 
 # Set kbdlayout
 exec --no-startup-id setxkbmap us -variant intl
+
+# Let pop-up windows float
+for_window [window_role="pop-up"] floating enable

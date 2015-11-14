@@ -24,6 +24,7 @@ configureApps () {
 
 c_createFishDefaultVars () {
   touch $DefaultvarsPath
+  echo "#!/bin/fish" >>$DefaultvarsPath
   echo "set -g default_host $1" >> $DefaultvarsPath
   echo "set -g default_user $2" >> $DefaultvarsPath
   echo "set -gx SCRIPTPATH $ScriptPath" >> $DefaultvarsPath

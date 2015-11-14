@@ -14,7 +14,7 @@ runtime .vimplugins.vim
 autocmd! bufwritepost .vimrc source %
 
 " Automatically strip trailing whitespace from certain files
-autocmd FileType c,cpp,java,python autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,java,python,fish autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Automatically disable paste mode when leavin insert mode
 autocmd InsertLeave * set nopaste
@@ -29,6 +29,9 @@ set foldlevel=99
 
 " Syntax highlighting on
 syntax on
+
+" indent on
+filetype plugin indent on
 
 " Disable vi compatibility mode
 set nocompatible

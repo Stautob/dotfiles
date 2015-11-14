@@ -1,3 +1,5 @@
+#!/usr/bin/fish
+
 #---------------------#
 # FUNCTIONS AND ALIAS #
 #---------------------#
@@ -48,7 +50,9 @@ function mcdir
 end
 
 function hsr-sync -d "Syncs hsr-folders"
+  mntHSR
   bash ~/git/hsrhkkers/Shell\ Sync/shell-scripts/hsr-sync.sh $argv
+  mntHSR -u
 end
 
 function mntNAS -d "Mounts Tobias-NAS"
@@ -57,4 +61,9 @@ end
 
 function mntHSR -d "Mounts HSR dfs"
   bash {$SCRIPTPATH}/mount_HSR.sh $argv
+end
+
+function pivotrandr
+  xrandr --auto
+  xrandr --output LVDS1 --auto --pos 0x1020 --output VGA1 --rotate left --pos 1600x0
 end

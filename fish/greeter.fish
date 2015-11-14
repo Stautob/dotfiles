@@ -38,7 +38,7 @@ function fish_greeting
   printf "Last Login..:%"(math $COLUMNS-17)"s" $greeter_lastlogin
   set_color $med_green
   printf " │\n┃ "
- 
+
   #Uptime
   set_color normal
   printf "Uptime......:%"(math $COLUMNS-17)"s" (uptime | awk '{print substr($5, 0, length($5)-1)}')
@@ -81,7 +81,7 @@ function fish_greeting
   #Avg- load
   set_color normal
   printf "Avg-load....:"
- 
+
   #colorpicker
   set greeter_uptime (printf "%.0f" (math (uptime | awk '{print $NF}')\*100))
   if [ $greeter_uptime -gt 50 ]

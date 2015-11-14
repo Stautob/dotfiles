@@ -17,3 +17,6 @@ source {$ConfigDir}functions.fish
 
 # load greetersourcefish
 source {$ConfigDir}greeter.fish
+
+# load keymanagement
+source {$ConfigDir}keymanagement.fish
