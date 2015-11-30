@@ -42,13 +42,16 @@
     use_system_font = False
   [[Tobias]]
     allow_bold = False
+    background_darkness = 0.6
     background_image = None
+    background_type = transparent
     copy_on_selection = True
     cursor_color = "#e6f416"
     custom_command = /bin/fish
     font = Liberation Mono for Powerline 10
+    foreground_color = "#ffffff"
     icon_bell = False
-    palette = "#000000:#cd0000:#00cd00:#cdcd00:#1e90ff:#cd00cd:#00cdcd:#e5e5e5:#4c4c4c:#ff0000:#00ff00:#ffff00:#4682b4:#ff00ff:#00ffff:#ffffff"
+    palette = "#073642:#dc322f:#44d419:#e5e712:#268bd2:#ff0880:#2aa198:#eee8d5:#002b36:#ff4a00:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     scrollback_infinite = True
     scrollbar_position = hidden
     show_titlebar = False

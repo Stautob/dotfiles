@@ -2,7 +2,7 @@
 # GREETER              #
 #----------------------#
 
-function fish_greeting
+function fish_greeting -d "Prints fish-greeting"
 
   #Needs lm-sensors
 
@@ -25,23 +25,26 @@ function fish_greeting
   set dk_grey    000
   set med_grey   999
   set lt_grey    ccc
+  sleep 0.2
+
+  set columns $COLUMNS
 
 
   #border
   set_color $med_green
-  printf "┏━┱%s┐" (for i in (seq (math $COLUMNS-4)); printf '─'; end)
+  printf "┏━┱%s┐" (for i in (seq (math $columns-4)); printf '─'; end)
   printf "┃ "
 
   #lastlogin
   set_color normal
   set greeter_lastlogin (last -R $USER |head -n1|awk '{print $3,$4,$5,$6}')
-  printf "Last Login..:%"(math $COLUMNS-17)"s" $greeter_lastlogin
+  printf "Last Login..:%"(math $columns-17)"s" $greeter_lastlogin
   set_color $med_green
   printf " │\n┃ "
 
   #Uptime
   set_color normal
-  printf "Uptime......:%"(math $COLUMNS-17)"s" (uptime | awk '{print substr($5, 0, length($5)-1)}')
+  printf "Uptime......:%"(math $columns-17)"s" (uptime | awk '{print substr($5, 0, length($5)-1)}')
   set_color $med_green
   printf " │\n┃ "
 
@@ -60,21 +63,21 @@ function fish_greeting
   else
       set_color $med_green
   end
-  printf "%"(math $COLUMNS-18)"s%%" $greeter_dusage
+  printf "%"(math $columns-18)"s%%" $greeter_dusage
   set_color $med_green
   printf " │\n┃ "
 
   #SSH Logins
   set_color normal
   set greeter_sshc (ps -A x |grep "[s]shd: .* \[priv\]"|wc -l)
-  printf "SSH Logins..:%"(math $COLUMNS-17)"s" $greeter_sshc
+  printf "SSH Logins..:%"(math $columns-17)"s" $greeter_sshc
   set_color $med_green
   printf " │\n┃ "
 
   #Processes
   set_color normal
   set greeter_pcount (echo (ps ax|wc -l) "("(ps|wc -l)")")
-  printf "Processes...:%"(math $COLUMNS-17)"s" $greeter_pcount
+  printf "Processes...:%"(math $columns-17)"s" $greeter_pcount
   set_color $med_green
   printf " │\n┃ "
 
@@ -93,7 +96,7 @@ function fish_greeting
   else
       set_color $med_green
   end
-  printf "%"(math $COLUMNS-18)"s%%" $greeter_uptime
+  printf "%"(math $columns-18)"s%%" $greeter_uptime
   set_color $med_green
   printf " │\n┃ "
 
@@ -112,9 +115,9 @@ function fish_greeting
   else
       set_color $med_green
   end
-  printf "%"(math $COLUMNS-17)"s" (sensors | awk '/Physical id 0/ {print $4}')
+  printf "%"(math $columns-17)"s" (sensors | awk '/Physical id 0/ {print $4}')
 
   #border
   set_color $med_green
-  printf " │\n┗━┹%s┘" (for i in (seq (math $COLUMNS-4)); printf '─'; end)
+  printf " │\n┗━┹%s┘" (for i in (seq (math $columns-4)); printf '─'; end)
 end

@@ -157,26 +157,8 @@ end
 # ===========================
 
 function __g2prompt_path_segment -d 'Display a shortened form of a directory'
-
   set_color $path_color
-
-  set -l directory
-  set -l parent
-
-  switch "$argv[1]"
-    case /
-      set directory '/'
-    case "$HOME"
-      set directory '~'
-    case '*'
-      set parent    (__g2prompt_pretty_parent "$argv[1]")
-      set parent    "$parent/"
-      set directory (basename "$argv[1]")
-  end
-
-  echo -n $left_bracket
-  test "$parent"; and echo -n -s "$parent"
-  echo -n "$directory$right_bracket "
+  echo -ns {$left_bracket}(prompt_pwd){$right_bracket}' '
   set_color normal
 end
 
@@ -331,5 +313,4 @@ function fish_right_prompt -d "Write out the right prompt"
   test "$dirstack[1]"; and echo {$left_bracket}{$tosParent}/(basename "$dirstack[1]"){$right_bracket}
   set_color normal
 end
-
 
