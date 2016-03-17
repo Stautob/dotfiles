@@ -28,6 +28,11 @@ function g++
 end
 
 #---------------------#
+# Independent Completions
+
+complete -f -w pacman -c apacman
+
+#---------------------#
 # Functions
 
 function ud -d "Opens Unidoc folder"
@@ -63,7 +68,12 @@ function mntHSR -d "Mounts HSR dfs"
   bash {$SCRIPTPATH}/mount_HSR.sh $argv
 end
 
+function baf -d "CD to BA directory"
+  cd ~/git/hsr/dab-data/source
+end
+
 function pivotrandr
   xrandr --auto
-  xrandr --output LVDS1 --auto --pos 0x1020 --output VGA1 --rotate left --pos 1600x0
+  #xrandr --output LVDS1 --auto --pos 1200x1020 --output VGA1 --rotate left --pos 0x0
+  xrandr --output VGA1 --rotate left --mode 1920x1200 --pos 0x0 --output LVDS1 --auto --pos 1200x1021
 end
