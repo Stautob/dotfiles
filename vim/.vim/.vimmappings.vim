@@ -5,6 +5,10 @@ let mapleader=","
 nnoremap <up> :m .-2<CR>==
 nnoremap <down> :m .+1<CR>==
 
+" do rather scroll than move lines with scrollwheel
+noremap <ScrollWheelUp> k
+noremap <ScrollWheelDown> j
+
 " indent lines in normal mode
 nnoremap <left> <<
 nnoremap <right> >>
