@@ -1,7 +1,7 @@
 " This is the plugin configuration for vim
 
 " 'YouCompleteMe' configuration
-let g:ycm_extra_conf_globlist = ['~/Secure/Projects/*']
+let g:ycm_extra_conf_globlist = ['~/git/hsr/*']
 
 " 'indent-guides' configuration
 let g:indent_guides_enable_on_vim_startup = 1
