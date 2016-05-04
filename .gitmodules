@@ -31,3 +31,9 @@
 [submodule "vim/.vim/bundle/vim-fish"]
 	path = vim/.vim/bundle/vim-fish
 	url = https://github.com/dag/vim-fish.git
+[submodule "vim/.vim/bundle/vim-multiple-cursors"]
+	path = vim/.vim/bundle/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule "vim/.vim/bundle/molokai"]
+	path = vim/.vim/bundle/molokai
+	url = https://github.com/tomasr/molokai.git
