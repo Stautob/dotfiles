@@ -6,8 +6,11 @@ nnoremap <up> :m .-2<CR>==
 nnoremap <down> :m .+1<CR>==
 
 " do rather scroll than move lines with scrollwheel
-noremap <ScrollWheelUp> k
-noremap <ScrollWheelDown> j
+noremap <ScrollWheelUp> 5gk
+noremap <ScrollWheelDown> 5gj
+" smooth scroll
+noremap <A-ScrollWheelUp> gk
+noremap <A-ScrollWheelDown> gj
 
 " indent lines in normal mode
 nnoremap <left> <<

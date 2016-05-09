@@ -6,8 +6,6 @@ let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 " Enable mouse
 set mouse=a
 
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
 noremap <LeftDrag> <LeftMouse>
 noremap! <LeftDrag> <LeftMouse>
 
