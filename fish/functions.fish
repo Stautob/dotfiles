@@ -27,6 +27,10 @@ function g++
   clang++ $argv
 end
 
+function dab
+  cd /home/tstauber/git/hsr/dab-data
+end
+
 #---------------------#
 # Independent Completions
 
@@ -34,6 +38,12 @@ complete -f -w pacman -c apacman
 
 #---------------------#
 # Functions
+
+function basheval -d "Evaluates Bash-syntax variables"
+  if [ (count $argv) -eq 1 ]
+    eval (echo $argv[1] | sed -r 's/:/\' \'/g; s/(.*)="?\'?(.*)\'?"?.*/set --universal --export \1 \'\2\';/')
+  end
+end
 
 function ud -d "Opens Unidoc folder"
   if [ (count $argv) -eq 1 ]
