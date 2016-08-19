@@ -40,8 +40,8 @@ complete -f -w pacman -c apacman
 # Functions
 
 function basheval -d "Evaluates Bash-syntax variables"
-  if [ (count $argv) -eq 1 ]
-    eval (echo $argv[1] | sed -r 's/:/\' \'/g; s/(.*)="?\'?(.*)\'?"?.*/set --universal --export \1 \'\2\';/')
+  for x in (seq (count $argv))
+    eval (echo $argv[$x] | sed -r 's/:/\' \'/g; s/(.*)=("|\')?([^;]*)(;)?\2?/set --universal \1 \'\3\'\4/')
   end
 end
 
@@ -95,6 +95,13 @@ end
 function fhdrandr
   xrandr --auto
   xrandr --output VGA1 --mode 1920x1080 --pos 0x0 --output LVDS1 --auto --pos 1921x180
+end
+
+function resrandr
+  xrandr --auto
+  if [ (count $argv) -eq 2 ]
+    xrandr --output VGA1 --mode {$argv[1]}x{$argv[2]} --pos 0x0 --output LVDS1 --auto --pos (math {$argv[1]}+1)x(math $argv[2] - 900)
+  end
 end
 
 set -xU LESS_TERMCAP_mb (printf "\e[01;31m")      # begin blinking

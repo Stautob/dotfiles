@@ -1,3 +1,4 @@
+# i3 config file (v4)
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -26,9 +27,6 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
@@ -56,18 +54,21 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # CUST enable brightness and volumecontrols: get Keycodes with xev | grep keycode
-#bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 3
-#bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 3
+# Brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-5%'
-bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+5%'
+# Lock
 bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
+# Audio
+bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'
+bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+3%'
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym $mod+Shift+s exec gnome-screenshot
+# Take screenshot
+bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='/home/tstauber/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
 
-# open opera on 2 www
+# open browsers on 2 www
 assign [class="Opera"] 2 www
+assign [class="vivaldi-stable"] 2 www
 
 # open nautilus
 bindsym $mod+n exec nautilus --no-desktop
@@ -129,28 +130,31 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+# Try to integrate gnome
+exec /usr/lib/gnome-settings-daemon
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+# Pressing up will shrink the window’s height.
+# Pressing down will grow the window’s height.
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+# same bindings, but for the arrow keys
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+# back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -158,7 +162,21 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+
+	colors {
+		# Whole color settings
+		background #000000
+		statusline #ffffff
+		separator  #666666
+
+		# Type             border  background font
+		focused_workspace  #008fff #007fff #ffffff
+		active_workspace   #333333 #5f676a #ffffff
+		inactive_workspace #333333 #222222 #888888
+		urgent_workspace   #aa0000 #990000 #ffffff
+	}
+
+  status_command py3status
 }
 
 # Start Networkmanager-Applet
@@ -168,7 +186,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id terminator
 
 # Start opera
-exec opera
+exec vivaldi-stable
 
 # Set wallpaper
 exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractwp.png
@@ -176,5 +194,7 @@ exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractw
 # Set kbdlayout
 exec --no-startup-id setxkbmap us -variant intl
 
+# Small boarder
+new_window 1pixel
 # Let pop-up windows float
 for_window [window_role="pop-up"] floating enable
