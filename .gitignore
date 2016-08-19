@@ -4,3 +4,5 @@
 .vim/plugin
 *.pyc
 fish/default_vars.fish
+i3/.i3/.i3status.conf
+
