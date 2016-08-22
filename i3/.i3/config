@@ -58,17 +58,14 @@ bindsym $mod+Shift+Right move right
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 # Lock
-bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
+bindcode 160 exec physlock -m
+#bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
 # Audio
 bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'
 bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+3%'
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 # Take screenshot
 bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='/home/tstauber/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
-
-# open browsers on 2 www
-assign [class="Opera"] 2 www
-assign [class="vivaldi-stable"] 2 www
 
 # open nautilus
 bindsym $mod+n exec nautilus --no-desktop
@@ -123,6 +120,10 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# open browsers on 2 www
+assign [class="Opera"] 2 www
+assign [class="vivaldi-stable"] 2 www
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -159,8 +160,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# I3BAR SETUP
+##############################
 bar {
 
 	colors {
@@ -179,13 +180,18 @@ bar {
   status_command py3status -c ~/.i3/.i3status.conf
 }
 
+# STARTUP OF APPS
+############################
 # Start Networkmanager-Applet
 exec --no-startup-id nm-applet
 
 # Start cli
 exec --no-startup-id terminator
 
-# Start opera
+# Start redshift
+exec --no-startup-id redshift -l 47.36667:8.55
+
+# Start browser
 exec vivaldi-stable
 
 # Set wallpaper
@@ -194,6 +200,9 @@ exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractw
 # Set kbdlayout
 exec --no-startup-id setxkbmap us -variant intl
 
+
+# Window setup
+##############################
 # Small boarder
 new_window 1pixel
 # Let pop-up windows float
