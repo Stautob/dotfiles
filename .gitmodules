@@ -27,7 +27,7 @@
 	url = https://github.com/nvie/vim-flake8.git
 [submodule "vim/.vim/bundle/vim-fish"]
 	path = vim/.vim/bundle/vim-fish
-	url = https://github.com/dag/vim-fish.git
+	url = https://github.com/Stautob/vim-fish
 [submodule "vim/.vim/bundle/vim-multiple-cursors"]
 	path = vim/.vim/bundle/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
