@@ -1,19 +1,19 @@
 #!/bin/fish
 
 
-set -g current_bg "NONE"
+set -g current_bg           "NONE"
 
 # Powerline glyphs
-set branch_glyph ' '
+set branch_glyph            ' '
 
 # Additional glyphs
-set detached_glyph "➦ "
+set detached_glyph          "➦ "
 set pull_pending_glyph      '⬇ '
 set push_pending_glyph      '⇧ '
 set nonzero_exit_glyph      '⚡ '
 set prompt_finisher_glyph   '❱ '
-set superuser_glyph         '✠ '
-set bg_job_glyph            '% '
+set superuser_glyph         '❲SU❳'
+set bg_job_glyph            '❲BG❳ '
 set left_bracket            '❲'
 set right_bracket           '❳'
 
