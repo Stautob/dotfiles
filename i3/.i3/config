@@ -61,9 +61,9 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindcode 160 exec physlock -m
 #bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
 # Audio
-bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'
-bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+3%'
-bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'; exec killall -SIGUSR1 py3status
+bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+3%'; exec killall -SIGUSR1 py3status
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; exec killall -SIGUSR1 py3status
 # Take screenshot
 bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='/home/tstauber/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
 
@@ -207,3 +207,4 @@ exec --no-startup-id setxkbmap us -variant intl
 new_window 1pixel
 # Let pop-up windows float
 for_window [window_role="pop-up"] floating enable
+for_window [class="Hamster-windows-service"] floating enable move position center
