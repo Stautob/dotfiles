@@ -2,6 +2,7 @@
 # Script to install and configure necessary applications
 
 DotfilesPath=`sed -n 's/\/$//p' <<< $(grep -o '.*/' <<< $(dirname $(realpath $0)))`
+AURGitLink="https://github.com/oshazard/apacman.git"
 ScriptPath="${DotfilesPath%/*}/scripts"
 DefaultvarsPath="${DotfilesPath}/fish/default_vars.fish"
 DotfilescriptPath="${DotfilesPath}/setup/dotfilescript.sh"
@@ -9,8 +10,28 @@ DefaultappsConfigPath="${DotfilesPath}/setup/.defaultapps.conf"
 DotfilesURL="https://bitbucket.org/stautob/dotfiles.git"
 KeyPath="~/.ssh/id_rsa.mk"
 
+installApacman () {
+  pacman --noconfirm -S jshon make gcc
+  git clone $AURGitLink
+  ./apacman/apacman --noconfirm -S apacman
+  rm -rf ./apacman
+}
+
+setup () {
+  installApacman
+  # install ui stuff and edit /etc/pam.d/lightdm
+  installApps
+  configureApps
+}
+
+install () {
+  # Test if apacman is installed else use pacman
+  command -p apacman --noconfirm -S $1 || pacman --noconfirm -S $1
+}
+
 installApps () {
-  cat $DefaultappsConfigPath | xargs -L1 sudo pacman --noconfirm -S
+  #cat $DefaultappsConfigPath | xargs -L1 sudo pacman --noconfirm -S
+  pacman --noconfirm -S $(< $DefaultappsConfigPath)
 }
 
 configureApps () {
@@ -60,6 +81,7 @@ printhelp () {
 case $1 in
   "") printhelp ; exit 0 ;;
   -h) printhelp ; exit 0 ;;
+  -s) setup ; exit 0 ;;
   -i) installApps ; exit 0 ;;
   -c) configureApps $@ ; exit 0 ;;
   *) ;;

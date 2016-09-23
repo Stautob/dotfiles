@@ -1,0 +1,1 @@
+/home/tstauber/git/stautob/dotfiles/vim/.vimrc

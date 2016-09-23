@@ -12,7 +12,7 @@ function sudop
 end
 
 function ll
-  ls -1a --color=auto $argv
+  ls -1av --color=auto $argv
 end
 
 function gst
@@ -29,6 +29,10 @@ end
 
 function dab
   cd /home/tstauber/git/hsr/dab-data
+end
+
+function ip
+  /bin/ip -c $argv
 end
 
 #---------------------#
@@ -92,15 +96,29 @@ function norandr
   xrandr --output VGA1 --off
 end
 
-function fhdrandr
-  xrandr --auto
-  xrandr --output VGA1 --mode 1920x1080 --pos 0x0 --output LVDS1 --auto --pos 1921x180
+function lfhdrandr
+  lresrandr 1920 1080
+  #xrandr --auto
+  #xrandr --output VGA1 --mode 1920x1080 --pos 0x0 --output LVDS1 --auto --pos 1921x180
 end
 
-function resrandr
+function rfhdrandr
+  rresrandr 1920 1080
+  #xrandr --auto
+  #xrandr --output LVDS1 --auto --pos 0x180 --output VGA1 --mode 1920x1080 --pos 1601x0
+end
+
+function lresrandr
   xrandr --auto
   if [ (count $argv) -eq 2 ]
     xrandr --output VGA1 --mode {$argv[1]}x{$argv[2]} --pos 0x0 --output LVDS1 --auto --pos (math {$argv[1]}+1)x(math $argv[2] - 900)
+  end
+end
+
+function rresrandr
+  xrandr --auto
+  if [ (count $argv) -eq 2 ]
+    xrandr --output VGA1 --mode {$argv[1]}x{$argv[2]} --pos 1601x0 --output LVDS1 --auto --pos 0x(math $argv[2] - 900)
   end
 end
 

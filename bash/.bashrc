@@ -13,3 +13,4 @@ LANG='en_US.UTF-8'
 export LANG
 
 echo $PATH > /tmp/path0
+
