@@ -8,7 +8,7 @@ DefaultvarsPath="${DotfilesPath}/fish/default_vars.fish"
 DotfilescriptPath="${DotfilesPath}/setup/dotfilescript.sh"
 DefaultappsConfigPath="${DotfilesPath}/setup/.defaultapps.conf"
 DotfilesURL="https://bitbucket.org/stautob/dotfiles.git"
-KeyPath="~/.ssh/id_rsa.mk"
+KeyPath="~/.ssh/id_rsa.1"
 
 installApacman () {
   pacman --noconfirm -S jshon make gcc
@@ -40,12 +40,12 @@ configureApps () {
   c_createFstabEntries
   c_getDotfiles
   c_linkDotfiles
-  c_makeKey
+  #c_makeKey
 }
 
 c_createFishDefaultVars () {
   touch $DefaultvarsPath
-  echo "#!/bin/fish" >>$DefaultvarsPath
+  echo "#!/bin/fish" >> $DefaultvarsPath
   echo "set -g default_host $1" >> $DefaultvarsPath
   echo "set -g default_user $2" >> $DefaultvarsPath
   echo "set -gx SCRIPTPATH $ScriptPath" >> $DefaultvarsPath
@@ -59,15 +59,16 @@ c_createFstabEntries () {
 c_getDotfiles () {
   echo "Getting Dotfiles"
   #TODO: implement better handling of already existent
-  git clone --recursive $DotfilesURL $ScriptPath
+  #git clone --recursive $DotfilesURL $ScriptPath
 }
 
 c_linkDotfiles () {
   echo "Linking dotfiles"
-  ${DotfilesPath}/dotfilescript.sh
+  ${DotfilesPath}/setup/dotfilescript.sh
 }
 
 c_makeKey () {
+  mkdir ~/.ssh
   ssh-keygen -b 4096 -t rsa -N $1 -f $KeyPath
 }
 

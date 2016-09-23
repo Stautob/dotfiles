@@ -34,3 +34,6 @@
 [submodule "vim/.vim/bundle/molokai"]
 	path = vim/.vim/bundle/molokai
 	url = https://github.com/tomasr/molokai.git
+[submodule "vim/.vim/bundle/vim-dart"]
+	path = vim/.vim/bundle/vim-dart
+	url = https://github.com/dart-lang/dart-vim-plugin.git
