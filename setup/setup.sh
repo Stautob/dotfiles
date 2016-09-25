@@ -18,53 +18,58 @@ installApacman () {
 }
 
 setup () {
-  installApacman
   # install ui stuff and edit /etc/pam.d/lightdm
+  installApacman
   installApps
-  configureApps
+  configureApps $2 $3
+  setupUI
+  setupOTHER
+}
+
+setupUI () {
+  gsettings set org.gnome.desktop.interface icon-theme 'deepin'
+  gsettings set org.gnome.desktop.interface cursor-theme 'deepin'
+  sudo systemctl enable lightdm.service
+   
+}
+
+setupOTHER () {
+  sudo systemctl enable NetworkManager.service
+  sudo systemctl enable ntpd.service
 }
 
 install () {
   # Test if apacman is installed else use pacman
-  command -p apacman --noconfirm -S $1 || pacman --noconfirm -S $1
+  command -p apacman --noconfirm -S $@ || pacman --noconfirm -S $@
 }
 
 installApps () {
-  #cat $DefaultappsConfigPath | xargs -L1 sudo pacman --noconfirm -S
-  pacman --noconfirm -S $(< $DefaultappsConfigPath)
+  install $(< $DefaultappsConfigPath)
 }
 
 configureApps () {
   # Syntax: configureApps [def_hostname] [def_username]
   c_createFishDefaultVars $2 $3
-  c_createFstabEntries
-  c_getDotfiles
   c_linkDotfiles
-  #c_makeKey
+  c_install_ycm
 }
 
 c_createFishDefaultVars () {
   touch $DefaultvarsPath
-  echo "#!/bin/fish" >> $DefaultvarsPath
+  echo "#!/bin/fish" > $DefaultvarsPath
   echo "set -g default_host $1" >> $DefaultvarsPath
   echo "set -g default_user $2" >> $DefaultvarsPath
   echo "set -gx SCRIPTPATH $ScriptPath" >> $DefaultvarsPath
   echo "Created ${DefaultvarsPath##*/}"
 }
 
-c_createFstabEntries () {
-  echo "Created fstab entries"
-}
-
-c_getDotfiles () {
-  echo "Getting Dotfiles"
-  #TODO: implement better handling of already existent
-  #git clone --recursive $DotfilesURL $ScriptPath
-}
-
 c_linkDotfiles () {
   echo "Linking dotfiles"
   ${DotfilesPath}/setup/dotfilescript.sh
+}
+
+c_install_ycm () {
+  ${DotfilesPath}/vim/.vim/bundle/YouCompleteMe/install.py --clang-completer
 }
 
 c_makeKey () {
@@ -75,6 +80,7 @@ c_makeKey () {
 printhelp () {
   echo "Usage: $0 -h                                   show this message"
   echo "       $0 -i                                   install software"
+  echo "       $0 -s [def_hostname] [def_username]     setup (install and configure)"
   echo "       $0 -c [def_hostname] [def_username]     configure system"
 }
 
