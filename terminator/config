@@ -3,6 +3,7 @@
   title_transmit_bg_color = "#0999d5"
 [keybindings]
   cycle_next = <Shift>Tab
+  help = None
 [layouts]
   [[default]]
     [[[child1]]]
