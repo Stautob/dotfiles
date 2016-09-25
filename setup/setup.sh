@@ -13,7 +13,7 @@ KeyPath="~/.ssh/id_rsa.1"
 installApacman () {
   pacman --noconfirm -S jshon make gcc
   git clone $AURGitLink
-  ./apacman/apacman --noconfirm -S apacman
+  ./apacman/apacman --noedit --noconfirm -S apacman
   rm -rf ./apacman
 }
 
@@ -40,7 +40,8 @@ setupOTHER () {
 
 install () {
   # Test if apacman is installed else use pacman
-  command -p apacman --noconfirm -S $@ || pacman --noconfirm -S $@
+  command -p apacman --noedit --noconfirm -S $@ || pacman --noconfirm -S $@
+  echo "----------------------------------------------------------------------------------------"
 }
 
 installApps () {
