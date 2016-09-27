@@ -108,6 +108,11 @@ function rfhdrandr
   #xrandr --output LVDS1 --auto --pos 0x180 --output VGA1 --mode 1920x1080 --pos 1601x0
 end
 
+function disset
+  xrandr --auto
+  xrandr --output DP-1 --mode 1920x1200 --left-of DP-2 --output DP-2 --mode 1920x1200 --left-of eDP-1
+end
+
 function lresrandr
   xrandr --auto
   if [ (count $argv) -eq 2 ]
