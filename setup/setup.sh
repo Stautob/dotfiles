@@ -30,10 +30,10 @@ setupUI () {
   gsettings set org.gnome.desktop.interface icon-theme 'deepin'
   gsettings set org.gnome.desktop.interface cursor-theme 'deepin'
   sudo systemctl enable lightdm.service
-   
 }
 
 setupOTHER () {
+  sudo sed -ie "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/" /etc/sudoers
   sudo systemctl enable NetworkManager.service
   sudo systemctl enable ntpd.service
 }
@@ -73,15 +73,10 @@ c_install_ycm () {
   ${DotfilesPath}/vim/.vim/bundle/YouCompleteMe/install.py --clang-completer
 }
 
-c_makeKey () {
-  mkdir ~/.ssh
-  ssh-keygen -b 4096 -t rsa -N $1 -f $KeyPath
-}
-
 printhelp () {
   echo "Usage: $0 -h                                   show this message"
-  echo "       $0 -i                                   install software"
   echo "       $0 -s [def_hostname] [def_username]     setup (install and configure)"
+  echo "       $0 -i                                   install software"
   echo "       $0 -c [def_hostname] [def_username]     configure system"
 }
 
