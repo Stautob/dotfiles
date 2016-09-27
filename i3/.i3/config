@@ -1,5 +1,6 @@
 # i3 config file (v4)
 set $mod Mod4
+set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -57,15 +58,19 @@ bindsym $mod+Shift+Right move right
 # Brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+
 # Lock
+bindsym $alt+Shift+s exec physlock -m
 bindcode 160 exec physlock -m
 #bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
+
 # Audio
 bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'; exec killall -SIGUSR1 py3status
 bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+3%'; exec killall -SIGUSR1 py3status
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; exec killall -SIGUSR1 py3status
+
 # Take screenshot
-bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='/home/tstauber/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
+bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='~/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
 
 # open nautilus
 bindsym $mod+n exec nautilus --no-desktop
