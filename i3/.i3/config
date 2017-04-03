@@ -62,7 +62,9 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 # Lock
 bindsym $alt+Shift+s exec physlock -m
 bindcode 160 exec physlock -m
-#bindcode 160 exec i3lock -c 000000 -e -i /home/tstauber/Pictures/Wallpapers/abstract.png
+
+# Suspend and Lock
+bindcode 150 exec /usr/bin/physlock -m -d ; exec systemctl suspend
 
 # Audio
 bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'; exec killall -SIGUSR1 py3status
@@ -71,6 +73,11 @@ bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; e
 
 # Take screenshot
 bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='~/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
+
+# Hamsterbutton
+bindsym Mod1+Ctrl+Shift+r exec --no-startup-id /usr/bin/hamster start default;
+bindsym Mod1+Ctrl+Shift+s exec --no-startup-id /usr/bin/hamster stop;
+bindsym Mod1+Ctrl+Shift+h exec ho;
 
 # open nautilus
 bindsym $mod+n exec nautilus --no-desktop
@@ -127,7 +134,7 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 # open browsers on 2 www
 assign [class="Opera"] 2 www
-assign [class="vivaldi-stable"] 2 www
+assign [class="Vivaldi-stable"] 2 www
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -200,7 +207,7 @@ exec --no-startup-id redshift -l 47.36667:8.55
 exec vivaldi-stable
 
 # Set wallpaper
-exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractwp.png
+#exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractwp.png
 
 # Set kbdlayout
 exec --no-startup-id setxkbmap us -variant intl
@@ -212,4 +219,4 @@ exec --no-startup-id setxkbmap us -variant intl
 new_window 1pixel
 # Let pop-up windows float
 for_window [window_role="pop-up"] floating enable
-for_window [class="Hamster-windows-service"] floating enable move position center
+for_window [class="Hamster-windows-service"] floating enable border normal 2 move position center
