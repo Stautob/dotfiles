@@ -15,6 +15,9 @@ source {$ConfigDir}prompt.fish
 # load functionssourcefish
 source {$ConfigDir}functions.fish
 
+# load displayfunctions
+source {$ConfigDir}functions_display.fish
+
 # load greetersourcefish
 # source {$ConfigDir}greeter.fish
 
