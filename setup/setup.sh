@@ -50,9 +50,14 @@ installApps () {
 
 configureApps () {
   # Syntax: configureApps [def_hostname] [def_username]
+  c_setGitDefaultCredStore
   c_createFishDefaultVars $2 $3
   c_linkDotfiles
   c_install_ycm
+}
+
+c_setGitDefaultCredStore () {
+  git config --global credential.helper /usr/lib/git-core/git-credential-gnome-keyring
 }
 
 c_createFishDefaultVars () {

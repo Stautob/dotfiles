@@ -31,17 +31,19 @@ checkexists () {
 export -f checkexists
 
 createLink () {
+  # TODO enable named links
   if checkexists $1; then
     mkdir -p $2
     linking ${1} $2
-  fi
+ fi
 }
 
 export -f createLink
 
 listApps () {
   # Syntax: listApps FUNCTIONNAME ARGS
-  xargs -L1 -I {} bash -c "$1 {} $2" < $APPFILE
+  xargs -L1 -I {} echo "$1 {}" < $APPFILE
+  #xargs -L1 -I {} bash -c "$1 {} $2" < $APPFILE
 }
 
 remove () {
