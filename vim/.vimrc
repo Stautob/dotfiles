@@ -1,4 +1,10 @@
 " Include the pathogen plugins
+"
+if has('nvim')
+  set runtimepath +=~/.vim,~/.vim/after
+  set packpath+=~/.vim
+endif
+
 call pathogen#infect()
 
 let g:ycm_path_to_python_interpreter = '/usr/bin/python'
