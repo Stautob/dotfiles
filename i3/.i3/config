@@ -27,8 +27,7 @@ bindsym $mod+Shift+Return exec i3-sensible-terminal $EXPORTEDPWD
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show run -lines 5 -eh 2 -width 100 -padding 500 -opacity "60" -bw 0 -bc "$base01" -bg "$base02" -fg "$base07" -hlbg "$base05" -columns 2 -font "System San Francisco Display 12" -hlfg "#9575cd"
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec "rofi -modi combi -show combi -combi-modi drun,run -location 8 -show-icons -font 'Quicksand 12'
 
 # change focus
 bindsym $mod+h focus left
@@ -186,7 +185,7 @@ bar {
 		urgent_workspace   #aa0000 #990000 #ffffff
 	}
 
-  status_command py3status -c ~/.i3/.i3status.conf
+  status_command py3status -c ~/.i3/i3status.conf
 }
 
 # STARTUP OF APPS
@@ -198,7 +197,6 @@ exec compton -f
 exec --no-startup-id setxkbmap us -variant intl
 
 # Set wallpaper
-exec variety
 # exec --no-startup-id feh --bg-scale /home/tstauber/Pictures/Wallpapers/abstractwp.png
 
 # Start Networkmanager-Applet

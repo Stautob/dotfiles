@@ -29,8 +29,7 @@
 [profiles]
   [[default]]
     allow_bold = False
-    background_darkness = 0.74
-    background_image = None
+    background_darkness = 0.34
     background_type = transparent
     cursor_color = "#fffd00"
     custom_command = /bin/fish
@@ -42,12 +41,10 @@
     use_custom_command = True
     use_system_font = False
   [[Neues Profil]]
-    background_image = None
     cursor_color = "#ece313"
   [[Tobias]]
     allow_bold = False
-    background_darkness = 0.6
-    background_image = None
+    background_darkness = 0.9
     background_type = transparent
     copy_on_selection = True
     cursor_color = "#e6f416"
@@ -59,7 +56,6 @@
     scrollback_infinite = True
     scrollbar_position = hidden
     show_titlebar = False
-    update_records = False
     use_custom_command = True
     use_system_font = False
     visible_bell = True

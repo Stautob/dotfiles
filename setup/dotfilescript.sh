@@ -14,26 +14,31 @@ export APPFILE
 linking () {
   # Syntax: linking LINKTARGETPATH, LINKPATH
   shopt -s dotglob
-  ln -s -b -t $2 ${APPSPATH}${1}/*
+  if [[ $2 == */ ]]; then
+    ln -s -b -t $2 ${APPSPATH}${1}/*
+  else
+    ln -s -b -t $2 ${APPSPATH}${1}
+  fi
 }
 
 export -f linking
 
 checkexists () {
-  # Syntax: checkexists PROGRAMMNAME
-  if ( (command -v $1 > /dev/null 2>&1) || [[ $APPEXCLUDE =~ $1 ]] ); then
-    echo -e "Proceeding creating links for $1"; return 0
+  # Syntax: checkexists PROGRAMNAME
+
+  programname=${1%/*}
+  if ( (command -v $programname > /dev/null 2>&1) || [[ $APPEXCLUDE =~ $programname ]] ); then
+    echo -e "Proceeding creating links for $programname"; return 0
   else
-    echo -e "No $1 installation found"; return 1
+    echo -e "No $programname installation found"; return 1
   fi
 }
 
 export -f checkexists
 
 createLink () {
-  # TODO enable named links
   if checkexists $1; then
-    mkdir -p $2
+    mkdir -p ${2%/*}
     linking ${1} $2
  fi
 }
@@ -42,8 +47,7 @@ export -f createLink
 
 listApps () {
   # Syntax: listApps FUNCTIONNAME ARGS
-  xargs -L1 -I {} echo "$1 {}" < $APPFILE
-  #xargs -L1 -I {} bash -c "$1 {} $2" < $APPFILE
+  xargs -L1 -I {} bash -c "$1 {}" < $APPFILE
 }
 
 remove () {
