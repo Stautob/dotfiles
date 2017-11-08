@@ -3,6 +3,9 @@
 #-----------------------#
 set -g ConfigDir ~/.config/fish/
 
+# set vim mode
+fish_vi_key_bindings
+
 # set vars and path
 source {$ConfigDir}vars.fish
 
