@@ -2,7 +2,7 @@
 # Script to install and configure necessary applications
 
 DotfilesPath=`sed -n 's/\/$//p' <<< $(grep -o '.*/' <<< $(dirname $(realpath $0)))`
-AURGitLink="https://github.com/oshazard/apacman.git"
+AURGitLink="https://github.com/gavinhungry/packer.git"
 ScriptPath="${DotfilesPath%/*}/scripts"
 DefaultvarsPath="${DotfilesPath}/fish/default_vars.fish"
 DotfilescriptPath="${DotfilesPath}/setup/dotfilescript.sh"
@@ -11,15 +11,15 @@ DotfilesURL="https://bitbucket.org/stautob/dotfiles.git"
 KeyPath="~/.ssh/id_rsa.1"
 
 installApacman () {
-  pacman --noconfirm -S jshon make gcc
+  pacman --noconfirm -S fakeroot jshon expac wget make gcc
   git clone $AURGitLink
-  ./apacman/apacman --noedit --noconfirm -S apacman
-  rm -rf ./apacman
+  ./packer/packer --noedit --noconfirm -S packer-git
+  rm -rf ./packer
 }
 
 setup () {
   # install ui stuff and edit /etc/pam.d/lightdm
-  installApacman
+  installPacker
   installApps
   configureApps $2 $3
   setupUI
