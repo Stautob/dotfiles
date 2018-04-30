@@ -2,7 +2,7 @@
 # Script to install and configure necessary applications
 
 DotfilesPath=`sed -n 's/\/$//p' <<< $(grep -o '.*/' <<< $(dirname $(realpath $0)))`
-AURGitLink="https://github.com/gavinhungry/packer.git"
+AURGitLink="https://aur.archlinux.org/aurman.git"
 ScriptPath="${DotfilesPath%/*}/scripts"
 DefaultvarsPath="${DotfilesPath}/fish/default_vars.fish"
 DotfilescriptPath="${DotfilesPath}/setup/dotfilescript.sh"
@@ -10,16 +10,18 @@ DefaultappsConfigPath="${DotfilesPath}/setup/.defaultapps.conf"
 DotfilesURL="https://bitbucket.org/stautob/dotfiles.git"
 KeyPath="~/.ssh/id_rsa.1"
 
-installApacman () {
+installAurman () {
   pacman --noconfirm -S fakeroot jshon expac wget make gcc
   git clone $AURGitLink
-  ./packer/packer --noedit --noconfirm -S packer-git
-  rm -rf ./packer
+  cd ./aurman/
+  makepkg -si
+  cd ..
+  rm -rf ./aurman
 }
 
 setup () {
   # install ui stuff and edit /etc/pam.d/lightdm
-  installPacker
+  installAurman
   installApps
   configureApps $2 $3
   setupUI
