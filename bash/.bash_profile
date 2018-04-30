@@ -31,7 +31,7 @@ elif [[ "$UNAME_PLATFORM" == "Linux" ]]; then
 
   export PATH=${USRH_PATH}:${URSL_PATH}:${OPT_PATH}:${SYST_PATH}:${GAME_PATH}:${CUST_PATH}
 
-  if [[ "$COLORTERM" == "terminator" || "$COLORTERM" == "gnome-terminal" || "$COLORTERM" == "mate-terminal" ]]
+  if [[ "$COLORTERM" == "termite" || "$COLORTERM" == "terminator" || "$COLORTERM" == "mate-terminal" ]]
   then
     TERM=xterm-256color
   fi
@@ -51,7 +51,7 @@ fi
 
 echo $PATH > /tmp/path1
 
-export EDITOR=vi
+export EDITOR=nvim
 export PAGER=less
 
 shopt -s cdspell
@@ -77,5 +77,6 @@ else
   PS1="\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[0;0m\] "
 fi
 
-
 HISTCONTROL=ignorespace:erasedups
+
+export SHELL=/bin/fish

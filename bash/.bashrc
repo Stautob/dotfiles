@@ -14,13 +14,11 @@ alias vi="nvim"
 
 # set variables
 TERM='xterm-256color'
-TERMINAL='terminator'
+TERMINAL='termite'
 EDITOR='nvim'
 editor='nvim'
 LANG='en_US.UTF-8'
 export LANG
 export EDITOR
 export editor
-
-echo $PATH > /tmp/path0
 
