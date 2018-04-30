@@ -86,6 +86,57 @@ function baf -d "CD to BA directory"
   cd ~/git/hsr/dab-data/source
 end
 
+function abspath -d 'Calculates the absolute path for the given path'
+    set -l cwd ''
+    set -l curr (pwd)
+    cd $argv[1]; and set cwd (pwd); and cd $curr
+    echo $cwd
+end
+
+function append-to-path --description 'Adds the given directory to the front of the PATH'
+    set -l dir ''
+    if test (count $argv) -ne 0
+        set dir $argv[1]
+    end
+
+    if test -d $dir
+        set dir (abspath $dir)
+
+        # If this path is already in the PATH array, remove all occurrences
+        # and add it to the head
+        for i in (seq (count $PATH) 1)
+            if test $PATH[$i] = $dir
+                set -e PATH[$i]
+            end
+        end
+        set PATH $PATH $dir
+    else
+        echo "Dir $dir does not exist?"
+    end
+end
+
+function prepend-to-path --description 'Adds the given directory to the front of the PATH'
+    set -l dir ''
+    if test (count $argv) -ne 0
+        set dir $argv[1]
+    end
+
+    if test -d $dir
+        set dir (abspath $dir)
+
+        # If this path is already in the PATH array, remove all occurrences
+        # and add it to the head
+        for i in (seq (count $PATH) 1)
+            if test $PATH[$i] = $dir
+                set -e PATH[$i]
+            end
+        end
+        set PATH $dir $PATH
+    else
+        echo "Dir $dir does not exist?"
+    end
+end
+
 set -xU LESS_TERMCAP_mb (printf "\e[01;31m")      # begin blinking
 set -xU LESS_TERMCAP_md (printf "\e[01;31m")      # begin bold
 set -xU LESS_TERMCAP_me (printf "\e[0m")          # end mode
