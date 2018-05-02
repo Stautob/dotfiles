@@ -1,0 +1,6 @@
+[options]
+font = Ionicons 8
+font = Liberation Mono for Powerline 10
+
+[colors]
+background = rgba(0, 0, 0, 0.8)
