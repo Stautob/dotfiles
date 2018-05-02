@@ -1,0 +1,17 @@
+
+rofi.theme:             /usr/share/rofi/themes/Arc.rasi
+
+rofi.modi:              combi,ssh
+rofi.font:              Quicksand 12
+rofi.location:          8
+rofi.yoffset:           0
+rofi.xoffset:           2
+rofi.show-icons:        true
+rofi.ssh-command:       {terminal} --exec "{ssh-client} {host}"
+rofi.run-command:       fish -c '{cmd}'
+rofi.run-list-command:  'fish -c functions'
+rofi.run-shell-command: {terminal} --exec "{cmd}"
+rofi.drun-icon-theme:   Deepin
+rofi.cycle:             true
+rofi.sidebar-mode:      true
+rofi.combi-modi:        drun,run
