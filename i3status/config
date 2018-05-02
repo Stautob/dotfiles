@@ -14,9 +14,11 @@ general {
 order += "hamster"
 order += "ipv6"
 order += "run_watch DHCP"
+#order += "arch_updates"
 order += "disk /"
 order += "online_status"
 order += "wifi"
+order += "backlight"
 order += "volume_status"
 order += "battery_level"
 order += "sysdata"
@@ -35,6 +37,10 @@ netdata {
 
 run_watch DHCP {
   pidfile = "/var/run/dhclient-wlp3s0.pid"
+}
+
+backlight {
+  device = "/sys/class/backlight/intel_backlight"
 }
 
 disk "/" {

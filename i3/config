@@ -68,7 +68,7 @@ bindsym Mod1+Ctrl+Shift+s exec --no-startup-id /usr/bin/hamster stop;
 bindsym Mod1+Ctrl+Shift+h exec ho;
 
 # open nautilus
-bindsym $mod+n exec nautilus --no-desktop
+bindsym $mod+n exec nautilus
 
 # split in horizontal orientation
 bindsym $mod+u split h
@@ -99,26 +99,26 @@ bindsym $mod+a focus parent
 # switch to workspace
 bindsym $mod+1 workspace 1 cli
 bindsym $mod+2 workspace 2 www
-bindsym $mod+3 workspace 3
+bindsym $mod+3 workspace 3 ide
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+0 workspace 10 git
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1 cli
 bindsym $mod+Shift+2 move container to workspace 2 www
-bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+3 move container to workspace 3 ide
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+0 move container to workspace 10 git
 
 # move workspace on outputs
 bindsym $mod+Shift+Left move workspace to output left
@@ -127,8 +127,9 @@ bindsym $mod+Shift+Right move workspace to output right
 # default workspace - output mapping
 # workspace 2 www output DP1
 
-# open browsers on 2 www
-assign [class="Opera"] 2 www
+# open certain applications on their own workspace
+assign [class="Opera"] opera
+assign [class="Eclipse"] 3 ide
 assign [class="Vivaldi-stable"] 2 www
 
 # reload the configuration file
@@ -186,7 +187,7 @@ bar {
 		urgent_workspace   #aa0000 #990000 #ffffff
 	}
 
-  status_command py3status -c ~/.i3/i3status.conf
+  status_command py3status #-c $XDG_CONFIG_HOME/i3status/config
 }
 
 # STARTUP OF APPS
@@ -204,7 +205,7 @@ exec --no-startup-id setxkbmap us -variant intl
 exec --no-startup-id nm-applet
 
 # Start cli
-exec --no-startup-id terminator
+exec --no-startup-id $i3-sensible-terminal
 
 # Start redshift
 # exec --no-startup-id redshift -l 47.36667:8.55
