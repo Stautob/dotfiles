@@ -13,6 +13,7 @@ export APPFILE
 
 linking () {
   # Syntax: linking LINKTARGETPATH, LINKPATH
+
   shopt -s dotglob
   if [[ $2 == */ ]]; then
     ln -s -b -t $2 ${APPSPATH}${1}/*
