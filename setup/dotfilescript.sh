@@ -10,60 +10,59 @@ export APPSPATH
 APPFILE="${SCRIPTPATH}/.apps.conf"
 export APPFILE
 
+printWithTilde () {
+  echo -e "${1//$HOME/\~}"
+}; export -f printWithTilde
 
 linking () {
-  # Syntax: linking LINKTARGETPATH, LINKPATH
+  relativePathToFile=$1;pathToLink=$2
 
-  shopt -s dotglob
-  if [[ $2 == */ ]]; then
-    ln -s -b -t $2 ${APPSPATH}${1}/*
-  else
-    ln -s -b -t $2 ${APPSPATH}${1}
-  fi
-}
-
-export -f linking
+  set +f; shopt -s dotglob
+  for dotFile in ${APPSPATH}${relativePathToFile} ; do
+    printWithTilde " -> link ${pathToLink}${dotFile##*/} to ${APPSPATH}${dotFile##*/}"
+    ln -s -b ${APPSPATH}${relativePathToFile} $pathToLink
+  done
+}; export -f linking
 
 checkexists () {
-  # Syntax: checkexists PROGRAMNAME
+  sourcePath=$1
 
-  programname=${1%/*}
+  programname=${sourcePath%/*}
   if ( (command -v $programname > /dev/null 2>&1) || [[ $APPEXCLUDE =~ $programname ]] ); then
-    echo -e "Proceeding creating links for $programname"; return 0
+    echo -e "Proceeding handling links for $programname"; return 0
   else
     echo -e "No $programname installation found"; return 1
   fi
-}
-
-export -f checkexists
+}; export -f checkexists
 
 createLink () {
-  if checkexists $1; then
-    mkdir -p ${2%/*}
-    linking ${1} $2
- fi
-}
+  relativePathToFile=$1;pathToLink=$2
 
-export -f createLink
+  if checkexists $relativePathToFile; then
+    mkdir -p ${pathToLink%/*}
+    linking $relativePathToFile $pathToLink
+  fi
+}; export -f createLink
 
 listApps () {
-  # Syntax: listApps FUNCTIONNAME ARGS
-  xargs -L1 -I {} bash -c "$1 {}" < $APPFILE
+  functionName=$1;shift;args=$@
+
+  xargs -L1 -I {} bash -c "set -f ; $functionName {} $args" < $APPFILE
 }
 
 remove () {
-  # Syntax: removeBackups NAME TARGETPATH SUFFIX
-  shopt -s dotglob
-  if checkexists $1; then
-    for d in ${APPSPATH}${1}/* ; do
-      unlink ${2}${d##*/}$3 2> /dev/null
+  relativePathToFile=$1;pathToLink=$2;suffix=$3
+
+  set +f; shopt -s dotglob
+  if checkexists $relativePathToFile; then
+    for dotFile in ${APPSPATH}${relativePathToFile} ; do
+      printWithTilde " -> unlink ${pathToLink}${dotFile##*/}$suffix"
+      unlink ${pathToLink}${dotFile##*/}$suffix 2> /dev/null
     done
   fi
-}
+}; export -f remove
 
-export -f remove
-
-printhelp () {
+printHelp () {
   echo "Usage: $0           create links to the dotfiles"
   echo "       $0 -h        show this message"
   echo "       $0 -rb       remove backups"
@@ -74,9 +73,9 @@ printhelp () {
 # Main
 
 case $1 in
-  "") listApps "createLink" ; exit 0 ;;
-  -h) printhelp ; exit 0 ;;
-  -rb) listApps "remove" "\~" ; exit 0 ;;
-  -u) listApps "remove" ""; exit 0 ;;
-  *) ;;
+  -c|--create-links) listApps "createLink" ; exit 0 ;;
+  -h|--help) printHelp ; exit 0 ;;
+  -rb|--remove-backups) listApps "remove" "\~" ; exit 0 ;;
+  -r|--remove-links) listApps "remove" ""; exit 0 ;;
+  *) printHelp ; exit 0;;
 esac
