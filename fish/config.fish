@@ -10,7 +10,7 @@ fish_vi_key_bindings
 source {$ConfigDir}vars.fish
 
 # set default vars
-source {$ConfigDir}default_vars.fish
+#source {$ConfigDir}default_vars.fish
 
 # load promptsourcefish
 source {$ConfigDir}prompt.fish
