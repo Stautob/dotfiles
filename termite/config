@@ -2,6 +2,8 @@
 font = Ionicons 8
 font = Liberation Mono for Powerline 10
 
+scrollback_lines = 50000
+
 [colors]
 # special
 foreground      = #f8f8f2
