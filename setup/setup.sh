@@ -4,7 +4,7 @@
 DotfilesPath=`sed -n 's/\/$//p' <<< $(grep -o '.*/' <<< $(dirname $(realpath $0)))`
 AURGitLink="https://aur.archlinux.org/aurman.git"
 ScriptPath="${DotfilesPath%/*}/scripts"
-DefaultvarsPath="${DotfilesPath}/fish/default_vars.fish"
+DefaultvarsPath="~/.config/fish/default_vars.fish"
 DotfilescriptPath="${DotfilesPath}/setup/dotfilescript.sh"
 DefaultappsConfigPath="${DotfilesPath}/setup/.defaultapps.conf"
 DotfilesURL="https://bitbucket.org/stautob/dotfiles.git"
@@ -68,7 +68,7 @@ c_createFishDefaultVars () {
   echo "set -g default_host $1" >> $DefaultvarsPath
   echo "set -g default_user $2" >> $DefaultvarsPath
   echo "set -gx SCRIPTPATH $ScriptPath" >> $DefaultvarsPath
-  echo "Created ${DefaultvarsPath##*/}"
+  echo "Created $DefaultvarsPath"
 }
 
 c_linkDotfiles () {
@@ -80,21 +80,23 @@ c_install_ycm () {
   ${DotfilesPath}/vim/.vim/bundle/YouCompleteMe/install.py --clang-completer
 }
 
-printhelp () {
-  echo "Usage: $0 -h                                   show this message"
-  echo "       $0 -s [def_hostname] [def_username]     setup (install and configure)"
-  echo "       $0 -i                                   install software"
-  echo "       $0 -c [def_hostname] [def_username]     configure system"
+printHelp () {
+  echo "Usage: $0 -h | --help                                               show this message"
+  echo "       $0 -s | --setup [def_hostname] [def_username]                setup (install and configure)"
+  echo "       $0 -i | --install-apps                                       install software"
+  echo "       $0 -c | --configure-apps [def_hostname] [def_username]       configure system"
+  echo "       $0 -d | --create-default-vars [def_hostname] [def_username]  created default variables"
 }
 
 # Main
 case $1 in
-  "") printhelp ; exit 0 ;;
-  -h) printhelp ; exit 0 ;;
-  -s) setup ; exit 0 ;;
-  -i) installApps ; exit 0 ;;
-  -c) configureApps $@ ; exit 0 ;;
-  *) ;;
+  "") printHelp ; exit 0 ;;
+  -h|--help) printHelp ; exit 0 ;;
+  -s|--setup) setup ; exit 0 ;;
+  -i|--install-apps) installApps ; exit 0 ;;
+  -c|--configure-apps) configureApps $@ ; exit 0 ;;
+  -d|--create-default-vars) c_createFishDefaultVars $@ ; exit 0 ;;
+  *) printHelp ; exit 0 ;;
 esac
 
 # TODO:
