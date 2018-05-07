@@ -69,7 +69,7 @@ alias gbranch='git branch'
 alias gcommit='git commit'
 alias gcheckout='git checkout'
 alias gclone='git clone'
-alias gstat='git status'
+alias gst='git status'
 
 if [[ $GIT_PROMPT_LOADED -eq '1' ]]; then
   PS1='\[\e[0;32m\]\u\[\e[0;34m\]@\H \[\e[1;31m\][\[\e[0;33m\]\W\[\e[0;34m\]$(__git_ps1 "{%s}")\[\e[1;31m\]] \[\e[1;34m\]\$\[\e[m\] '
@@ -79,4 +79,4 @@ fi
 
 HISTCONTROL=ignorespace:erasedups
 
-export SHELL=/bin/fish
+export SHELL=/usr/bin/fish
