@@ -19,8 +19,14 @@ installAurman () {
   rm -rf ./aurman
 }
 
+installChannels () {
+  source ${DotfilesPath}/setup/pacman_keys.sh
+  source ${DotfilesPath}/setup/pacman_channels.sh
+}
+
 setup () {
   # install ui stuff and edit /etc/pam.d/lightdm
+  installChannels
   installAurman
   installApps
   configureApps $2 $3
