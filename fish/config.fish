@@ -6,6 +6,9 @@ set -g ConfigDir ~/.config/fish/
 # set vim mode
 fish_vi_key_bindings
 
+# load colors
+source {$ConfigDir}colors.fish
+
 # set vars and path
 source {$ConfigDir}vars.fish
 
