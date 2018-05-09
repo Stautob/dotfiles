@@ -50,25 +50,25 @@ function __g2_enclose_in_brackets
   echo -nes {$left_bracket}$argv{$right_bracket}
 end
 
-function __g2prompt_pretty_parent -d 'Print a parent directory, shortened to fit the prompt'
+function __g2_prompt_pretty_parent -d 'Print a parent directory, shortened to fit the prompt'
   echo -n (dirname $argv[1]) | sed -e 's|/private||' -e "s|^$HOME|~|" -e 's-/\(\.\{0,1\}[^/]\)\([^/]*\)-/\1-g' -e 's|/$||'
 end
 
 function __g2_pretty_path -a path
- echo (__g2prompt_pretty_parent $path)"/"(basename $path)
+ echo (__g2_prompt_pretty_parent $path)"/"(basename $path)
 end
 
-function __g2prompt_project_dir -d 'Print the current git project base directory'
+function __g2_prompt_project_dir -d 'Print the current git project base directory'
   command git rev-parse --show-toplevel ^/dev/null
 end
 
-function __g2prompt_project_pwd -d 'Print the working directory relative to project root'
+function __g2_prompt_project_pwd -d 'Print the working directory relative to project root'
   set -l base_dir
-  echo "$PWD" | sed -e "s*"(__g2prompt_project_dir)"**g" -e 's*^/**'
+  echo "$PWD" | sed -e "s*"(__g2_prompt_project_dir)"**g" -e 's*^/**'
 end
 
 
-function __g2prompt_getBranchOp
+function __g2_prompt_getBranchOp
     set -l git_dir (command git rev-parse --git-dir ^/dev/null)
     test ! -d $git_dir; and return 1
 
@@ -144,11 +144,11 @@ end
 # Segment functions
 # ===========================
 
-function __g2prompt_path_segment -d 'Display a shortened form of a directory'
+function __g2_prompt_path_segment -d 'Display a shortened form of a directory'
   __g2_color_print (__g2_enclose_in_brackets (prompt_pwd))" " $custom_color_medium_blue
 end
 
-function __g2prompt_finish_segments -d 'Close open segments'
+function __g2_prompt_finish_segments -d 'Close open segments'
   __g2_color_print $prompt_finisher_glyph green --bold
 end
 
@@ -158,7 +158,7 @@ end
 # ===========================
 
 
-function __g2prompt_prompt_status -d 'the symbols for a non zero exit status, root and background jobs'
+function __g2_prompt_status -d 'the symbols for a non zero exit status, root and background jobs'
   # Print non-zero exit status
   if test $PROMPT_LAST_STATUS -ne 0
     __g2_color_print (__g2_enclose_in_brackets "⚡") $custom_color_red --bold #--background red
@@ -181,7 +181,7 @@ function __g2_pretty_hostname
   end
 end
 
-function __g2prompt_prompt_user -d 'Display actual user if different from $default_user'
+function __g2_prompt_user -d 'Display actual user if different from $default_user'
   if test \("$theme_display_user" = "yes"\) -a \("$USER" != "$default_user" -o -n "$SSH_CLIENT"\)
     echo -ns (__g2_enclose_in_brackets (whoami)(__g2_pretty_hostname))
   end
@@ -192,7 +192,7 @@ function __g2_getremote
     test -n "$remote"; and echo $remote
 end
 
-function __g2prompt_aheadbehind -a local
+function __g2_prompt_aheadbehind -a local
     # This is throwing the error
     if test -n "$local"
       set -l cnt (command git rev-list --left-right --count $local...(__g2_getremote) -- ^/dev/null |tr \t \n)
@@ -205,9 +205,9 @@ function __g2prompt_aheadbehind -a local
     end
 end
 
-function __g2prompt_prompt_git -d 'Display the actual git state'
+function __g2_prompt_git -d 'Display the actual git state'
 
-  set -l v (__g2prompt_getBranchOp)
+  set -l v (__g2_prompt_getBranchOp)
   set -l branch $v[1]
   set -l op $v[2]
 
@@ -234,7 +234,7 @@ function __g2prompt_prompt_git -d 'Display the actual git state'
   end
 
   # Not sure what this does, but its causing errors
-  set -l flags (__g2prompt_aheadbehind $branch)
+  set -l flags (__g2_prompt_aheadbehind $branch)
 
   set -l flag_fg $med_grey
 
@@ -256,7 +256,7 @@ function __g2prompt_prompt_git -d 'Display the actual git state'
       end
   end
 
-  __g2prompt_path_segment "$PWD"
+  __g2_prompt_path_segment "$PWD"
 
   set_color $flag_fg --bold
   echo -n -s '(' $icon$branch $flags ') '
@@ -264,8 +264,8 @@ function __g2prompt_prompt_git -d 'Display the actual git state'
   set_color normal
 end
 
-function __g2prompt_prompt_dir -d 'Display a shortened form of the current directory'
-  __g2prompt_path_segment "$PWD"
+function __g2_prompt_dir -d 'Display a shortened form of the current directory'
+  __g2_prompt_path_segment "$PWD"
 end
 
 
@@ -276,18 +276,18 @@ end
 function fish_prompt -d "Write out left part of prompt"
   set -g PROMPT_LAST_STATUS $status
   set -gx EXPORTEDPWD $PWD
-  __g2prompt_prompt_status
-  __g2prompt_prompt_user
+  __g2_prompt_status
+  __g2_prompt_user
 
   # dont use fish redirection here
   command git rev-parse --is-inside-work-tree > /dev/null ^ /dev/null
   if test $status -eq 0
-    __g2prompt_prompt_git
+    __g2_prompt_git
   else
-    __g2prompt_prompt_dir
+    __g2_prompt_dir
   end
 
-  __g2prompt_finish_segments
+  __g2_prompt_finish_segments
 end
 
 function fish_right_prompt -d "Write out the right prompt"
