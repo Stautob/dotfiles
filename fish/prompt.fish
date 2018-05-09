@@ -10,12 +10,10 @@ set branch_glyph            ' '
 set detached_glyph          "➦ "
 set pull_pending_glyph      '⬇ '
 set push_pending_glyph      '⇧ '
-set nonzero_exit_glyph      '⚡ '
+#set nonzero_exit_glyph      ''
 set prompt_finisher_glyph   '❱ '
-set superuser_glyph         '❲SU❳'
-set bg_job_glyph            '❲BG❳ '
-set left_bracket            '❲'
-set right_bracket           '❳'
+set left_bracket            '⦗'
+set right_bracket           '⦘'
 
 # Colors
 set lt_green   addc10
@@ -42,18 +40,22 @@ set path_color 0ABFFC
 # Helper methods
 # ===========================
 
-function __g2_getremote
-    set -l remote (command git rev-parse --symbolic-full-name --abbrev-ref '@{u}' ^/dev/null)
-    if test "$remote" = '@{u}'
-        echo ''
-    else
-        echo $remote
-    end
+function __g2_color_print -a text color
+  set_color $color $argv[2..-1]
+  echo -ne $text
+  set_color normal
 end
 
+function __g2_enclose_in_brackets
+  echo -nes {$left_bracket}$argv{$right_bracket}
+end
 
 function __g2prompt_pretty_parent -d 'Print a parent directory, shortened to fit the prompt'
   echo -n (dirname $argv[1]) | sed -e 's|/private||' -e "s|^$HOME|~|" -e 's-/\(\.\{0,1\}[^/]\)\([^/]*\)-/\1-g' -e 's|/$||'
+end
+
+function __g2_pretty_path -a path
+ echo (__g2prompt_pretty_parent $path)"/"(basename $path)
 end
 
 function __g2prompt_project_dir -d 'Print the current git project base directory'
@@ -61,24 +63,10 @@ function __g2prompt_project_dir -d 'Print the current git project base directory
 end
 
 function __g2prompt_project_pwd -d 'Print the working directory relative to project root'
-  set -l base_dir (__g2prompt_project_dir)
-  echo "$PWD" | sed -e "s*$base_dir**g" -e 's*^/**'
+  set -l base_dir
+  echo "$PWD" | sed -e "s*"(__g2prompt_project_dir)"**g" -e 's*^/**'
 end
 
-function __g2prompt_aheadbehind --argument-names local
-    # This is throwing the error
-    if test "$local"
-      set -l remote (__g2_getremote)
-
-      set -l cnt (command git rev-list --left-right --count $local...$remote -- ^/dev/null |tr \t \n)
-      if [ $cnt[1] -gt 0 -a $cnt[2] -gt 0 ]
-          echo -n ' ±'
-      else
-          test $cnt[1] -gt 0; and echo -n ' +'
-          test $cnt[2] -gt 0; and echo -n ' -'
-      end
-    end
-end
 
 function __g2prompt_getBranchOp
     set -l git_dir (command git rev-parse --git-dir ^/dev/null)
@@ -88,7 +76,7 @@ function __g2prompt_getBranchOp
     set -l op ''
     set -l branch ''
 
-    command git ls-tree HEAD >/dev/null ^/dev/null
+    command git ls-tree HEAD > /dev/null ^ /dev/null
 
     if test $status -eq 128
       set op 'init'
@@ -146,7 +134,7 @@ function __g2prompt_getBranchOp
       end
     end
 
-    echo $branch >> /tmp/debug.log
+    echo $branch >> /tmp/fish_prompt_debug.log
     echo $branch | sed  's/refs\/heads\///g'
     echo $op
 end
@@ -157,16 +145,11 @@ end
 # ===========================
 
 function __g2prompt_path_segment -d 'Display a shortened form of a directory'
-  set_color $path_color
-  echo -ns {$left_bracket}(prompt_pwd){$right_bracket}' '
-  set_color normal
+  __g2_color_print (__g2_enclose_in_brackets (prompt_pwd))" " $custom_color_medium_blue
 end
 
 function __g2prompt_finish_segments -d 'Close open segments'
-  set_color $lt_green --bold
-  echo -n $prompt_finisher_glyph
-  set_color normal
-  set -g current_bg NONE
+  __g2_color_print $prompt_finisher_glyph green --bold
 end
 
 
@@ -174,52 +157,52 @@ end
 # Theme components
 # ===========================
 
+
 function __g2prompt_prompt_status -d 'the symbols for a non zero exit status, root and background jobs'
-  set -l nonzero
-  set -l superuser
-  set -l bg_jobs
+  # Print non-zero exit status
+  if test $PROMPT_LAST_STATUS -ne 0
+    __g2_color_print (__g2_enclose_in_brackets "⚡") $custom_color_red --bold #--background red
+  end
 
-  # Last exit was nonzero
-  test $RETVAL -ne 0; and set nonzero $RETVAL
+  # Print super-user glyph
+  if test (id -u $USER) -eq 0
+    __g2_color_print (__g2_enclose_in_brackets "SU") red --bold
+  end
 
-  # if superuser (uid == 0)
-  set -l uid (id -u $USER)
-  test $uid -eq 0; and set superuser $superuser_glyph
+  # Print background-jobs glyph
+  if test (jobs -l | wc -l) -gt 0
+    __g2_color_print (__g2_enclose_in_brackets "BG") $custom_color_yellow --bold
+  end
+end
 
-  # Jobs display
-  [ (jobs -l | wc -l) -gt 0 ]; and set bg_jobs $bg_job_glyph
-
-  set -l status_flags "$nonzero$superuser$bg_jobs"
-
-  if test "$nonzero" -o "$superuser" -o "$bg_jobs"
-    if [ "$nonzero" ]
-      set_color $med_red --bold
-      echo -n $nonzero_exit_glyph
-    end
-
-    if [ "$superuser" ]
-      set_color $med_green --bold
-      echo -n $superuser_glyph
-    end
-
-    if [ "$bg_jobs" ]
-      set_color $slate_blue --bold
-      echo -n $bg_job_glyph
-    end
+function __g2_pretty_hostname
+  if test (hostname) != "$default_host"
+    echo "@"(hostname | cut -d . -f 1)
   end
 end
 
 function __g2prompt_prompt_user -d 'Display actual user if different from $default_user'
-  set HOST (hostname)
-  if [ "$theme_display_user" = 'yes' ]
-    if [ "$USER" != "$default_user" -o -n "$SSH_CLIENT" ]
-      echo -n -s "$left_bracket" (whoami)
-      if [ "$HOST" != "$default_host" ]
-        echo -n -s '@' (hostname | cut -d . -f 1)
-      end
-      echo -n -s "$right_bracket "
-    end
+  if test \("$theme_display_user" = "yes"\) -a \("$USER" != "$default_user" -o -n "$SSH_CLIENT"\)
+    echo -ns (__g2_enclose_in_brackets (whoami)(__g2_pretty_hostname))
   end
+end
+
+function __g2_getremote
+    set -l remote (command git rev-parse --symbolic-full-name --abbrev-ref '@{u}' ^/dev/null)
+    test -n "$remote"; and echo $remote
+end
+
+function __g2prompt_aheadbehind -a local
+    # This is throwing the error
+    if test -n "$local"
+      set -l cnt (command git rev-list --left-right --count $local...(__g2_getremote) -- ^/dev/null |tr \t \n)
+      if test $cnt[1] -gt 0 -a $cnt[2] -gt 0
+          echo -n ' ±'
+      else
+          test $cnt[1] -gt 0; and echo -n ' +'
+          test $cnt[2] -gt 0; and echo -n ' -'
+      end
+    end
 end
 
 function __g2prompt_prompt_git -d 'Display the actual git state'
@@ -251,7 +234,7 @@ function __g2prompt_prompt_git -d 'Display the actual git state'
   end
 
   # Not sure what this does, but its causing errors
-  # set -l flags (__g2prompt_aheadbehind $branch)
+  set -l flags (__g2prompt_aheadbehind $branch)
 
   set -l flag_fg $med_grey
 
@@ -291,13 +274,13 @@ end
 # ===========================
 
 function fish_prompt -d "Write out left part of prompt"
-  set -g RETVAL $status
+  set -g PROMPT_LAST_STATUS $status
   set -gx EXPORTEDPWD $PWD
   __g2prompt_prompt_status
   __g2prompt_prompt_user
 
   # dont use fish redirection here
-  command git rev-parse --is-inside-work-tree >/dev/null 2>/dev/null
+  command git rev-parse --is-inside-work-tree > /dev/null ^ /dev/null
   if test $status -eq 0
     __g2prompt_prompt_git
   else
@@ -308,9 +291,9 @@ function fish_prompt -d "Write out left part of prompt"
 end
 
 function fish_right_prompt -d "Write out the right prompt"
-  set_color $lt_green --bold
-  set tosParent (__g2prompt_pretty_parent "$dirstack[1]")
-  test "$dirstack[1]"; and echo {$left_bracket}{$tosParent}/(basename "$dirstack[1]"){$right_bracket}
-  set_color normal
+  if test "$dirstack[1]"
+    test (count $dirstack) -gt 1; and set more " +"
+    __g2_color_print (__g2_enclose_in_brackets (__g2_pretty_path "$dirstack[1]$more")) green --bold
+  end
 end
 
