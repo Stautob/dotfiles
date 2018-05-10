@@ -1,6 +1,5 @@
 #!/bin/fish
 
-
 set -g current_bg           "NONE"
 
 # Powerline glyphs
@@ -207,6 +206,8 @@ end
 
 function __g2_prompt_git -d 'Display the actual git state'
 
+  command git rev-parse --is-inside-work-tree > /dev/null ^ /dev/null; or return 1
+
   set -l v (__g2_prompt_getBranchOp)
   set -l branch $v[1]
   set -l op $v[2]
@@ -233,8 +234,7 @@ function __g2_prompt_git -d 'Display the actual git state'
       end
   end
 
-  # Not sure what this does, but its causing errors
-  set -l flags (__g2_prompt_aheadbehind $branch)
+  set -l ahead_behind (__g2_prompt_aheadbehind $branch)
 
   set -l flag_fg $med_grey
 
@@ -256,18 +256,8 @@ function __g2_prompt_git -d 'Display the actual git state'
       end
   end
 
-  __g2_prompt_path_segment "$PWD"
-
-  set_color $flag_fg --bold
-  echo -n -s '(' $icon$branch $flags ') '
-
-  set_color normal
+  __g2_color_print (__g2_enclose_in_brackets $icon$branch" "$ahead_behind) $flag_fg --bold
 end
-
-function __g2_prompt_dir -d 'Display a shortened form of the current directory'
-  __g2_prompt_path_segment "$PWD"
-end
-
 
 # ===========================
 # Apply theme
@@ -276,17 +266,11 @@ end
 function fish_prompt -d "Write out left part of prompt"
   set -g PROMPT_LAST_STATUS $status
   set -gx EXPORTEDPWD $PWD
+
   __g2_prompt_status
   __g2_prompt_user
-
-  # dont use fish redirection here
-  command git rev-parse --is-inside-work-tree > /dev/null ^ /dev/null
-  if test $status -eq 0
-    __g2_prompt_git
-  else
-    __g2_prompt_dir
-  end
-
+  __g2_prompt_path_segment "$PWD"
+  __g2_prompt_git
   __g2_prompt_finish_segments
 end
 
