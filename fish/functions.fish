@@ -23,10 +23,6 @@ function g++
   clang++ $argv
 end
 
-function dab
-  cd /home/tstauber/git/hsr/dab-data
-end
-
 function ip
   /bin/ip -c $argv
 end
@@ -49,16 +45,6 @@ function basheval -d "Evaluates Bash-syntax variables"
   end
 end
 
-function ud -d "Opens Unidoc folder"
-  if [ (count $argv) -eq 1 ]
-    cd {$docfolder}/*/{$argv[1]}
-  else
-    cd $docfolder
-  end
-end
-
-complete -f -c ud -a "(ls $docfolder/*)"
-
 function mcdir
   if [ (count $argv) -gt 0 ]
       mkdir $argv[(count $argv)] -p
@@ -80,10 +66,6 @@ end
 
 function mntHSR -d "Mounts HSR dfs"
   bash {$SCRIPTPATH}/mount_HSR.sh $argv
-end
-
-function baf -d "CD to BA directory"
-  cd ~/git/hsr/dab-data/source
 end
 
 function abspath -d 'Calculates the absolute path for the given path'
