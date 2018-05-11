@@ -1,42 +1,17 @@
-#!/bin/fish
+#!/usr/bin/fish
 
-set -g current_bg           "NONE"
+# Git glyphs
+set branch_glyph            ''
+set detached_glyph          "➦"
+set pull_pending_glyph      '⬇'
+set push_pending_glyph      '⇧'
 
-# Powerline glyphs
-set branch_glyph            ' '
-
-# Additional glyphs
-set detached_glyph          "➦ "
-set pull_pending_glyph      '⬇ '
-set push_pending_glyph      '⇧ '
-#set nonzero_exit_glyph      ''
+# Other glyphs
 set prompt_finisher_glyph   '❱ '
-set left_bracket            '⦗'
-set right_bracket           '⦘'
-
-# Colors
-set lt_green   addc10
-set med_green  189303
-set dk_green   0c4801
-
-set lt_red     C99
-set med_red    ce000f
-set dk_red     600
-
-set slate_blue 255e87
-
-set lt_orange  f6b117
-set dk_orange  3a2a03
-
-set dk_grey    000
-set med_grey   999
-set lt_grey    ccc
-
-set path_color 0ABFFC
 
 
 # ===========================
-# Helper methods
+# String Helper methods
 # ===========================
 
 function __g2_color_print -a text color
@@ -46,96 +21,106 @@ function __g2_color_print -a text color
 end
 
 function __g2_enclose_in_brackets
-  echo -nes {$left_bracket}$argv{$right_bracket}
+  __g2_debug_log "enclose_in_brackets argv: $argv"
+  echo -ne "⦗"$argv"⦘"
 end
 
-function __g2_prompt_pretty_parent -d 'Print a parent directory, shortened to fit the prompt'
-  echo -n (dirname $argv[1]) | sed -e 's|/private||' -e "s|^$HOME|~|" -e 's-/\(\.\{0,1\}[^/]\)\([^/]*\)-/\1-g' -e 's|/$||'
+
+# ===========================
+# Path Helper methods
+# ===========================
+
+function __g2_prompt_pretty_parent -a path -d 'Print a parent directory, shortened to fit the prompt'
+  echo -n (dirname $path) | sed -e 's|/private||' -e "s|^$HOME|~|" -e 's-/\(\.\{0,1\}[^/]\)\([^/]*\)-/\1-g' -e 's|/$||'
 end
 
 function __g2_pretty_path -a path
  echo (__g2_prompt_pretty_parent $path)"/"(basename $path)
 end
 
+
+# ===========================
+# Git Helper methods
+# ===========================
+
 function __g2_prompt_project_dir -d 'Print the current git project base directory'
   command git rev-parse --show-toplevel ^/dev/null
 end
 
 function __g2_prompt_project_pwd -d 'Print the working directory relative to project root'
-  set -l base_dir
   echo "$PWD" | sed -e "s*"(__g2_prompt_project_dir)"**g" -e 's*^/**'
 end
 
-
 function __g2_prompt_getBranchOp
-    set -l git_dir (command git rev-parse --git-dir ^/dev/null)
-    test ! -d $git_dir; and return 1
+  set -l base_dir
+  set -l git_dir (command git rev-parse --git-dir ^/dev/null)
+  test ! -d $git_dir; and return 1
 
-    # get repo status & branch name
-    set -l op ''
-    set -l branch ''
+  # get repo status & branch name
+  set -l op ''
+  set -l branch ''
 
-    command git ls-tree HEAD > /dev/null ^ /dev/null
+  command git ls-tree HEAD > /dev/null ^ /dev/null
 
-    if test $status -eq 128
-      set op 'init'
+  if test $status -eq 128
+    set op 'init'
+  else
+    set -l step
+    set -l total
+
+    if test -d "$git_dir/rebase-merge"
+      set step (cat "$git_dir/rebase-merge/msgnum")
+      set total (cat "$git_dir/rebase-merge/end")
+      set branch (cat "$git_dir/rebase-merge/head-name")" $step/$total"
+
+      if test -f "$git_dir/rebase-merge/interactive"
+        set op 'rebase -i'
+      else
+        set op 'rebase -m'
+      end
     else
-      set -l step
-      set -l total
+      if test -d "$git_dir/rebase-apply"
+        set step (cat "$git_dir/rebase-apply/next")
+        set total (cat "$git_dir/rebase-apply/last")
 
-      if test -d "$git_dir/rebase-merge"
-        set step (cat "$git_dir/rebase-merge/msgnum")
-        set total (cat "$git_dir/rebase-merge/end")
-        set branch (cat "$git_dir/rebase-merge/head-name")" $step/$total"
-
-        if test -f "$git_dir/rebase-merge/interactive"
-          set op 'rebase -i'
+        if test -f "$git_dir/rebase-apply/rebasing"
+          set op 'rebase'
+        else if test -f "$git_dir/rebase-apply/applying"
+          set op 'am'
         else
-          set op 'rebase -m'
+          set op 'am/rebase'
         end
       else
-        if test -d "$git_dir/rebase-apply"
-          set step (cat "$git_dir/rebase-apply/next")
-          set total (cat "$git_dir/rebase-apply/last")
-
-          if test -f "$git_dir/rebase-apply/rebasing"
-            set op 'rebase'
-          else if test -f "$git_dir/rebase-apply/applying"
-            set op 'am'
-          else
-            set op 'am/rebase'
-          end
-        else
-          if test -f "$git_dir/MERGE_HEAD"
-            set op 'merge'
-          else if test -f "$git_dir/CHERRY_PICK_HEAD"
-            set op 'cherrypick'
-          else if test -f "$git_dir/REVERT_HEAD"
-            set op 'revert'
-          else if test -f "$git_dir/BISECT_LOG"
-            set op 'bisect'
+        if test -f "$git_dir/MERGE_HEAD"
+          set op 'merge'
+        else if test -f "$git_dir/CHERRY_PICK_HEAD"
+          set op 'cherrypick'
+        else if test -f "$git_dir/REVERT_HEAD"
+          set op 'revert'
+        else if test -f "$git_dir/BISECT_LOG"
+          set op 'bisect'
+        end
+      end
+      if not set branch (command git symbolic-ref HEAD ^/dev/null)
+        test ! "$op"; and set op 'detached'
+        if not set branch (command git describe --tags --exact-match HEAD ^/dev/null)
+          if not set branch (cut -c 1-7 "$git_dir/HEAD" ^/dev/null)
+            set branch 'unknown'
           end
         end
-        if not set branch (command git symbolic-ref HEAD ^/dev/null)
-          test ! "$op"; and set op 'detached'
-          if not set branch (command git describe --tags --exact-match HEAD ^/dev/null)
-            if not set branch (cut -c 1-7 "$git_dir/HEAD" ^/dev/null)
-              set branch 'unknown'
-            end
-          end
 
-          if test "$step" -a "$total"
-            set branch "[$branch $step/$total]"
-          else
-            set branch "[$branch]"
-          end
+        if test "$step" -a "$total"
+          set branch "[$branch $step/$total]"
+        else
+          set branch "[$branch]"
         end
       end
     end
+  end
 
-    echo $branch >> /tmp/fish_prompt_debug.log
-    echo $branch | sed  's/refs\/heads\///g'
-    echo $op
+  __g2_debug_log "branch: $branch"
+  echo $branch | sed  's/refs\/heads\///g'
+  echo $op
 end
 
 
@@ -181,25 +166,23 @@ function __g2_pretty_hostname
 end
 
 function __g2_prompt_user -d 'Display actual user if different from $default_user'
-  if test \("$theme_display_user" = "yes"\) -a \("$USER" != "$default_user" -o -n "$SSH_CLIENT"\)
+  if test "$theme_display_user" = "yes" -a \( -n "$SSH_CLIENT" -o -n "$SSH_TTY" \)
     echo -ns (__g2_enclose_in_brackets (whoami)(__g2_pretty_hostname))
   end
 end
 
 function __g2_getremote
-    set -l remote (command git rev-parse --symbolic-full-name --abbrev-ref '@{u}' ^/dev/null)
-    test -n "$remote"; and echo $remote
+    set -l remote (command git rev-parse --symbolic-full-name --abbrev-ref '@{u}' ^/dev/null); and echo $remote
 end
 
 function __g2_prompt_aheadbehind -a local
-    # This is throwing the error
     if test -n "$local"
       set -l cnt (command git rev-list --left-right --count $local...(__g2_getremote) -- ^/dev/null |tr \t \n)
       if test $cnt[1] -gt 0 -a $cnt[2] -gt 0
-          echo -n ' ±'
+          echo -n '±'
       else
-          test $cnt[1] -gt 0; and echo -n ' +'
-          test $cnt[2] -gt 0; and echo -n ' -'
+          test $cnt[1] -gt 0; and echo -n '+'
+          test $cnt[2] -gt 0; and echo -n '-'
       end
     end
 end
@@ -213,7 +196,7 @@ function __g2_prompt_git -d 'Display the actual git state'
   set -l op $v[2]
 
   set -l icon "$branch_glyph "
-  test $op = 'detached'; and set icon "$detached_glyph "
+  test "$op" = 'detached'; and set icon "$detached_glyph "
 
   #### PARSE STATUS
   set -l new 0
@@ -223,42 +206,44 @@ function __g2_prompt_git -d 'Display the actual git state'
   set -l git_status (command git status --porcelain ^/dev/null)
 
   for line in $git_status
-      set -l x (echo $line | cut -c 1)
-      set -l y (echo $line | cut -c 2)
+    set -l x (echo $line | cut -c 1)
+    set -l y (echo $line | cut -c 2)
 
-      if test $x = '?'
-          set new (math $new + 1)
-      else
-          test $x != ' '; and  set staged (math $staged + 1)
-          test $y != ' '; and  set dirty (math $dirty + 1)
-      end
+    if test $x = '?'
+        set new (math $new + 1)
+    else
+        test "$x" != ' '; and set staged (math $staged + 1)
+        test "$y" != ' '; and set dirty (math $dirty + 1)
+    end
   end
-
-  set -l ahead_behind (__g2_prompt_aheadbehind $branch)
-
-  set -l flag_fg $med_grey
 
   if test -n "$op"
     if test "$op" = 'init'
-      set flag_fg fff
-      set branch 'init'
+      set flag_fg white
+      set branch $op
     else
-      set flag_fg $med_red
+      set flag_fg $custom_color_red
       set branch "$op:$branch"
     end
+  else if test $dirty -gt 0 -o $new -gt 0
+    set flag_fg $custom_color_orange
+  else if test $staged -gt 0
+    set flag_fg green
   else
-      if test $staged -gt 0
-        set flag_fg $lt_green
-      end
-
-      if test $dirty -gt 0 -o $new -gt 0
-          set flag_fg $lt_orange
-      end
+    set flag_fg brblack
   end
 
-  __g2_color_print (__g2_enclose_in_brackets $icon$branch" "$ahead_behind) $flag_fg --bold
+
+  set -l ahead_behind (__g2_prompt_aheadbehind $branch)
+  __g2_debug_log "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
+  __g2_color_print (__g2_enclose_in_brackets "$icon $branch $ahead_behind") $flag_fg --bold
 end
 
+function __g2_debug_log -a text
+  if test "$PROMPT_DEBUG" = "true"
+    echo "$text" >> /tmp/fish_prompt_debug.log
+  end
+end
 # ===========================
 # Apply theme
 # ===========================
@@ -266,6 +251,8 @@ end
 function fish_prompt -d "Write out left part of prompt"
   set -g PROMPT_LAST_STATUS $status
   set -gx EXPORTEDPWD $PWD
+
+  __g2_debug_log "-----------------------------------"
 
   __g2_prompt_status
   __g2_prompt_user
