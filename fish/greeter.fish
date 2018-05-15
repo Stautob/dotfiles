@@ -4,48 +4,36 @@
 
 function fish_greeting -d "Prints fish-greeting"
 
-  #Needs lm-sensors
+  ILTIS_is_remote; or return 0
 
-  set lt_green   addc10
   set med_green  189303
-  set dk_green   0c4801
-
-  set lt_red     C99
   set med_red    ce000f
-  set dk_red     600
-
-  set slate_blue 255e87
-
-  set lt_orange  f6b117
   set med_orange fd8d1b
-  set dk_orange  3a2a03
-
   set med_yellow f0fd1b
 
-  set dk_grey    000
-  set med_grey   999
-  set lt_grey    ccc
-  sleep 0.2
-
+  sleep 0.2 # Needed for terminal to open
   set columns $COLUMNS
 
 
   #border
-  set_color $med_green
+  set_color green
   printf "┏━┱%s┐" (for i in (seq (math $columns-4)); printf '─'; end)
+  printf "┃ "; set_color red --bold; printf "WELCOME TO %s %"(math $columns-15-(string length (hostname)))"s" (hostname)
+  set_color green
+  printf "│┠─╂%s┤" (for i in (seq (math $columns-4)); printf '─'; end)
   printf "┃ "
 
   #lastlogin
   set_color normal
   set greeter_lastlogin (last -R $USER |head -n1|awk '{print $3,$4,$5,$6}')
   printf "Last Login..:%"(math $columns-17)"s" $greeter_lastlogin
-  set_color $med_green
+  set_color green
   printf " │\n┃ "
 
   #Uptime
   set_color normal
   printf "Uptime......:%"(math $columns-17)"s" (uptime | awk '{print substr($5, 0, length($5)-1)}')
-  set_color $med_green
+  set_color green
   printf " │\n┃ "
 
   #Disk Usage
@@ -64,21 +52,21 @@ function fish_greeting -d "Prints fish-greeting"
       set_color $med_green
   end
   printf "%"(math $columns-18)"s%%" $greeter_dusage
-  set_color $med_green
+  set_color green
   printf " │\n┃ "
 
   #SSH Logins
   set_color normal
   set greeter_sshc (ps -A x |grep "[s]shd: .* \[priv\]"|wc -l)
   printf "SSH Logins..:%"(math $columns-17)"s" $greeter_sshc
-  set_color $med_green
+  set_color green
   printf " │\n┃ "
 
   #Processes
   set_color normal
   set greeter_pcount (echo (ps ax|wc -l) "("(ps|wc -l)")")
   printf "Processes...:%"(math $columns-17)"s" $greeter_pcount
-  set_color $med_green
+  set_color green
   printf " │\n┃ "
 
   #Avg- load
@@ -97,27 +85,9 @@ function fish_greeting -d "Prints fish-greeting"
       set_color $med_green
   end
   printf "%"(math $columns-18)"s%%" $greeter_uptime
-  set_color $med_green
-  printf " │\n┃ "
-
-  #Temperature
-  set_color normal
-  printf "Temperature.:"
-
-  #colorpicker
-  set greeter_temp (sensors | awk '/Physical id 0/ {print substr($4, 2, length($4)-5)}')
-  if [ $greeter_temp -gt 80 ]
-      set_color $med_red
-  else if [ $greeter_temp -gt 60 ]
-      set_color $med_orange
-  else if [ $greeter_temp -gt 50 ]
-      set_color $med_yellow
-  else
-      set_color $med_green
-  end
-  printf "%"(math $columns-17)"s" (sensors | awk '/Physical id 0/ {print $4}')
+  set_color green
 
   #border
-  set_color $med_green
+  set_color green
   printf " │\n┗━┹%s┘" (for i in (seq (math $columns-4)); printf '─'; end)
 end

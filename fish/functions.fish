@@ -5,50 +5,36 @@
 #---------------------#
 
 #---------------------#
-# Alias
+# Abbreviations
 
-function sudop
-  sudo -i fish $argv
-end
-
-function ll
-  ls -1av --color=auto $argv
-end
-
-function gst
-  git status $argv
-end
-
-function g++
-  clang++ $argv
-end
-
-function ip
-  /bin/ip -c $argv
-end
-
-function vi
-  /bin/nvim $argv
+if test (abbr --list | wc -l) -eq 0
+  abbr --add ll ls -1av --color=auto
+  abbr --add gst git status
+  abbr --add ip ip -c
+  abbr --add vi nvim
 end
 
 #---------------------#
-# Independent Completions
+# Alias
 
-complete -f -w pacman -c apacman
+alias g++="clang++"
+alias vi="nvim"
+alias diff="diff --color=auto"
+alias grep="grep --color=auto -n"
+alias dmesg="dmesg --color=always"
+alias pacman="pacman --color=always"
+
 
 #---------------------#
 # Functions
 
-function basheval -d "Evaluates Bash-syntax variables"
-  for x in (seq (count $argv))
-    eval (echo $argv[$x] | sed -r 's/:/\' \'/g; s/(.*)=("|\')?([^;]*)(;)?\2?/set --universal \1 \'\3\'\4/')
-  end
+function ILTIS_is_remote
+  return (test -n "$SSH_CLIENT" -o -n "$SSH_TTY")
 end
 
-function mcdir
-  if [ (count $argv) -gt 0 ]
-      mkdir $argv[(count $argv)] -p
-      cd $argv[(count $argv)]
+function mcdir -a path -d "Creates a directory inclusive parents and changes into the new directory"
+  if [ -n path ]
+      mkdir $path -p; and cd $path
   else
     echo "Usage: mcdir <path/to/new/folder>"
   end
@@ -68,20 +54,13 @@ function mntHSR -d "Mounts HSR dfs"
   bash {$SCRIPTPATH}/mount_HSR.sh $argv
 end
 
-function abspath -d 'Calculates the absolute path for the given path'
-    set -l cwd ''
+function abspath -a path -d 'Calculates the absolute path for the given path'
     set -l curr (pwd)
-    cd $argv[1]; and set cwd (pwd); and cd $curr
-    echo $cwd
+    cd $path; and echo (pwd); and cd $curr
 end
 
-function append-to-path --description 'Adds the given directory to the front of the PATH'
-    set -l dir ''
-    if test (count $argv) -ne 0
-        set dir $argv[1]
-    end
-
-    if test -d $dir
+function append-to-path -a dir -d 'Adds the given directory to the front of the PATH'
+    if test -n $dir -a -d $dir
         set dir (abspath $dir)
 
         # If this path is already in the PATH array, remove all occurrences
@@ -97,13 +76,8 @@ function append-to-path --description 'Adds the given directory to the front of 
     end
 end
 
-function prepend-to-path --description 'Adds the given directory to the front of the PATH'
-    set -l dir ''
-    if test (count $argv) -ne 0
-        set dir $argv[1]
-    end
-
-    if test -d $dir
+function prepend-to-path -a dir -d 'Adds the given directory to the front of the PATH'
+    if test -n $dir -a -d $dir
         set dir (abspath $dir)
 
         # If this path is already in the PATH array, remove all occurrences
@@ -119,10 +93,3 @@ function prepend-to-path --description 'Adds the given directory to the front of
     end
 end
 
-set -xU LESS_TERMCAP_mb (printf "\e[01;31m")      # begin blinking
-set -xU LESS_TERMCAP_md (printf "\e[01;31m")      # begin bold
-set -xU LESS_TERMCAP_me (printf "\e[0m")          # end mode
-set -xU LESS_TERMCAP_se (printf "\e[0m")          # end standout-mode
-set -xU LESS_TERMCAP_so (printf "\e[01;44;33m")   # begin standout-mode - info box
-set -xU LESS_TERMCAP_ue (printf "\e[0m")          # end underline
-set -xU LESS_TERMCAP_us (printf "\e[01;32m")      # begin underline
