@@ -48,9 +48,6 @@ let g:multi_cursor_exit_from_insert_mode=0
 " Syntax highlighting on
 syntax on
 
-" indent on
-filetype plugin indent on
-
 " Disable vi compatibility mode
 set nocompatible
 
