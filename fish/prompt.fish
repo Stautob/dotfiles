@@ -273,7 +273,8 @@ function fish_mode_prompt
 end
 
 function fish_right_prompt -d "Write out the right prompt"
-  test "$dirstack[1]" -a (count $dirstack) -gt 1; and set more " +";
+  if test "$dirstack[1]"
+    test (count $dirstack) -gt 1; and set more " +";
     __g2_color_print (__g2_enclose_in_brackets (__g2_pretty_path "$dirstack[1]$more")) green --bold
   end
 end
