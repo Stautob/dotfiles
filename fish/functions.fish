@@ -54,14 +54,9 @@ function mntHSR -d "Mounts HSR dfs"
   bash {$SCRIPTPATH}/mount_HSR.sh $argv
 end
 
-function abspath -a path -d 'Calculates the absolute path for the given path'
-    set -l curr (pwd)
-    cd $path; and echo (pwd); and cd $curr
-end
-
 function append-to-path -a dir -d 'Adds the given directory to the front of the PATH'
     if test -n $dir -a -d $dir
-        set dir (abspath $dir)
+        set dir (realpath $dir)
 
         # If this path is already in the PATH array, remove all occurrences
         # and add it to the head
@@ -78,7 +73,7 @@ end
 
 function prepend-to-path -a dir -d 'Adds the given directory to the front of the PATH'
     if test -n $dir -a -d $dir
-        set dir (abspath $dir)
+        set dir (realpath $dir)
 
         # If this path is already in the PATH array, remove all occurrences
         # and add it to the head
