@@ -15,43 +15,47 @@ source {$ConfigDir}vars.fish
 # set default vars
 #source {$ConfigDir}default_vars.fish
 
-# load promptsourcefish
+# load prompt
 source {$ConfigDir}prompt.fish
 
-# load functionssourcefish
+# load functions
 source {$ConfigDir}functions.fish
 
 # load displayfunctions
 source {$ConfigDir}functions_display.fish
 
 # load greetersourcefish
-# source {$ConfigDir}greeter.fish
+source {$ConfigDir}greeter.fish
 
 # load keymanagement
 source {$ConfigDir}keymanagement.fish
 
 # Debug setup
 set debug_buffer ""
-set debug_key ""
 
 function fish_debug -a key line --on-event print_debug
-  if test "$key" != "$debug_key"
-    if test -n "$debug_buffer[1]"
-      flush_fish_debug
+  if test "$PRINT_DEBUG" = "true"
+    if test -z "$key"
+      echo "A key must be provided"
     end
-    set debug_key $key
-    set debug_buffer "-------------[$debug_key]--------------"
+    set debug_buffer $debug_buffer "$key"$line
   end
-  set debug_buffer $debug_buffer $line
 end
 
-function flush_fish_debug -a file --on-event flush_debug
-  if test -z $file
-    set file "/tmp/fish_debug.log"
+function flush_fish_debug -a key file --on-event flush_debug
+  if test "$PRINT_DEBUG" = "true"
+    if test -z "$file"
+      set file "/tmp/fish_debug.log"
+    end
+    if test -z "$key"
+      echo "A key must be provided"
+    end
+    echo "-------------[$key]--------------" >> $file
+    for i in (seq (count $debug_buffer) 1)
+      if set lines (sting match $key $debug_buffer[$1])
+        echo $lines[2] >> $file
+        set -e $debug_buffer[i]
+      end
+    end
   end
-  for line in $debug_buffer
-    echo $line >> $file
-  end
-  set debug_buffer ""
-  set debug_key ""
 end
