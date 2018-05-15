@@ -21,7 +21,7 @@ function __g2_color_print -a text color
 end
 
 function __g2_enclose_in_brackets
-  __g2_debug_log "enclose_in_brackets| argv: $argv"
+  emit print_debug "prompt" "enclose_in_brackets| argv: $argv"
   echo -ne "⦗"$argv"⦘"
 end
 
@@ -110,7 +110,7 @@ function __g2_prompt_getBranchOp
     end
   end
 
-  __g2_debug_log "getBranchOp| branch: $branch"
+  emit print_debug "prompt" "getBranchOp| branch: $branch"
   echo (string replace --all "refs/heads/" "" $branch)
   echo $op
 end
@@ -152,8 +152,8 @@ function __g2_prompt_status -d 'the symbols for a non zero exit status, root and
 end
 
 function __g2_prompt_user -d 'Display actual user if different from $default_user'
-  test "$theme_display_user" = "yes"; and set -l user (whoami)
-  test -n "$SSH_CLIENT" -o -n "$SSH_TTY"; and set -l host "@"(promt_hostname)
+  test "$theme_display_user" = "true"; and set -l user (whoami)
+  ILTIS_is_remote; and set -l host "@"(prompt_hostname)
   test -n "$user" -a -n "$host"; echo -n (__g2_enclose_in_brackets $user$host)
 end
 
@@ -164,7 +164,7 @@ end
 function __g2_prompt_aheadbehind -a local
   string match -q "detached:*" $local; and return 1
   set -l cnt (command git rev-list --left-right --count $local...(__g2_getremote) -- ^/dev/null |tr \t \n)
-  __g2_debug_log "prompt_aheadbehing| local: $local cnt[1]: $cnt[1] cnt[2]: $cnt[2]"
+  emit print_debug "prompt" "prompt_aheadbehing| local: $local cnt[1]: $cnt[1] cnt[2]: $cnt[2]"
   if test $cnt[1] -gt 0 -a $cnt[2] -gt 0
     echo -n '±'
   else
@@ -222,14 +222,8 @@ function __g2_prompt_git -d 'Display the actual git state'
 
   set -l ahead_behind (__g2_prompt_aheadbehind $branch)
 
-  __g2_debug_log "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
+  emit print_debug "prompt" "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
   __g2_color_print (__g2_enclose_in_brackets "$icon $branch $ahead_behind") $local_color_flag --bold
-end
-
-function __g2_debug_log -a text
-  if test "$PROMPT_DEBUG" = "true"
-    echo "$text" >> /tmp/fish_prompt_debug.log
-  end
 end
 
 
@@ -242,13 +236,13 @@ function fish_prompt -d "Write out left part of prompt"
   set -g PROMPT_LAST_STATUS $status
   set -gx EXPORTEDPWD $PWD
 
-  __g2_debug_log "-----------------------------------"
-
   __g2_prompt_status
   __g2_prompt_user
   __g2_prompt_path_segment "$PWD"
   __g2_prompt_git
   __g2_prompt_finish_segments
+
+  emit flush_fish_debug "/tmp/fish_prompt_debug.log"
 end
 
 function fish_mode_prompt
