@@ -14,7 +14,7 @@ set prompt_finisher_glyph '❱ '
 # String Helper methods
 # ===========================
 
-function __g3_color_print -a text color
+function __g2_color_print -a text color
     set_color $color $argv[2..-1]
     echo -ne $text
     set_color normal
