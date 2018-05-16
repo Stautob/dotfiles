@@ -60,6 +60,7 @@ configureApps () {
   # Syntax: configureApps [def_hostname] [def_username]
   c_setGitDefaultCredStore
   c_createFishDefaultVars $2 $3
+  fish -c fisher
   c_linkDotfiles
   c_install_ycm
 }
@@ -71,7 +72,6 @@ c_setGitDefaultCredStore () {
 c_createFishDefaultVars () {
   touch $DefaultvarsPath
   echo "#!/bin/fish" > $DefaultvarsPath
-  echo "set -g default_host $1" >> $DefaultvarsPath
   echo "set -g default_user $2" >> $DefaultvarsPath
   echo "set -gx SCRIPTPATH $ScriptPath" >> $DefaultvarsPath
   echo "Created $DefaultvarsPath"

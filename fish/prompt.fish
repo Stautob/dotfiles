@@ -27,27 +27,12 @@ end
 
 
 # ===========================
-# Path Helper methods
-# ===========================
-
-function __g2_pretty_path -a path
-    echo -n (string replace "$HOME" "~" $path | string replace --all --regex "(?'short'\.?[^/])[^/]*/" "\$short/")
-end
-
-
-# ===========================
 # Git Helper methods
 # ===========================
 
-function __g2_prompt_project_dir -d 'Print the current git project base directory'
-    command git rev-parse --show-toplevel ^/dev/null
-end
-
 function __g2_prompt_getBranchOp
-    set -l base_dir
-    set -l git_dir (command git rev-parse --git-dir ^/dev/null)
-    test ! -d $git_dir
-    and return 1
+    set -l git_dir (git_repository_root)
+    or return 1
 
     # get repo status & branch name
     set -l op ''
@@ -119,141 +104,83 @@ end
 
 
 # ===========================
-# Segment functions
-# ===========================
-
-function __g2_prompt_path_segment -d 'Display a shortened form of a directory'
-    __g2_color_print (__g2_enclose_in_brackets (prompt_pwd))" " $custom_color_medium_blue
-end
-
-function __g2_prompt_finish_segments -d 'Close open segments'
-    __g2_color_print $prompt_finisher_glyph green --bold
-end
-
-
-# ===========================
-# Theme components
-# ===========================
-
-
-function __g2_prompt_status -d 'the symbols for a non zero exit status, root and background jobs'
-    # Print non-zero exit status
-    if test $PROMPT_LAST_STATUS -ne 0
-        __g2_color_print (__g2_enclose_in_brackets "⚡") $custom_color_red --bold #--background red
-    end
-
-    # Print super-user glyph
-    if test (id -u $USER) -eq 0
-        __g2_color_print (__g2_enclose_in_brackets "SU") red --bold
-    end
-
-    # Print background-jobs glyph
-    if test (jobs -l | wc -l) -gt 0
-        __g2_color_print (__g2_enclose_in_brackets "BG") $custom_color_yellow --bold
-    end
-end
-
-function __g2_prompt_user -d 'Display actual user if different from $default_user'
-    test "$theme_display_user" = "true"
-    and set -l user (whoami)
-    ILTIS_is_remote
-    and set -l host "@"(prompt_hostname)
-    test -n "$user" -a -n "$host"
-    echo -n (__g2_enclose_in_brackets $user$host)
-end
-
-function __g2_getremote
-    set -l remote (command git rev-parse --symbolic-full-name --abbrev-ref '@{u}' ^/dev/null)
-    and echo $remote
-end
-
-function __g2_prompt_aheadbehind -a local
-    string match -q "detached:*" $local
-    and return 1
-    set -l cnt (command git rev-list --left-right --count $local...(__g2_getremote) -- ^/dev/null |tr \t \n)
-    emit print_debug "prompt" "prompt_aheadbehing| local: $local cnt[1]: $cnt[1] cnt[2]: $cnt[2]"
-    if test $cnt[1] -gt 0 -a $cnt[2] -gt 0
-        echo -n '±'
-    else
-        test $cnt[1] -gt 0
-        and echo -n '+'
-        test $cnt[2] -gt 0
-        and echo -n '-'
-    end
-end
-
-function __g2_prompt_git -d 'Display the actual git state'
-
-    command git rev-parse --is-inside-work-tree >/dev/null ^/dev/null
-    or return 1
-
-    set -l v (__g2_prompt_getBranchOp)
-    set -l branch $v[1]
-    set -l op $v[2]
-
-    set -l icon "$branch_glyph "
-    test "$op" = "detached"
-    and set icon "$detached_glyph "
-
-    #### PARSE STATUS
-    set -l new 0
-    set -l staged 0
-    set -l dirty 0
-
-    set -l git_status (command git status --porcelain ^/dev/null)
-
-    for line in $git_status
-        set -l x (echo $line | cut -c 1)
-        set -l y (echo $line | cut -c 2)
-
-        if test $x = '?'
-            set new (math $new + 1)
-        else
-            test "$x" != ' '
-            and set staged (math $staged + 1)
-            test "$y" != ' '
-            and set dirty (math $dirty + 1)
-        end
-    end
-
-    if test -n "$op"
-        if test "$op" = 'init'
-            set local_color_flag white
-            set branch $op
-        else
-            set local_color_flag $custom_color_red
-            set branch "$op:$branch"
-        end
-    else if test $dirty -gt 0 -o $new -gt 0
-        set local_color_flag $custom_color_orange
-    else if test $staged -gt 0
-        set local_color_flag green
-    else
-        set local_color_flag brblack
-    end
-
-
-    set -l ahead_behind (__g2_prompt_aheadbehind $branch)
-
-    emit print_debug "prompt" "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
-    __g2_color_print (__g2_enclose_in_brackets "$icon $branch $ahead_behind") $local_color_flag --bold
-end
-
-
-
-# ===========================
 # Apply theme
 # ===========================
 
 function fish_prompt -d "Write out left part of prompt"
     set -g PROMPT_LAST_STATUS $status
-    set -gx EXPORTEDPWD $PWD
 
-    __g2_prompt_status
-    __g2_prompt_user
-    __g2_prompt_path_segment "$PWD"
-    __g2_prompt_git
-    __g2_prompt_finish_segments
+    begin # Prints the status segment
+        # Print non-zero exit status
+        if test $PROMPT_LAST_STATUS -ne 0
+            __g2_color_print (__g2_enclose_in_brackets "⚡") $custom_color_red --bold #--background red
+        end
+
+        # Print super-user glyph
+        if test (id -u $USER) -eq 0
+            __g2_color_print (__g2_enclose_in_brackets "SU") red --bold
+        end
+
+        # Print background-jobs glyph
+        if test (jobs -l | wc -l) -gt 0
+            __g2_color_print (__g2_enclose_in_brackets "BG") $custom_color_yellow --bold
+        end
+    end
+    begin # Prints user if sudo is active or user@hostname if shell is in a ssh session
+        __g2_enclose_in_brackets (
+        if [ "$theme_display_user" = "true" -o -n "$SUDO_USER" ]; or ILTIS_is_remote
+          echo -en (whoami)
+          if [ -n "$SUDO_USER" ]
+            echo -en "($SUDO_USER)"
+          end
+        end
+        if ILTIS_is_remote
+          echo -en "@"(prompt_hostname)
+        end
+        )
+    end
+    begin # Prints the prettyfied pwd
+        __g2_color_print (__g2_enclose_in_brackets (prompt_pwd))" " $custom_color_medium_blue
+    end
+
+    begin # Prints some status information about git
+        if git_is_repo
+            set -l v (__g2_prompt_getBranchOp)
+            set -l branch $v[1]
+            set -l op $v[2]
+
+            set -l icon "$branch_glyph"
+            test "$op" = "detached"
+            and set icon "$detached_glyph"
+
+
+            if test -n "$op"
+                if test "$op" = 'init'
+                    set local_color_flag white
+                    set branch $op
+                else
+                    set local_color_flag $custom_color_red
+                    set branch "$op:$branch"
+                end
+            else if git_is_touched
+                or git_untracked_files >/dev/null
+                set local_color_flag $custom_color_orange
+            else if git_is_staged
+                set local_color_flag green
+            else
+                set local_color_flag brblack
+            end
+
+            set -l ahead_behind (git_ahead)
+
+            emit print_debug "prompt" "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
+            __g2_color_print (__g2_enclose_in_brackets "$icon $branch $ahead_behind") $local_color_flag --bold
+        end
+    end
+
+    begin # Prints the finishing glyph
+        __g2_color_print $prompt_finisher_glyph green --bold
+    end
 
     emit flush_fish_debug "/tmp/fish_prompt_debug.log"
 end
@@ -262,21 +189,21 @@ function fish_mode_prompt
     switch $fish_bind_mode
         case default
             set_color --bold red
-            echo (__g2_enclose_in_brackets 'N')
+            echo -en (__g2_enclose_in_brackets 'N')
         case insert
             set_color --bold green
-            echo (__g2_enclose_in_brackets 'I')
+            echo -en (__g2_enclose_in_brackets 'I')
         case replace_one
             set_color --bold green
-            echo (__g2_enclose_in_brackets 'R')
+            echo -en (__g2_enclose_in_brackets 'R')
         case visual
             set_color --bold brmagenta
-            echo (__g2_enclose_in_brackets 'V')
+            echo -en (__g2_enclose_in_brackets 'V')
         case '*'
             set_color --bold red
-            echo (__g2_enclose_in_brackets '?')
+            echo -en (__g2_enclose_in_brackets '?')
     end
-    echo " "
+    echo -en " "
     set_color normal
 end
 
@@ -284,6 +211,10 @@ function fish_right_prompt -d "Write out the right prompt"
     if test "$dirstack[1]"
         test (count $dirstack) -gt 1
         and set more " +"
+
+        function __g2_pretty_path -a path
+            echo -n (string replace "$HOME" "~" $path | string replace --all --regex "(?'short'\.?[^/])[^/]*/" "\$short/")
+        end
 
         __g2_color_print (__g2_enclose_in_brackets (__g2_pretty_path "$dirstack[1]$more")) green --bold
     end
