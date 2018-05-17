@@ -15,10 +15,7 @@ alias vi="nvim"
 # set variables
 TERM='xterm-256color'
 TERMINAL='termite'
-EDITOR='nvim'
-editor='nvim'
-LANG='en_US.UTF-8'
-export LANG
-export EDITOR
-export editor
+export LANG='en_US.UTF-8'
+export EDITOR='nvim'
+export editor='nvim'
 

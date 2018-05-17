@@ -1,6 +1,5 @@
 UNAME_PLATFORM=$(uname)
 
-
 USRH_PATH=~/.bin
 OPT_PATH=/opt/rabbitMQ:/opt/android-studio/bin:
 USRL_PATH=/usr/local/bin:/usr/local/sbin
