@@ -1,0 +1,56 @@
+[global]
+    font = "Quicksand Bold 12"
+    markup = yes
+    format = "<big>%s</big>\n%b"
+
+    sort = true
+    indicate_hidden = true
+    alignment = center
+    bounce_freq = 0
+    show_age_threshold = 60
+    word_wrap = true
+    ignore_newline = false
+    geometry = "264x64-18+18"
+    transparency = 0
+
+    dmenu = /usr/bin/rofi
+    browser = /usr/bin/vivaldi
+
+    idle_threshold = 120
+    monitor = 0
+    follow = mouse
+    sticky_history = true
+
+    line_height = 10
+    separator_height = 0
+    separator_color = auto
+    padding = 8
+    horizontal_padding = 18
+    frame_width = 0
+    frame_color = "#f8f8f2"
+    startup_notification = false
+
+    icon_position = left
+    icon_path = /usr/share/icons/deepin/actions/64/:/usr/share/icons/deepin/apps/64/:/usr/share/icons/deepin/devices/64/:/usr/share/icons/deepin/status/64/
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+dead_grave
+    context = ctrl+shift+period
+
+[base16_low]
+    msg_urgency = low
+    background = "#383830"
+    foreground = "#75715e"
+
+[base16_normal]
+    msg_urgency = normal
+    background = "#49483e"
+    foreground = "#f8f8f2"
+
+[base16_critical]
+    msg_urgency = critical
+    background = "#f92672"
+    foreground = "#f5f4f1"
+
