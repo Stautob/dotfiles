@@ -8,7 +8,6 @@
 # Abbreviations
 
 if test (abbr --list | wc -l) -eq 0
-  abbr --add ll ls -1av --color=auto
   abbr --add gst git status
   abbr --add ip ip -c
   abbr --add vi nvim
@@ -23,6 +22,8 @@ alias diff="diff --color=auto"
 alias grep="grep --color=auto -n"
 alias dmesg="dmesg --color=always"
 alias pacman="pacman --color=always"
+alias tree="tree -C"
+alias ll="ls -1av"
 
 
 #---------------------#
