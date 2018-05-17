@@ -2,7 +2,7 @@
 set $mod Mod4
 set $alt Mod1
 
-set $font pango:Liberation Mono for Powerline, FontAwesome5, Ionicons, 8 #DejaVu Sans Mono 8
+set $font pango:Quicksand Bold, 8 #DejaVu Sans Mono 8
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -214,8 +214,6 @@ bindsym $mod+r mode "resize"
 ##############################
 bar {
 
-  font $font
-
   colors {
 # Whole color settings
     background #000000
@@ -236,7 +234,7 @@ bar {
 ############################
 
 # Start compton
-exec compton -f
+exec --no-startup-id compton -f
 
 # Set kbdlayout
 exec --no-startup-id setxkbmap us -variant intl
@@ -251,9 +249,6 @@ exec i3-sensible-terminal
 exec i3-sensible-terminal
 exec i3-sensible-terminal
 
-# Start redshift
-# exec --no-startup-id redshift -l 47.36667:8.55
-
 # Start browser
 exec vivaldi-stable
 
@@ -261,6 +256,8 @@ exec vivaldi-stable
 ##############################
 # Small boarder
 new_window 1pixel
+
 # Let pop-up windows float
 for_window [window_role="pop-up"] floating enable
 for_window [class="Hamster-windows-service"] floating enable border normal 2 move position center
+
