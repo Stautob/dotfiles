@@ -8,6 +8,10 @@
 
 general {
   colors = true
+  color_good = "#a6e22e"
+  color_degraded = "#dfdf00"
+  color_bad = "#f92672"
+  color_charging = "#00aabb"
   interval = 5
 }
 
@@ -39,10 +43,6 @@ run_watch DHCP {
   pidfile = "/var/run/dhclient-wlp3s0.pid"
 }
 
-backlight {
-  device = "/sys/class/backlight/intel_backlight"
-}
-
 disk "/" {
   format = "💾 %avail free"
 }
@@ -58,26 +58,27 @@ wifi {
   format_up = " {ssid}: {bitrate} {signal_percent}"
 }
 
+backlight {
+  device = "/sys/class/backlight/intel_backlight"
+}
+
 volume_status {
   format = "🔊 {percentage}%"
   format_muted = "🔇 muted"
 }
 
 battery_level {
-  color_good = '#00AA00'
-  color_bad = '#AA0000'
-  color_degraded = '#AAAA00'
-  color_charging = '#FFFF00'
   battery_id = "all"
   hide_seconds = True
   notify_low_level = True
-  threshold_full = 99
+  threshold_full = 95
   blocks = "🔋🔋🔋🔋🔋🔋🔋🔋🔋"
   charging_character = "⚡"
   format = "{icon} {percent}% ({time_remaining})"
   format_down = "⚠️ No battery found"
   format_notify_discharging = "⚠️ Battery low {percent}% | {time_remaining}"
 }
+
 sysdata {
   format = "CPU: {cpu_usage}%  MEM: {mem_used}G / {mem_total}G"
 }

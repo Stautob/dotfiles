@@ -3,11 +3,13 @@ set $mod Mod4
 set $alt Mod1
 
 set $font pango:Quicksand Bold, 8 #DejaVu Sans Mono 8
+set $emojifont pango:Noto Color Emoji, 8
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
+font $emojifont
 font $font
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -15,6 +17,39 @@ font $font
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
+
+# Color variables
+
+set $transparent #00000000
+set $background #261e1cff
+# black
+set $base00 #272822
+set $base03 #75715e
+# red
+set $base01 #f92672
+set $base08 #f92672
+# green
+set $base02 #a6e22e
+set $base0B #a6e22e
+# yellow
+set $base04 #a59f85
+set $base0A #f4bf75
+# blue
+set $medium_blue #00aadd
+set $base0D #66d9ef
+# magenta
+set $base0E #ae81ff
+# cyan
+set $base0C #a1efe4
+# white
+set $base06 #f5f4f1
+set $base05 #f8f8f2
+set $base07 #f9f8f5
+# orange
+set $base0F #cc6633
+set $base09 #fd971f
+
+
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -59,7 +94,6 @@ bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; e
 
 # Take screenshot
 bindsym $mod+Shift+s exec teiler --quick image area
-#bindsym $mod+Shift+s exec shutter --select --exit_after_capture --output='~/Pictures/screenshots/shutter_%d.%m.%Y_%H:%m:%s.png'
 
 # Hamsterbutton
 bindsym Mod1+Ctrl+Shift+r exec --no-startup-id /usr/bin/hamster start default;
@@ -76,7 +110,7 @@ bindsym $mod+u split h
 bindsym $mod+v split v
 
 # open command prompt
-bindsym $mod+o exec i3-input
+bindsym $mod+i exec i3-input
 bindsym $mod+Shift+m exec i3-input -F 'rename workspace to "%s"' -P 'Rename: '
 bindsym $mod+m exec i3-input -F 'workspace "%s"' -P 'Switch: '
 
@@ -128,9 +162,9 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10 git
 
 
-bindsym $mod+y mode "+10"
+bindsym $mod+y mode "<b>+10</b>"
 
-mode "+10" {
+mode --pango_markup "<b>+10</b>" {
 
   bindsym $mod+1 workspace 11
   bindsym $mod+2 workspace 12
@@ -210,21 +244,24 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+
+
+
 # I3BAR SETUP
 ##############################
 bar {
 
   colors {
-# Whole color settings
-    background #000000
-    statusline #ffffff
+    # Whole color settings
+    background #383830
+    statusline $base05
     separator  #666666
 
-# Type             border  background font
-    focused_workspace  #008fff #007fff #ffffff
-    active_workspace   #333333 #5f676a #ffffff
-    inactive_workspace #333333 #222222 #888888
-    urgent_workspace   #aa0000 #990000 #ffffff
+    # Type             border  background font
+    active_workspace   #333333 #5f676a $base00
+    focused_workspace  #008fff $medium_blue $base00
+    inactive_workspace #333333 #49483e $base03
+    urgent_workspace   $base01 $base01 $base07
   }
 
   status_command py3status #-c $XDG_CONFIG_HOME/i3status/config
@@ -243,7 +280,7 @@ exec --no-startup-id setxkbmap us -variant intl
 exec --no-startup-id nm-applet
 
 # Start cli
-exec i3-msg "workspace 1 cli; append_layout /home/tstauber/.config/i3/quad_layout.json"
+exec i3-msg "workspace '1 cli'; append_layout '/home/tstauber/.config/i3/quad_layout.json'"
 exec i3-sensible-terminal
 exec i3-sensible-terminal
 exec i3-sensible-terminal
@@ -255,9 +292,22 @@ exec vivaldi-stable
 # Window setup
 ##############################
 # Small boarder
-new_window 1pixel
+default_floating_border pixel 2
+default_border pixel 3
+hide_edge_borders both
+
+# COLORS
+##############################
+
+client.background $background
+
+# class                 border  backgr    text    indicator
+client.focused          $base00 $transparent $base05 $base03
+client.focused_inactive $base00 $transparent $base05 $base03
+client.unfocused        $base00 $transparent $base03 $base03
+client.urgent           $base01 $transparent $base05 $base03
 
 # Let pop-up windows float
 for_window [window_role="pop-up"] floating enable
-for_window [class="Hamster-windows-service"] floating enable border normal 2 move position center
+for_window [class="Hamster-windows-service"] floating enable move position center
 
