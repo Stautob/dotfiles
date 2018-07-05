@@ -7,7 +7,7 @@
     "nodes": [
         {
             "border": "pixel",
-            "current_border_width": 1,
+            "current_border_width": 3,
             "floating": "auto_off",
             "name": "terminal",
             "percent": 0.5,
@@ -20,9 +20,9 @@
         },
         {
             "border": "pixel",
-            "current_border_width": 1,
+            "current_border_width": 3,
             "floating": "auto_off",
-            "name": "fish  /home/tstauber",
+            "name": "terminal",
             "percent": 0.5,
             "swallows": [
                {
@@ -43,9 +43,9 @@
     "nodes": [
         {
             "border": "pixel",
-            "current_border_width": 1,
+            "current_border_width": 3,
             "floating": "auto_off",
-            "name": "fish  /home/tstauber",
+            "name": "terminal",
             "percent": 0.5,
             "swallows": [
                {
@@ -56,9 +56,9 @@
         },
         {
             "border": "pixel",
-            "current_border_width": 1,
+            "current_border_width": 3,
             "floating": "auto_off",
-            "name": "fish  /home/tstauber",
+            "name": "terminal",
             "percent": 0.5,
             "swallows": [
                {
