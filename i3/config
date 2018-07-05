@@ -63,6 +63,10 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show combi
 
+# scratchpad
+bindsym $mod+Shift+p move scratchpad
+bindsym $mod+p scratchpad show
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -81,7 +85,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 
 # Lock
-bindsym $alt+Shift+s exec physlock -m
+bindsym $alt+Shift+s exec physlock -m -p "Unlock Tobis Lunix"
 bindcode 160 exec physlock -m
 
 # Suspend and Lock
@@ -96,9 +100,9 @@ bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; e
 bindsym $mod+Shift+s exec teiler --quick image area
 
 # Hamsterbutton
-bindsym Mod1+Ctrl+Shift+r exec --no-startup-id /usr/bin/hamster start default;
-bindsym Mod1+Ctrl+Shift+s exec --no-startup-id /usr/bin/hamster stop;
-bindsym Mod1+Ctrl+Shift+h exec ho;
+bindsym $alt+Ctrl+Shift+r exec --no-startup-id /usr/bin/hamster start default;
+bindsym $alt+Ctrl+Shift+s exec --no-startup-id /usr/bin/hamster stop;
+bindsym $alt+Ctrl+Shift+h exec ho;
 
 # open nautilus
 bindsym $mod+n exec nautilus
@@ -166,7 +170,7 @@ bindsym $mod+y mode "<b>+10</b>"
 
 mode --pango_markup "<b>+10</b>" {
 
-  bindsym $mod+1 workspace 11
+  bindsym $mod+1 workspace 11 opera
   bindsym $mod+2 workspace 12
   bindsym $mod+3 workspace 13
   bindsym $mod+4 workspace 14
@@ -177,7 +181,7 @@ mode --pango_markup "<b>+10</b>" {
   bindsym $mod+9 workspace 19
   bindsym $mod+0 workspace 20
 
-  bindsym $mod+Shift+1 move container to workspace 11
+  bindsym $mod+Shift+1 move container to workspace 11 opera
   bindsym $mod+Shift+2 move container to workspace 12
   bindsym $mod+Shift+3 move container to workspace 13
   bindsym $mod+Shift+4 move container to workspace 14
@@ -189,6 +193,8 @@ mode --pango_markup "<b>+10</b>" {
   bindsym $mod+Shift+0 move container to workspace 20
 
   bindsym $mod+y mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 # switch back to previous workspace on trying to switch to it again
@@ -202,8 +208,8 @@ bindsym $mod+Shift+Right move workspace to output right
 # workspace 2 www output DP1
 
 # open certain applications on their own workspace
-assign [class="Opera"] → opera
-assign [class="Eclipse"] → 3 ide
+assign [class="Opera"] → 11 opera
+#assign [class="Eclipse"] → 3 ide
 assign [class="Vivaldi-stable"] → 2 www
 
 # reload the configuration file
@@ -233,11 +239,18 @@ mode "resize" {
 
 # same bindings, but for the arrow keys
   bindsym Left resize shrink width 10 px or 10 ppt
-  bindsym Down resize grow height 10 px or 10 ppt
-  bindsym Up resize shrink height 10 px or 10 ppt
   bindsym Right resize grow width 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+
+# TODO make those work ??
+  bindsym --whole-window --border button5 resize grow height 10 px or 10 ppt
+  bindsym --whole-window --border button4 resize shrink height 10 px or 10 ppt
+  bindsym --whole-window --border Ctrl+button5 resize grow width 10 px or 10 ppt
+  bindsym --whole-window --border Ctrl+button4 resize shrink width 10 px or 10 ppt
 
 # back to normal: Enter or Escape
+  bindsym $mod+r mode "default"
   bindsym Return mode "default"
   bindsym Escape mode "default"
 }
@@ -264,8 +277,33 @@ bar {
     urgent_workspace   $base01 $base01 $base07
   }
 
-  status_command py3status #-c $XDG_CONFIG_HOME/i3status/config
+  status_command py3status -c $HOME/.config/i3status/config
 }
+
+# WINDOW SETUP
+##############################
+
+# Small boarder
+default_floating_border pixel 2
+default_border pixel 3
+hide_edge_borders both
+
+# COLORS
+##############################
+
+client.background $background
+
+# class                 border  backgr       text    indicator
+client.focused          $base00 $transparent $base05 $base03 $transparent
+client.focused_inactive $base00 $transparent $base05 $base03 $transparent
+client.unfocused        $base00 $transparent $base03 $base03 $transparent
+client.urgent           $base01 $transparent $base05 $base01 $transparent
+client.placeholder      $base01 $transparent $base05 $transparent $transparent
+
+# Let pop-up windows float
+for_window [window_role="pop-up"] floating enable
+for_window [class="Hamster-windows-service"] floating enable, move position center
+
 
 # STARTUP OF APPS
 ############################
@@ -280,34 +318,8 @@ exec --no-startup-id setxkbmap us -variant intl
 exec --no-startup-id nm-applet
 
 # Start cli
-exec i3-msg "workspace '1 cli'; append_layout '/home/tstauber/.config/i3/quad_layout.json'"
-exec i3-sensible-terminal
-exec i3-sensible-terminal
-exec i3-sensible-terminal
-exec i3-sensible-terminal
+exec --no-startup-id i3-msg "workspace 1 cli; append_layout $HOME/.config/i3/quad_layout.json; exec i3-sensible-terminal; exec i3-sensible-terminal; exec i3-sensible-terminal; exec i3-sensible-terminal"
 
 # Start browser
 exec vivaldi-stable
-
-# Window setup
-##############################
-# Small boarder
-default_floating_border pixel 2
-default_border pixel 3
-hide_edge_borders both
-
-# COLORS
-##############################
-
-client.background $background
-
-# class                 border  backgr    text    indicator
-client.focused          $base00 $transparent $base05 $base03
-client.focused_inactive $base00 $transparent $base05 $base03
-client.unfocused        $base00 $transparent $base03 $base03
-client.urgent           $base01 $transparent $base05 $base03
-
-# Let pop-up windows float
-for_window [window_role="pop-up"] floating enable
-for_window [class="Hamster-windows-service"] floating enable move position center
 
