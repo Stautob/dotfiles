@@ -1,7 +1,8 @@
 [options]
 font = Ionicons 8
 font = Liberation Mono for Powerline 10
-
+hyperlinks = true
+clickable_url = false
 scrollback_lines = 50000
 
 [colors]
