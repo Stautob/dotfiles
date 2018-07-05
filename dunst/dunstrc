@@ -1,5 +1,5 @@
 [global]
-    font = "Quicksand Bold 12"
+    font = "Quicksand Bold 8"
     markup = yes
     format = "<big>%s</big>\n%b"
 
