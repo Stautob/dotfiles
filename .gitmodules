@@ -37,3 +37,6 @@
 [submodule "vim/.vim/bundle/vim-dart"]
 	path = vim/.vim/bundle/vim-dart
 	url = https://github.com/dart-lang/dart-vim-plugin.git
+[submodule "vim/.vim/bundle/vimwiki"]
+	path = vim/.vim/bundle/vimwiki
+	url = https://github.com/vimwiki/vimwiki.git
