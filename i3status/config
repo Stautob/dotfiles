@@ -17,9 +17,7 @@ general {
 
 order += "hamster"
 order += "ipv6"
-order += "run_watch DHCP"
-#order += "arch_updates"
-order += "disk /"
+order += "diskdata"
 order += "online_status"
 order += "wifi"
 order += "backlight"
@@ -39,23 +37,19 @@ netdata {
   nic = "enp0s25"
 }
 
-run_watch DHCP {
-  pidfile = "/var/run/dhclient-wlp3s0.pid"
-}
-
-disk "/" {
-  format = "💾 %avail free"
+diskdata {
+  format = "💾 {disk}: {used_percent}% used"
 }
 
 online_status {
   cache_timeout = 30
-  format_offline = "⚠️"
-  format_online = "🌐"
-  url = "google.com"
+  icon_off = "⚠️"
+  icon_on = "🌐"
+  url = "http://google.com"
 }
 
 wifi {
-  format_up = " {ssid}: {bitrate} {signal_percent}"
+  format = "[	{ssid}: {bitrate} {signal_percent}]|	Disabled"
 }
 
 backlight {
@@ -63,13 +57,14 @@ backlight {
 }
 
 volume_status {
-  format = "🔊 {percentage}%"
-  format_muted = "🔇 muted"
+  format = "🔊	{percentage}%"
+  format_muted = "🔇	muted"
 }
 
 battery_level {
   battery_id = "all"
   hide_seconds = True
+  measurement_mode = "acpi"
   notify_low_level = True
   threshold_full = 95
   blocks = "🔋🔋🔋🔋🔋🔋🔋🔋🔋"
@@ -84,6 +79,6 @@ sysdata {
 }
 
 tztime local {
-  format = "%d-%m-%Y %H:%M:%S"
+  format = "%d-%m-%Y	%H:%M:%S"
 }
 
