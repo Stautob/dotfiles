@@ -63,10 +63,10 @@ remove () {
 }; export -f remove
 
 printHelp () {
-  echo "Usage: $0           create links to the dotfiles"
-  echo "       $0 -h        show this message"
-  echo "       $0 -rb       remove backups"
-  echo "       $0 -u        remove links"
+  echo "Usage: $0 -c  --create-links          create links to the dotfiles"
+  echo "       $0 -h  --help                  show this message"
+  echo "       $0 -rb --remove-backups        remove backups"
+  echo "       $0 -r  --remove-links          remove links"
 }
 
 

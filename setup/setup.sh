@@ -26,7 +26,6 @@ installChannels () {
 
 setup () {
   # install ui stuff and edit /etc/pam.d/lightdm
-  installChannels
   installAurman
   installApps
   configureApps $2 $3
@@ -47,8 +46,10 @@ setupOTHER () {
 }
 
 install () {
-  # Test if apacman is installed else use pacman
-  command -p apacman --noedit --noconfirm -S $@ || pacman --noconfirm -S $@
+  # Test if aurman is installed else use pacman
+  installChannels
+  command -p aurman --noedit --noconfirm -Syyu || sudo pacman --noconfirm -Syyu
+  command -p aurman --noedit --noconfirm -S $@ || sudo pacman --noconfirm -S $@
   echo "----------------------------------------------------------------------------------------"
 }
 
@@ -79,7 +80,7 @@ c_createFishDefaultVars () {
 
 c_linkDotfiles () {
   echo "Linking dotfiles"
-  ${DotfilesPath}/setup/dotfilescript.sh
+  ${DotfilescriptPath} --create-links
 }
 
 c_install_ycm () {
