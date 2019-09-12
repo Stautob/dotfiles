@@ -1,42 +1,42 @@
 [submodule "vim/.vim/bundle/YouCompleteMe"]
-	path = vim/.vim/bundle/YouCompleteMe
+	path = vim/.vim/pack/plugins/start/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule "vim/.vim/bundle/vim-cmake"]
-	path = vim/.vim/bundle/vim-cmake
+	path = vim/.vim/pack/plugins/opt/vim-cmake
 	url = https://github.com/vhdirk/vim-cmake.git
 [submodule "vim/.vim/bundle/vim-airline"]
-	path = vim/.vim/bundle/vim-airline
+	path = vim/.vim/pack/plugins/start/vim-airline
 	url = https://github.com/bling/vim-airline.git
 [submodule "vim/.vim/bundle/vim-gnupg"]
-	path = vim/.vim/bundle/vim-gnupg
+	path = vim/.vim/pack/plugins/opt/vim-gnupg
 	url = https://github.com/jamessan/vim-gnupg.git
 [submodule "vim/.vim/bundle/vim-python-pep8-indent"]
-	path = vim/.vim/bundle/vim-python-pep8-indent
+	path = vim/.vim/pack/plugins/opt/vim-python-pep8-indent
 	url = https://github.com/hynek/vim-python-pep8-indent.git
 [submodule "vim/.vim/bundle/vim-indent-guides"]
-	path = vim/.vim/bundle/vim-indent-guides
+	path = vim/.vim/pack/plugins/start/vim-indent-guides
 	url = https://github.com/nathanaelkane/vim-indent-guides.git
 [submodule "vim/.vim/bundle/vim-cpp-enhanced-highlight"]
-	path = vim/.vim/bundle/vim-cpp-enhanced-highlight
+	path = vim/.vim/pack/plugins/opt/vim-cpp-enhanced-highlight
 	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
 [submodule "vim/.vim/bundle/vimroom"]
-	path = vim/.vim/bundle/vimroom
+	path = vim/.vim/pack/plugins/opt/vimroom
 	url = https://github.com/mikewest/vimroom.git
 [submodule "vim/.vim/bundle/vim-flake8"]
-	path = vim/.vim/bundle/vim-flake8
+	path = vim/.vim/pack/plugins/opt/vim-flake8
 	url = https://github.com/nvie/vim-flake8.git
 [submodule "vim/.vim/bundle/vim-fish"]
-	path = vim/.vim/bundle/vim-fish
+	path = vim/.vim/pack/plugins/start/vim-fish
 	url = https://github.com/Stautob/vim-fish
 [submodule "vim/.vim/bundle/vim-multiple-cursors"]
-	path = vim/.vim/bundle/vim-multiple-cursors
+	path = vim/.vim/pack/plugins/opt/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
 [submodule "vim/.vim/bundle/molokai"]
-	path = vim/.vim/bundle/molokai
+	path = vim/.vim/pack/plugins/start/molokai
 	url = https://github.com/tomasr/molokai.git
 [submodule "vim/.vim/bundle/vim-dart"]
-	path = vim/.vim/bundle/vim-dart
+	path = vim/.vim/pack/plugins/opt/vim-dart
 	url = https://github.com/dart-lang/dart-vim-plugin.git
 [submodule "vim/.vim/bundle/vimwiki"]
-	path = vim/.vim/bundle/vimwiki
+	path = vim/.vim/pack/plugins/opt/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
