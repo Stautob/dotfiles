@@ -91,6 +91,9 @@ bindcode 160 exec physlock -m
 # Suspend and Lock
 bindcode 150 exec /usr/bin/physlock -m -d ; exec systemctl suspend
 
+# Open monitor layout dialog
+bindsym $mod+equal exec ~/monitor_layout.py
+
 # Audio
 bindcode 122 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-3%'; exec killall -SIGUSR1 py3status
 bindcode 123 exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+3%'; exec killall -SIGUSR1 py3status

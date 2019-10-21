@@ -30,6 +30,8 @@ order += "tztime local"
 
 hamster {
   cache_timeout = 60
+  on_click 1 = "exec fish -c toggleHamster"
+  on_click 3 = "exec hamster overview"
 }
 
 netdata {
