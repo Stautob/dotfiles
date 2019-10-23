@@ -2,6 +2,9 @@
 # CONFIG                #
 #-----------------------#
 set -g ConfigDir ~/.config/fish/
+#echo $fish_function_path (dirname (status --current-filename))/synced_functions (dirname (readlink -m (status --current-filename)))/synced_functions
+set fish_function_path (dirname (status --current-filename))/synced_functions/ $fish_function_path
+set fish_complete_path (dirname (status --current-filename))/synced_completions/ $fish_complete_path
 
 # set vim mode
 fish_vi_key_bindings
@@ -10,22 +13,13 @@ fish_vi_key_bindings
 source {$ConfigDir}colors.fish
 
 # set vars and path
-source {$ConfigDir}vars.fish
+source {$ConfigDir}variables.fish
 
-# set default vars
-#source {$ConfigDir}default_vars.fish
+# load abbreviations
+source {$ConfigDir}abbreviations.fish
 
-# load prompt
-source {$ConfigDir}prompt.fish
-
-# load functions
-source {$ConfigDir}functions.fish
-
-# load displayfunctions
-source {$ConfigDir}functions_display.fish
-
-# load greetersourcefish
-source {$ConfigDir}greeter.fish
+# load aliases
+source {$ConfigDir}aliases.fish
 
 # load keymanagement
 source {$ConfigDir}keymanagement.fish
