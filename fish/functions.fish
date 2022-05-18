@@ -29,6 +29,10 @@ alias ll="ls -1av"
 #---------------------#
 # Functions
 
+function git_remove_local_orphans
+  git branch -vv | command grep ': gone]'|  command grep -v "\*" | awk '{ print $2; }' | xargs git branch -d
+end
+
 function ILTIS_is_remote
   return (test -n "$SSH_CLIENT" -o -n "$SSH_TTY")
 end

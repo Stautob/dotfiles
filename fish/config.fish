@@ -59,3 +59,12 @@ function flush_fish_debug -a key file --on-event flush_debug
     end
   end
 end
+
+test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+
+eval (ssh-agent -c)
+
+source /usr/local/opt/asdf/libexec/asdf.fish
+
+eval (direnv hook fish)
+

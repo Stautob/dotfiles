@@ -40,3 +40,6 @@
 [submodule "vim/.vim/bundle/vimwiki"]
 	path = vim/.vim/pack/plugins/opt/vimwiki
 	url = https://github.com/vimwiki/vimwiki.git
+[submodule "vim/.vim/pack/plugins/start/vim-swift"]
+	path = vim/.vim/pack/plugins/start/vim-swift
+	url = https://github.com/keith/swift.vim.git

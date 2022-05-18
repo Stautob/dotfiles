@@ -31,7 +31,7 @@ end
 # ===========================
 
 function __g2_prompt_getBranchOp
-    set -l git_dir (git_repository_root)
+    set -l git_dir (git-repository-root)
     or return 1
 
     # get repo status & branch name
@@ -79,11 +79,11 @@ function __g2_prompt_getBranchOp
                     set op 'bisect'
                 end
             end
-            if not set branch (command git symbolic-ref HEAD ^/dev/null)
+            if not set branch (command git symbolic-ref HEAD 2>/dev/null)
                 test ! "$op"
                 and set op 'detached'
-                if not set branch (command git describe --tags --exact-match HEAD ^/dev/null)
-                    if not set branch (cut -c 1-7 "$git_dir/HEAD" ^/dev/null)
+                if not set branch (command git describe --tags --exact-match HEAD 2>/dev/null)
+                    if not set branch (cut -c 1-7 "$git_dir/HEAD" 2>/dev/null)
                         set branch 'unknown'
                     end
                 end
@@ -144,7 +144,7 @@ function fish_prompt -d "Write out left part of prompt"
     end
 
     begin # Prints some status information about git
-        if git_is_repo
+        if git-is-repo
             set -l v (__g2_prompt_getBranchOp)
             set -l branch $v[1]
             set -l op $v[2]
@@ -162,16 +162,16 @@ function fish_prompt -d "Write out left part of prompt"
                     set local_color_flag $custom_color_red
                     set branch "$op:$branch"
                 end
-            else if git_is_touched
-                or git_untracked_files >/dev/null
+            else if git-is-touched
+                or git-list-untracked >/dev/null
                 set local_color_flag $custom_color_orange
-            else if git_is_staged
+            else if git-is-staged
                 set local_color_flag green
             else
                 set local_color_flag brblack
             end
 
-            set -l ahead_behind (git_ahead)
+            set -l ahead_behind (git-ahead)
 
             emit print_debug "prompt" "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
             __g2_color_print (__g2_enclose_in_brackets "$icon $branch $ahead_behind") $local_color_flag --bold
