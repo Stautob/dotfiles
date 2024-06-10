@@ -61,7 +61,7 @@ function fish_prompt --description 'Write out left part of prompt'
                     set branch "$op:$branch"
                 end
             else if git-is-touched
-                or git_untracked_files >/dev/null
+                or git-untracked-files >/dev/null
                 set local_color_flag $custom_color_orange
             else if git-is-staged
                 set local_color_flag green
