@@ -1,0 +1,13 @@
+[[hints.enabled]]
+regex = "[^ ]+\\.rs:\\d+:\\d+"
+command = { program = "code", args = [ "--goto" ] }
+mouse = { enabled = true }
+
+[shell]
+program = "/opt/homebrew/bin/fish"
+args = [ "--login" ]
+#program = "/bin/zsh"
+#args = ["-c", "/opt/homebrew/bin/fish -i"]
+
+[font]
+normal = { family = "JetBrains Mono NL", style = "Regular" }
