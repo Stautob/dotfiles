@@ -42,7 +42,7 @@ function fish_prompt --description 'Write out left part of prompt'
     end
 
     begin # Prints some status information about git
-        if git_is_repo
+        if git-is-repo
             set -l v (prompt.getBranchOp)
             set -l branch $v[1]
             set -l op $v[2]
@@ -60,16 +60,16 @@ function fish_prompt --description 'Write out left part of prompt'
                     set local_color_flag $custom_color_red
                     set branch "$op:$branch"
                 end
-            else if git_is_touched
+            else if git-is-touched
                 or git_untracked_files >/dev/null
                 set local_color_flag $custom_color_orange
-            else if git_is_staged
+            else if git-is-staged
                 set local_color_flag green
             else
                 set local_color_flag brblack
             end
 
-            set -l ahead_behind (git_ahead)
+            set -l ahead_behind (git-ahead)
 
             emit print_debug "prompt" "prompt_git| icon: $icon branch: $branch ahead_behind: $ahead_behind"
             util.colorPrint (util.encloseInParentheses "$icon $branch $ahead_behind") $local_color_flag --bold

@@ -9,21 +9,6 @@ set fish_complete_path (dirname (status --current-filename))/synced_completions/
 # set vim mode
 fish_vi_key_bindings
 
-# load colors
-source {$ConfigDir}colors.fish
-
-# set vars and path
-source {$ConfigDir}variables.fish
-
-# load abbreviations
-source {$ConfigDir}abbreviations.fish
-
-# load aliases
-source {$ConfigDir}aliases.fish
-
-# load keymanagement
-source {$ConfigDir}keymanagement.fish
-
 # Debug setup
 set debug_buffer ""
 
@@ -53,3 +38,12 @@ function flush_fish_debug -a key file --on-event flush_debug
     end
   end
 end
+
+
+#test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+
+eval (ssh-agent -c)
+
+#source /usr/local/opt/asdf/libexec/asdf.fish
+
+#eval (direnv hook fish)

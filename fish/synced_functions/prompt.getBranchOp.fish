@@ -1,12 +1,12 @@
 function prompt.getBranchOp
-    set -l git_dir (git_repository_root)
+    set -l git_dir (git-repository-root)
     or return 1
 
     # get repo status & branch name
     set -l op ''
     set -l branch ''
 
-    command git ls-tree HEAD >/dev/null ^/dev/null
+    command git ls-tree HEAD >/dev/null 2> /dev/null
 
     if test $status -eq 128
         set op 'init'
@@ -47,11 +47,11 @@ function prompt.getBranchOp
                     set op 'bisect'
                 end
             end
-            if not set branch (command git symbolic-ref HEAD ^/dev/null)
+            if not set branch (command git symbolic-ref HEAD 2> /dev/null)
                 test ! "$op"
                 and set op 'detached'
-                if not set branch (command git describe --tags --exact-match HEAD ^/dev/null)
-                    if not set branch (cut -c 1-7 "$git_dir/HEAD" ^/dev/null)
+                if not set branch (command git describe --tags --exact-match HEAD 2> /dev/null)
+                    if not set branch (cut -c 1-7 "$git_dir/HEAD" 2> /dev/null)
                         set branch 'unknown'
                     end
                 end
