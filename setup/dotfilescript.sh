@@ -64,6 +64,7 @@ remove () {
 
 printHelp () {
   echo "Usage: $0 -c  --create-links          create links to the dotfiles"
+  echo "       $0 -a  --apps                  a file listing the apps to install"
   echo "       $0 -h  --help                  show this message"
   echo "       $0 -rb --remove-backups        remove backups"
   echo "       $0 -r  --remove-links          remove links"
@@ -71,11 +72,13 @@ printHelp () {
 
 
 # Main
-
-case $1 in
-  -c|--create-links) listApps "createLink" ; exit 0 ;;
-  -h|--help) printHelp ; exit 0 ;;
-  -rb|--remove-backups) listApps "remove" "\~" ; exit 0 ;;
-  -r|--remove-links) listApps "remove" ""; exit 0 ;;
-  *) printHelp ; exit 0;;
-esac
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -a|--apps) APPFILE="$2" ;;
+    -c|--create-links) listApps "createLink" ; exit 0 ;;
+    -h|--help) printHelp ; exit 0 ;;
+    -rb|--remove-backups) listApps "remove" "\~" ; exit 0 ;;
+    -r|--remove-links) listApps "remove" ""; exit 0 ;;
+    *) printHelp ; exit 0;;
+  esac
+done
